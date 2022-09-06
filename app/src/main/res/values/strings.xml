@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Fully Integrated Reference Application</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="initialize_ct_framework">Initialize Contact Framework</string>
+    <string name="set_term_config">Set Terminal Configuration</string>
+    <string name="emv_config">EMV Configuration</string>
+    <string name="set_aid_config">Set AID Configuration</string>
+    <string name="set_capk_config">Set CAPK Configugration</string>
+    <string name="apply_ct_config">Apply Contact Configuration</string>
+    <string name="card_detect">Card Detect</string>
+    <string name="txn">Transaction</string>
+    <string name="start_transaction">Start Transaction</string>
+    <string name="set_ct_config">Set Contact Configuration</string>
+    <string name="set_ct_aid_config">Set Contact AID Configuration</string>
+    <string name="set_ct_capk_config">Set Contact CAPK Configuration</string>
+    <string name="set_ctls_capk_config">Set CTLS CAPK Configuration</string>
+    <string name="set_ctls_aid_config">Set CTLS AID Configuration</string>
+    <string name="set_ctls_config">Set CTLS Configuration</string>
+    <string name="start_ctls_transaction">Start Ctls Transaction</string>
+    <string name="print_bmp">Print BMP</string>
+    <string name="print_html">Print HTML</string>
+    <string name="print_bmp_hacked">Print BMP (Hacked)</string>
+    <string name="log_ct_config">Log Contact Configuration</string>
+    <string name="log_ctls_config">Log CTLS Configuration</string>
+    <string name="start_manual_entry_transaction">Manual Entry Transaction</string>
+
+</resources>

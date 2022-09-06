@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/titleFragment">
+
+    <fragment
+        android:id="@+id/titleFragment"
+        android:name="com.verifone.psdk.sdiapplication.ui.home.TitleFragment"
+        android:label="PSDK SDI POS"
+        tools:layout="@layout/fragment_title" >
+    </fragment>
+    <fragment
+        android:id="@+id/configurationFragment"
+        android:name="com.verifone.psdk.sdiapplication.ui.config.ConfigurationFragment"
+        android:label="EMV Configuration"
+        tools:layout="@layout/fragment_configuration" />
+
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="com.verifone.psdk.sdiapplication.ui.transaction.TransactionFragment"
+        android:label="Transaction Flow"
+        tools:layout="@layout/fragment_txn" />
+</navigation>

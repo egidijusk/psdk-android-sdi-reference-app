@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/configurationFragment"
+        android:icon="@drawable/btn_circle"
+        android:title="@string/emv_config" />
+    <item
+        android:id="@+id/transactionFragment"
+        android:icon="@drawable/btn_circle"
+        android:title="@string/txn" />
+</menu>
