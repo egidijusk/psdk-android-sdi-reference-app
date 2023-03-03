@@ -5,7 +5,7 @@
 
     <application
         android:name="com.verifone.psdk.sdiapplication.PSDKContext"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_psdk_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_psdk_launcher_round"

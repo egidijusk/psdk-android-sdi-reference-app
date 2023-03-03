@@ -199,7 +199,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
 
 
     private inner class StatusCallback : SdiStatusCallback() {
-        override fun callback(digits: Int, value: String?) {
+        override fun statusCallback(digits: Int, value: String?) {
             Log.d(TAG, "StatusCallback Pin Digits entered : $digits : $value")
             var current = ""
             var digit = 0
@@ -238,8 +238,8 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     }
 
     private inner class CardDetectCallback : SdiCardDetectCallback() {
-        override fun callback(p0: Int, p1: Short, p2: SdiEmvTxn?, p3: ByteArray?) {
-            Log.d(TAG, "CardDetectCallback $p0 : $p1 : ${p2?.cardType}: ${p3.contentToString()}")
+        override fun cardDetectCallback(returnCode: Int, tecOut: Short, sdiEmvTxn: SdiEmvTxn?, pluginResult: ByteArray?) {
+            Log.d(TAG, "CardDetectCallback $returnCode : $tecOut : ${sdiEmvTxn?.cardType}: ${pluginResult.contentToString()}")
         }
 
     }

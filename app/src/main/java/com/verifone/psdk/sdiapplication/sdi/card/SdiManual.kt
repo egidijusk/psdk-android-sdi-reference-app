@@ -37,7 +37,7 @@ class SdiManual(private val sdiManager: SdiManager, private val config: Config) 
     }
 
     private inner class ControlCallback : SdiControlCallback() {
-        override fun callback(data: SdiTlv?): Int {
+        override fun controlCallback(data: SdiTlv?): Int {
             val CONTINUE = 1
             val RETRY = 2
             val ABORT = 3

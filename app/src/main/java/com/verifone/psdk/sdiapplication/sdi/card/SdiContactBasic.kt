@@ -77,7 +77,7 @@ class SdiContactBasic(private val sdiManager: SdiManager, private val config: Co
 
     private inner class EMVCallback : SdiEmvCallback() {
         @ExperimentalStdlibApi
-        override fun callback(type: SdiEmvCallbackType?, input: SdiEmvTxn?, output: SdiEmvTxn?) {
+        override fun emvCallback(type: SdiEmvCallbackType?, input: SdiEmvTxn?, output: SdiEmvTxn?) {
             when (type) {
                 SdiEmvCallbackType.REDUCE_CANDIDATES -> {
                     Log.d(TAG, "EMV Callback ${type?.name}")
