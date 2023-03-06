@@ -99,7 +99,7 @@ class SdiContactless(private val sdiManager: SdiManager, private val config: Con
 
     // This callback will get the Led update notifications and the display notification during retap
     private inner class NotifyCallback : SdiNotifyCallback() {
-        override fun callback(data: SdiTlv) {
+        override fun notifyCallback(data: SdiTlv) {
             Log.d(TAG, "Notify Callback")
             val messageTag = 0xF0
             val ctlsLedTag = 0xBF10
