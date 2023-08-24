@@ -3,6 +3,7 @@ package com.verifone.psdk.sdiapplication.sdi.config.model
 data class EmvCtlsConfig(
     val capks: List<Capk>,
     val fetchTags: List<String>,
+    val sensitiveTags: List<String>,
     val mastercard: Mastercard,
     val terminal: Terminal,
     val visa: Visa

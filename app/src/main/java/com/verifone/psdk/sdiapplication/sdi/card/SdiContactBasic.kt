@@ -66,9 +66,7 @@ class SdiContactBasic(private val sdiManager: SdiManager, private val config: Co
 //        RETURN_CANDIDATE_LIST | RETURN_AFTER_READ_RECORD | RETURN_FOR_CVM_PROCESS
         // 1st GEn AC
         val result = sdiManager.emvCt.continueOffline(sdiEmvTxn)
-
         Log.d(TAG, "Command Result: ${result.result.name}")
-
 
         retrieveTags(result.txn)
         retrieveTagsUsingApi(config.getCtTagsToFetch())

@@ -32,6 +32,14 @@ class Config(private val context: Context, private val sdk: PaymentSdk) {
         return ctlsConfig.getTagsToFetch()
     }
 
+    fun getCtSensitiveTagsToFetch(): List<String> {
+        return ctConfig.getSensitiveTagsToFetch()
+    }
+
+    fun getCtlsSensitiveTagsToFetch(): List<String> {
+        return ctlsConfig.getSensitiveTagsToFetch()
+    }
+
     fun logCtConfiguration() {
         ctConfig.logConfiguration()
     }

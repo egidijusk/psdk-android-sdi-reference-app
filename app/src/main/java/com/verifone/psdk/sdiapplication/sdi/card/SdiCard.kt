@@ -1,16 +1,14 @@
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
+import com.verifone.payment_sdk.*
 import com.verifone.psdk.sdiapplication.sdi.config.Config
 import com.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel.Companion.CONFIRM
-import com.verifone.payment_sdk.*
-import com.verifone.payment_sdk.SdiEmvCallbackType.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
-import kotlin.collections.ArrayList
 
 abstract class SdiCard(private val sdiManager: SdiManager, private val config: Config) {
 
@@ -115,6 +113,24 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
                 Log.d(TAG, "TAG ${tag.toString(radix = 16)}: $value")
             }
         }
+    }
+
+    internal fun fetchEncryptedData(sensitiveTagsToRetrieve: List<String>) {
+        val sdiSecureData = SdiSecureData(sdiManager.crypto, sdiManager.data)
+        val openResult = sdiSecureData.open("05")
+        if (openResult != SdiResultCode.OK) {
+            return
+        }
+
+        sdiSecureData.getValidationInfo()
+        sdiSecureData.getKeyInventory()
+        sdiSecureData.getEncryptedPin()
+        sdiSecureData.getEncryptedData(sensitiveTagsToRetrieve)
+        sdiSecureData.getEncryptedMessageData()
+        sdiSecureData.getMessageSignature()
+
+        sdiSecureData.close()
+        sdiSecureData.clearDataStore()
     }
 
     // PIN Entry using Status Callback method
