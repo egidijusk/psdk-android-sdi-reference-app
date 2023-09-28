@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.verifone.psdk.sdiapplication.PSDKContext
 import com.verifone.psdk.sdiapplication.ui.utils.getDeviceInformation
 import com.verifone.payment_sdk.*
+import com.verifone.psdk.sdiapplication.sdi.card.SdiSamCard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -109,6 +110,9 @@ public class SdiConnectionViewModel(private val app: Application) : AndroidViewM
                         state.postValue(State.CONNECTED)
                         system = SdiSystem(sdiManager = paymentSdk.sdiManager)
                         deviceInformation.postValue(paymentSdk.deviceInformation)
+
+                        val samCard = SdiSamCard(paymentSdk.sdiManager)
+                        samCard.activate()
                     }
                     StatusCode.CONFIGURATION_REQUIRED == statusCode -> {
                         Log.i(TAG, "Configuration required")
