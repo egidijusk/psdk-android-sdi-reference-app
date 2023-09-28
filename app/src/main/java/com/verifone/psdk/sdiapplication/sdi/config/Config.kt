@@ -32,6 +32,10 @@ class Config(private val context: Context, private val sdk: PaymentSdk) {
         return ctlsConfig.getTagsToFetch()
     }
 
+    fun getMagstripeTagsToFetch(): List<String> {
+        return listOf("57", "5A", "5F24", "9F02", "9F03", "5F2A", "9F35")
+    }
+
     fun logCtConfiguration() {
         ctConfig.logConfiguration()
     }

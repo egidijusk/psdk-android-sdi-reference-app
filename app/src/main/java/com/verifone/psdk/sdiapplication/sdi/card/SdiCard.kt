@@ -197,6 +197,13 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
         return pinResult
     }
 
+    // Validation checks for the current card regarding the validation table (cardranges.json) stored on the device.
+    fun performValidationChecks(date: ByteArray, returnAdditional: Boolean): SdiDataValidationResponse {
+        Log.i(TAG, "Perform Validation Checks  Command (29-05) ")
+        val response = sdiManager.data.performValidationChecks(date, returnAdditional)
+        Log.i(TAG, "Command Result: ${response.result.name}")
+        return response
+    }
 
     private inner class StatusCallback : SdiStatusCallback() {
         override fun statusCallback(digits: Int, value: String?) {

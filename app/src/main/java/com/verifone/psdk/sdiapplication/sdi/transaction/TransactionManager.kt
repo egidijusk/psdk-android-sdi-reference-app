@@ -2,12 +2,12 @@ package com.verifone.psdk.sdiapplication.sdi.transaction
 
 
 import android.util.Log
+import com.verifone.payment_sdk.SdiManager
+import com.verifone.payment_sdk.SdiResultCode
 import com.verifone.psdk.sdiapplication.sdi.card.*
 import com.verifone.psdk.sdiapplication.sdi.card.SdiCard.Companion.cardDetect
 import com.verifone.psdk.sdiapplication.sdi.config.Config
-import com.verifone.payment_sdk.*
 import kotlin.experimental.and
-import kotlin.experimental.or
 
 class TransactionManager(private val sdiManager: SdiManager, config: Config) {
 
@@ -21,7 +21,8 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
     private val manualTransaction = SdiManual(sdiManager, config)
     private lateinit var contactTransaction: SdiContact
     private val ctlsTransaction = SdiContactless(sdiManager, config)
-    private var techEnabled = SdiCard.TEC_CT.or(SdiCard.TEC_CTLS)
+    private val swipeTransaction = SdiSwipe(sdiManager, config)
+    private var techEnabled = SdiCard.TEC_ALL
 
     private lateinit var listener: TransactionListener
 
@@ -30,6 +31,7 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
         contactTransactionAdvanced.setListener(listener)
         ctlsTransaction.setListener(listener)
         manualTransaction.setListener(listener)
+        swipeTransaction.setListener(listener)
         this.listener = listener
     }
 
@@ -75,7 +77,7 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
                 listener.display("Present Card")
                 val detectResp = cardDetect(techEnabled, sdiManager = sdiManager)
                 if (detectResp.result == SdiResultCode.OK) {
-                    Log.d(TAG, "Failed to detect Card: ${detectResp.result.name}")
+                    Log.d(TAG, "Card detected successfully : ${detectResp.result.name}, tec : ${detectResp.tecOut}")
                     if (detectResp.tecOut == SdiCard.TEC_CT) {
                         listener.showLeds(false)
                         val ctResult = contactTransaction.startTransactionFlow(amount)
@@ -92,6 +94,9 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
                             techEnabled = SdiCard.TEC_CTLS
                             continue
                         }
+                    }
+                    if (detectResp.tecOut == SdiCard.TEC_MSR) {
+                        val swipeResult = swipeTransaction.startTransactionFlow(amount)
                     }
                 } else {
                     listener.display("Card Read Error : ${detectResp.result.name}")

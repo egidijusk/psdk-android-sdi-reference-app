@@ -110,6 +110,12 @@ Can refer under sdi->system->SdiSystem package
 * First GEN AC
 * TAG retrieval
 
+### Magstripe Transaction Flow
+
+* Card Detect
+* Validation checks
+* TAG retrieval
+
 ## Manual Card Data entry
 
 * PAN Entry
