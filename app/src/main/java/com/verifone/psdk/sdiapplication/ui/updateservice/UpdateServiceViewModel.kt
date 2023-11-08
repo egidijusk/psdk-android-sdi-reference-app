@@ -40,7 +40,6 @@ class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) 
                 updateService.registerCallback(updateServiceCallback)
                 copyTestFiles(fileName)
 
-                Log.d(TAG, "installApk, package : ${app.cacheDir}")
                 val file = File(app.cacheDir, fileName)
                 val fileDescriptor =
                     ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
