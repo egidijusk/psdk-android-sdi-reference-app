@@ -123,6 +123,13 @@ Can refer under sdi->system->SdiSystem package
 * CVV
 * Exception handling
 
+## Update Service
+
+* Install Apk
+* Un-Install Apk
+* Install Android Ota Package
+* Install Super Package(params, APK and Android OTA file)
+
 ## Data Interface (TBD) Highest priority
 * Sample sccfg.json
 * Sample VRK Payload

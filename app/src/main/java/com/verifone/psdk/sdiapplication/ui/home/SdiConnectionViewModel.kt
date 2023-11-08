@@ -3,21 +3,16 @@ package com.verifone.psdk.sdiapplication.ui.home
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
-import com.verifone.psdk.sdiapplication.PSDKContext
-import com.verifone.psdk.sdiapplication.ui.utils.getDeviceInformation
 import com.verifone.payment_sdk.*
+import com.verifone.psdk.sdiapplication.PSDKContext
 import com.verifone.psdk.sdiapplication.sdi.card.SdiSamCard
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.*
 import com.verifone.psdk.sdiapplication.sdi.system.SdiSystem
+import com.verifone.psdk.sdiapplication.ui.utils.getDeviceInformation
+import com.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
 
-public class SdiConnectionViewModel(private val app: Application) : AndroidViewModel(app) {
+public class SdiConnectionViewModel(private val app: Application) : BaseViewModel(app) {
 
     enum class State {
         NOT_CONNECTED,
@@ -46,19 +41,6 @@ public class SdiConnectionViewModel(private val app: Application) : AndroidViewM
 
     val stateConnected = Transformations.map(state) {
         it.equals(State.CONNECTED)
-    }
-
-
-    private fun background(action: () -> Unit) {
-        // Launching within the view model scope for this example, but in production, these should
-        // be launched from some scope that lives with the application instead of the UI.
-        viewModelScope.launch {
-            performBackgroundAction(action)
-        }
-    }
-
-    private suspend fun performBackgroundAction(action: () -> Unit) = withContext(Dispatchers.Default) {
-        action()
     }
 
     init {

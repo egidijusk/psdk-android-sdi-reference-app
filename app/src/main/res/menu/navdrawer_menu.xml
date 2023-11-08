@@ -9,4 +9,8 @@
         android:id="@+id/transactionFragment"
         android:icon="@drawable/btn_circle"
         android:title="@string/txn" />
+    <item
+        android:id="@+id/updateServiceFragment"
+        android:icon="@drawable/btn_circle"
+        android:title="@string/update_service" />
 </menu>

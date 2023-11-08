@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.verifone.psdk.sdiapplication.ui.config.SdiConfigurationViewModel
 import com.verifone.psdk.sdiapplication.ui.home.SdiConnectionViewModel
 import com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel
+import com.verifone.psdk.sdiapplication.ui.updateservice.UpdateServiceViewModel
 
 class PsdkViewModelFactory(
     private val application: Application,
@@ -21,6 +22,9 @@ class PsdkViewModelFactory(
         }
         if (modelClass.isAssignableFrom(SdiConfigurationViewModel::class.java)) {
             return SdiConfigurationViewModel(application) as T
+        }
+        if (modelClass.isAssignableFrom(UpdateServiceViewModel::class.java)) {
+            return UpdateServiceViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
