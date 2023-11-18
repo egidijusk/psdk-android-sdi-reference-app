@@ -3,19 +3,16 @@ package com.verifone.psdk.sdiapplication.ui.config
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import com.verifone.payment_sdk.CommerceEvent
+import com.verifone.payment_sdk.CommerceListener2
+import com.verifone.payment_sdk.Status
 import com.verifone.psdk.sdiapplication.PSDKContext
-import com.verifone.payment_sdk.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
 
 
 public class SdiConfigurationViewModel(private val app: Application) :
-    AndroidViewModel(app) {
-
+    BaseViewModel(app) {
 
     companion object {
         private const val TAG = "EMVConfigViewModel"
@@ -27,19 +24,6 @@ public class SdiConfigurationViewModel(private val app: Application) :
     private var listenerAdded = false
 
     var statusMessage = MutableLiveData<String>()
-
-    private fun background(action: () -> Unit) {
-        // Launching within the view model scope for this example, but in production, these should
-        // be launched from some scope that lives with the application instead of the UI.
-        viewModelScope.launch {
-            performBackgroundAction(action)
-        }
-    }
-
-    private suspend fun performBackgroundAction(action: () -> Unit) =
-        withContext(Dispatchers.Default) {
-            action()
-        }
 
     init {
         start()
@@ -61,7 +45,6 @@ public class SdiConfigurationViewModel(private val app: Application) :
             paymentSdk.removeListener(psdkListener)
             listenerAdded = false
         }
-
     }
 
     fun setContactConfig() {
@@ -106,7 +89,6 @@ public class SdiConfigurationViewModel(private val app: Application) :
             eventReceived(status.status, status.type, status.message)
             Log.d(TAG, "handleStatus statusCode: ${status.status}")
             statusMessage.postValue(status.message)
-
         }
     }
 }
