@@ -70,7 +70,7 @@
                 android:top="@dimen/nova_divider_grid_hairline"
                 android:left="@dimen/nova_divider_grid_hairline"
                 android:right="@dimen/nova_divider_grid_hairline"/>
-            <solid android:color="@color/vfdl_colorLight" />
+            <solid android:color="@color/colorLight" />
             <stroke android:width="1dp" android:color="@color/colorPrimary" />
         </shape>
     </item>

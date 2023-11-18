@@ -20,8 +20,16 @@
     <color name="button_ghost_border">#ff494949</color>
     <color name="calendar_active_month_bg">#fff5f7f9</color>
 
-    <color name="vfdl_textColorPrimary">#000000</color>
     <color name="red">#F44336</color>
     <color name="yellow">#F8DE31</color>
 
+    <color name="textColorPrimary">#000000</color>
+    <color name="colorPrimary">#0181BD</color>
+    <color name="colorAccentGrey">#555555</color>
+    <color name="colorPrimaryDark">#44C0F1</color>
+    <color name="colorPrimaryDisabled">#320181BD</color>
+    <color name="colorGrey">#757575</color>
+    <color name="colorLight">#F4F4F4</color>
+    <color name="colorDark">#242424</color>
+    <color name="dividerColor">#ffd9dbdc</color>
 </resources>
