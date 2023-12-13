@@ -26,7 +26,7 @@ class SdiSystem(internal val sdiManager: SdiManager) {
 
     fun printBmp(app: Context) {
         val bitmap =
-            Utils.getBitmapFromAsset(app.applicationContext, "receipt/bmp/test.bmp")
+            Utils.getBitmapFromAsset(app.applicationContext, "receipt/bmp/verifone-logo.bmp")
         val bytes = JavaUtils.convertBitmapTo1bpp(bitmap)
         Log.d(TAG, "Print Command ")
         val result = sdiManager.printer.printBitmap(bitmap!!.width, bitmap.height, bytes)
@@ -46,10 +46,12 @@ class SdiSystem(internal val sdiManager: SdiManager) {
                 "<div>" +
                 "<img src=\"data:image/png;base64,encoded_data_placeholder\"/>" +
                 "</div>" +
+                "<br>" +
+                "<br>" +
                 "</body>" +
                 "</html>"
         val bitmap =
-            Utils.getBitmapFromAsset(app.applicationContext, "receipt/bmp/test.bmp")
+            Utils.getBitmapFromAsset(app.applicationContext, "receipt/bmp/verifone-logo.bmp")
         var encodedString = ""
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             encodedString = getBase64EncodedBitmap(bitmap!!)
