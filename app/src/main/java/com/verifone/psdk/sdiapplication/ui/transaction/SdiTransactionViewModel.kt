@@ -175,8 +175,8 @@ public class SdiTransactionViewModel(private val app: Application) :
     }
 
     fun scanBarcode(view: View) {
-        paymentSdk.initScanListener(scannerListener)
-        paymentSdk.startBarcodeScanner(getAttributesForBarcodeScanning(view.context))
+        paymentSdk.initScanListener(scannerListener) // Set the listener to receive the scanned data event
+        paymentSdk.startBarcodeScanner(getAttributesForBarcodeScanning(view.context)) // Start the scanning based on provided attributes
     }
 
     fun abort() {
