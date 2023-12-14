@@ -6,12 +6,16 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.verifone.payment_sdk.*
+import com.verifone.payment_sdk.ScannerConfiguration.ATTRIBUTE_BARCODE
+import com.verifone.payment_sdk.ScannerConfiguration.ATTRIBUTE_BARCODE_FORMAT
+import com.verifone.payment_sdk.ScannerConfiguration.STATUS_BARCODE_DETECTED
 import com.verifone.psdk.sdiapplication.PSDKContext
 import com.verifone.psdk.sdiapplication.sdi.card.SdiContactless
 import com.verifone.psdk.sdiapplication.sdi.system.SdiSystem
 import com.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.verifone.psdk.sdiapplication.sdi.transaction.TransactionManager
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
+import com.verifone.psdk.sdiapplication.ui.utils.getAttributesForBarcodeScanning
 import com.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
 
 public class SdiTransactionViewModel(private val app: Application) :
@@ -170,6 +174,11 @@ public class SdiTransactionViewModel(private val app: Application) :
         }
     }
 
+    fun scanBarcode(view: View) {
+        paymentSdk.initScanListener(scannerListener)
+        paymentSdk.startBarcodeScanner(getAttributesForBarcodeScanning(view.context))
+    }
+
     fun abort() {
         background {
             sdiSystem.abort()
@@ -215,6 +224,27 @@ public class SdiTransactionViewModel(private val app: Application) :
             eventReceived(status.status, status.type, status.message)
             Log.d(TAG, "handleStatus statusCode: ${status.status}")
             statusMessage.postValue(status.message)
+        }
+    }
+
+    private val scannerListener = ScannerListener { status, attributes ->
+        var barcode: String? = ""
+        var barcodeType: String? = ""
+        var message: String? = ""
+        if (status === STATUS_BARCODE_DETECTED) {
+            if (attributes.containsKey(ATTRIBUTE_BARCODE)) {
+                barcode = attributes[ATTRIBUTE_BARCODE] as String?
+            }
+            if (attributes.containsKey(ATTRIBUTE_BARCODE_FORMAT)) {
+                barcodeType = attributes[ATTRIBUTE_BARCODE_FORMAT] as String?
+            }
+            message = "Scanned Data : $barcode, Type : $barcodeType"
+            Log.d(TAG, "Scanner status :$status, $message")
+            statusMessage.postValue(message)
+        } else {
+            message = "Scanner status : $status"
+            Log.d(TAG, message)
+            statusMessage.postValue(message)
         }
     }
 }
