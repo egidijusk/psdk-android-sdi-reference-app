@@ -26,9 +26,7 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
         Log.d(TAG, "Init CT Framework Command (39 00) ")
         val initOptions = SdiEmvOptions.create()
         initOptions.setOption(SdiEmvOption.TRACE, true)
-        //initOptions.setOption(SdiEmvOption.CONFIG_MODE, true)
         initOptions.setOption(SdiEmvOption.TRACE_ADK_LOG, true)
-        initOptions.setOption(SdiEmvOption.L1_DUMP, true)
         val result = sdiManager.emvCt?.initFramework(60, initOptions)
         Log.d(TAG, "Command result: ${result?.name}")
         return result!!
@@ -105,6 +103,7 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
     internal fun continueOnline(onlineResult: Boolean, resp: ByteArray): SdiEmvTxnResponse {
         Log.d(TAG, "EMV CT Continue Online Command (39-12)")
         val sdiEmvTxn = SdiEmvTxn.create()
+
         // TAG 91 sdiEmvTxn.authData
         // TAG 71 sdiEmvTxn.criticalScript
         // TAG 72 sdiEmvTxn.nonCriticalScript

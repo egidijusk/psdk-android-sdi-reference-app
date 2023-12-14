@@ -67,8 +67,11 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
                     continueStartTxn = true
                     val cbCandidateList = sdiEmvTxnResponse?.txn?.candidateList
                     if (cbCandidateList != null) {
+                        // UI call for user to select application and return the result of selection
                         val selection = listener.applicationSelection(cbCandidateList)
+
                         var options:SdiEmvBuildOptions?= null
+
                         when (selection) {
                             0-> options = SdiEmvBuildOptions.REUSE_EXISTING_LIST_SEL_0
                             1-> options = SdiEmvBuildOptions.REUSE_EXISTING_LIST_SEL_1

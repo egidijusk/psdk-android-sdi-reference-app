@@ -92,9 +92,6 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
                         state.postValue(State.CONNECTED)
                         system = SdiSystem(sdiManager = paymentSdk.sdiManager)
                         deviceInformation.postValue(paymentSdk.deviceInformation)
-
-                        val samCard = SdiSamCard(paymentSdk.sdiManager)
-                        samCard.activate()
                     }
                     StatusCode.CONFIGURATION_REQUIRED == statusCode -> {
                         Log.i(TAG, "Configuration required")
@@ -111,7 +108,7 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
                     Log.i(TAG, "Teardown Failed")
                 } else -> {
                 Log.i(TAG, "Unhandled event: ${status.type}")
-            }
+                }
             }
         }
     }
