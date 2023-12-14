@@ -36,7 +36,7 @@ class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) 
     fun installApk() {
         background {
             try {
-                val fileName = "Flappy_Bird1533657275.apk"
+                val fileName = "HelloWorldApp.apk"
                 updateService.registerCallback(updateServiceCallback)
                 copyTestFiles(fileName)
 
@@ -56,7 +56,7 @@ class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) 
     fun unInstallApk() {
         background {
             try {
-                val component = "com.dotgears.flappybird"
+                val component = "com.verifone.helloworldapp"
                 updateService.registerCallback(updateServiceCallback)
                 result = updateService.uninstallApkPackage(component)
                 Log.d(TAG, "uninstallApkPackage: $result")
