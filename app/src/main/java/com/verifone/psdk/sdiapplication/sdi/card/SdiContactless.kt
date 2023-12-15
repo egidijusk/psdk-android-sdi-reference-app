@@ -162,11 +162,6 @@ class SdiContactless(private val sdiManager: SdiManager, private val config: Con
                 //if 0x15 // probably for MC torn transaction test case
                 //listener.display("Re-tap")
             }
-            /*   val emvcotextId: Int =
-                   data.obtain(messageTag).obtain(ctlsDisplay).obtain(emvcoDisplayTextId).number
-
-               Log.d(TAG, "EMVCO Display Text: ${emvcotextId.toString(16)}")
-               // Please see phone and MC's torn transaction test case*/
         }
     }
 }

@@ -107,6 +107,8 @@ public class SdiTransactionViewModel(private val app: Application) :
         }
 
         override fun getSensitiveDataTouchCoordinates(): ArrayList<SdiTouchButton> {
+            // implementation is in TransactionFragment.kt
+            // under getSensitiveDataTouchButtons() function
             return sensitiveDataTouchButtons.value!!
         }
 
@@ -185,7 +187,7 @@ public class SdiTransactionViewModel(private val app: Application) :
     fun startTransaction() {
         background {
             transactionState.postValue(State.TransactionInProgress)
-            transactionManager.startTransactionFlow(amount, true)
+            transactionManager.startTransactionFlow(amount, false)
             transactionState.postValue(State.Idle)
         }
     }

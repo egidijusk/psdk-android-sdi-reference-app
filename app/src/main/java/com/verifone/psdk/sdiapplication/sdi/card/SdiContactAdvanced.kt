@@ -17,7 +17,7 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
     SdiContact(sdiManager, config) {
 
     companion object {
-        private const val TAG = "SdiCard"
+        private const val TAG = "SdiCardContactAdvanced"
     }
     private var amount: Long = 0
 
@@ -104,22 +104,12 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
         var response: SdiEmvTxnResponse? = null
         do {
             response = sdiManager.emvCt.continueOffline(sdiEmvTxn)
-            /*
-            * result READ REC
-            * fetch txn tags
-            * call continue offline with the orginal emv txn data
-            *
-            * * * result = ONLINE PIN , prompt for pin
-            * if result is ok , just call continue offline
-            * pass the original emv txn data
-            *
-            * */
             Log.d(TAG, "Command Result: ${response.result.name}")
 
             when (response.result) {
                 SdiResultCode.EMVSTATUS_APP_REQ_READREC -> {
                     Log.d(TAG, "Read Record")
-                    /* Validate if cashback is allowed
+                    /* Example usecase: Validate if cashback is allowed
                      Check PDOL if it requested for the tags you are going to change
                      prompt user for cashback
                      Update the tags you want modified ex Transaction Type, Amount , other mount and set it back in txn object
@@ -139,8 +129,11 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
                 SdiResultCode.EMVSTATUS_APP_REQ_ONL_PIN, SdiResultCode.EMVSTATUS_APP_REQ_OFFL_PIN, SdiResultCode.EMVSTATUS_APP_REQ_PLAIN_PIN -> {
                     retrieveTags(response.txn)
                     retrieveTagsUsingApi(config.getCtTagsToFetch())
+                    // Interaction with UI elements
                     listener.setSensitiveDataGreenButtonText(SdiTransactionViewModel.CONFIRM)
+                    // Interaction with UI elements
                     listener.sensitiveDataEntryTitle("Enter Pin")
+                    // Interaction with UI elements
                     listener.showSensitiveDataEntry()
                     val pinResult = getPinUsingCallback()
                     Log.d(TAG, "PIN Entry Result: ${pinResult.name}")

@@ -24,6 +24,7 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
     }
 
     private val psdkListener: CommerceListener2 = SimpleCommerceListener()
+    private val networkListener: SdiDisconnectCallback = NetworkCallback()
     private var paymentSdk = (app as PSDKContext).paymentSDK
     lateinit var system : SdiSystem
     private var deviceInformation = MutableLiveData<PsdkDeviceInformation?>()
@@ -68,7 +69,12 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
             paymentSdk.tearDown()
         }
     }
-
+    private inner class NetworkCallback : SdiDisconnectCallback() {
+        override fun disconnectCallback() {
+            Log.i(TAG, "connection with SDI Server is lost")
+            paymentSdk.tearDown()
+        }
+    }
 
     private inner class SimpleCommerceListener : CommerceListener2() {
         private fun eventReceived(status: Int, type: String, message: String) {
@@ -88,7 +94,7 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
                     StatusCode.SUCCESS == statusCode -> {
                         Log.i(TAG, "Initialize Success")
                         (app as PSDKContext).sdiManager = paymentSdk.sdiManager
-
+                        paymentSdk.sdiManager.setDisconnectCallback(networkListener)
                         state.postValue(State.CONNECTED)
                         system = SdiSystem(sdiManager = paymentSdk.sdiManager)
                         deviceInformation.postValue(paymentSdk.deviceInformation)

@@ -92,7 +92,6 @@ class TransactionFragment : Fragment() {
                 e.printStackTrace()
             }
         })
-        //PSDKContext.instance.sdiManager?.setEmvCallback(emvCallback)
         binding.lifecycleOwner = this
     }
 

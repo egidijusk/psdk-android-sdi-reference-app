@@ -121,7 +121,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     fun getPinUsingCallback() = runBlocking {
         var pinResult = SdiResultCode.FAIL
         val job = launch { // launch a new coroutine and keep a reference to its Job
-            val buttons = listener.getSensitiveDataTouchCoordinates()
+            val buttons:ArrayList<SdiTouchButton> = listener.getSensitiveDataTouchCoordinates()
 
             Log.d(TAG, "GetPin using touch buttons Command (22-01)")
             val result = sdiManager.ped.getPinTouchButtons(
