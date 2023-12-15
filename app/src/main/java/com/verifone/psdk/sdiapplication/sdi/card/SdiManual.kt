@@ -54,8 +54,12 @@ class SdiManual(private val sdiManager: SdiManager, private val config: Config) 
                 Log.d(TAG, "panEnteredTag : ${data.obtain(messageTag).count(panEnteredTag)}")
                 // Checking if PAN was entered
                 if (data.obtain(messageTag).count(panEnteredTag) > 0) {
-                    Log.d(TAG, "pan validation check : ${data.obtain(messageTag).obtain(panEnteredTag).count(cardValidationCheck)}")
-                    Log.d(TAG, "luhn check : ${data.obtain(messageTag).obtain(panEnteredTag).count(luhnCheck)}")
+                    if (data.obtain(messageTag).obtain(panEnteredTag).count(cardValidationCheck) > 0) {
+                        Log.d(TAG, "bin range: ${data.obtain(messageTag).obtain(panEnteredTag).obtain(cardValidationCheck).string}")
+                    }
+                    if (data.obtain(messageTag).obtain(panEnteredTag).count(luhnCheck) > 0) {
+                        Log.d(TAG, "luhn check ${data.obtain(messageTag).obtain(panEnteredTag).obtain(luhnCheck).number}")
+                    }
                     Log.d(TAG, "Pan Entered")
                     result = CONTINUE
                     // if 0x14
