@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
@@ -6,7 +16,6 @@ import com.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel.Companion.CONFIRM
 import com.verifone.payment_sdk.*
-import com.verifone.payment_sdk.SdiEmvCallbackType.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -94,7 +103,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     In this function we are reading the required tags from the json config and passing the same
     to the PSDK SDI API to retrieve the tags.
     Once the tags are retrieved we use SDiTlv Class to parse and print the tags
-*/
+    */
     internal fun retrieveTagsUsingApi(tagsToRetrieve: List<String>) {
         val tags = ArrayList<Long>()
         for (tag in tagsToRetrieve) {
@@ -248,6 +257,5 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
         override fun cardDetectCallback(returnCode: Int, tecOut: Short, sdiEmvTxn: SdiEmvTxn?, pluginResult: ByteArray?) {
             Log.d(TAG, "CardDetectCallback $returnCode : $tecOut : ${sdiEmvTxn?.cardType}: ${pluginResult.contentToString()}")
         }
-
     }
 }

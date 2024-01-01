@@ -1,8 +1,17 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.config
 
 import android.content.Context
 import android.util.Log
-import com.verifone.psdk.sdiapplication.sdi.card.SdiContact
 import com.verifone.psdk.sdiapplication.sdi.config.model.EmvContactConfig
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByteArray
@@ -53,7 +62,6 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
         Log.d(TAG, "Command result: ${result?.name}")
         return result!!
     }
-
 
     private fun setCtTerminalConfiguration(): SdiResultCode {
         val termConfig = getCtTerminalConfig()
@@ -109,7 +117,6 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
         sdiEmvConf.transactionCurrencyExp = ctConfig.terminal.transactionCurrencyExp.toShort();
         return sdiEmvConf
     }
-
 
     private fun getCtApplicationConfig(): ArrayList<SdiEmvConf> {
 
@@ -263,7 +270,6 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
                 e.printStackTrace()
             }
         }
-
         return applications.toList()
     }
 

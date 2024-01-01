@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.ui.utils
 
 import android.graphics.Rect
@@ -9,7 +19,6 @@ import android.view.View
 import androidx.core.text.HtmlCompat
 import com.verifone.psdk.sdiapplication.sdi.system.SdiSystem
 import com.verifone.payment_sdk.PsdkDeviceInformation
-
 
 fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem): Spanned {
     val sb = StringBuilder()
@@ -37,13 +46,13 @@ fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem):
             append("<br>")
         }
     }
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
     } else {
         return HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }
-
 
 fun getGlobalVisibleRectForView(view: View): Rect {
     val rect = Rect()

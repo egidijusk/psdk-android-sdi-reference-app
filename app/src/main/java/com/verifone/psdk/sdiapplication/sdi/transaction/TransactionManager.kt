@@ -1,5 +1,14 @@
-package com.verifone.psdk.sdiapplication.sdi.transaction
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
 
+package com.verifone.psdk.sdiapplication.sdi.transaction
 
 import android.util.Log
 import com.verifone.payment_sdk.SdiManager
@@ -13,7 +22,6 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
 
     companion object {
         private const val TAG = "TransactionManager"
-
     }
 
     private val contactTransactionBasic = SdiContactBasic(sdiManager, config)
@@ -42,7 +50,6 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
         result = ctlsTransaction.initialize()
         return result
     }
-
 
     // Function called from UI
     fun startManualEntryTransactionFlow(amount: Long) {
@@ -122,5 +129,4 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
             listener.display("Exit CT Frame Work Failed: ${exitResult.name}")
         }
     }
-
 }

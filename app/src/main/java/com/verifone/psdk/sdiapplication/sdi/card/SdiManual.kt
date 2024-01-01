@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
@@ -15,10 +25,12 @@ class SdiManual(private val sdiManager: SdiManager, private val config: Config) 
         private const val TAG = "SdiCardManual"
     }
     private val controlCallback: ControlCallback = ControlCallback()
+
     override fun initialize(): SdiResultCode {
         sdiManager.setControlCallback(controlCallback)
         return super.initialize()
     }
+
     override fun startTransactionFlow(amount: Long): SdiResultCode {
         listener.setSensitiveDataGreenButtonText(ENTER)
         listener.sensitiveDataEntryTitle("Enter Card Number")
@@ -81,11 +93,9 @@ class SdiManual(private val sdiManager: SdiManager, private val config: Config) 
                     // if 0x14
                     //if 0x15 // probably for MC torn transaction test case
                     //listener.display("Re-tap")
-
                 }
             }
             return result
         }
-
     }
 }
