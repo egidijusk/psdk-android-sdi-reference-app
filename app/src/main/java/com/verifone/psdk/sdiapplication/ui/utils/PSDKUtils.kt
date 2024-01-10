@@ -9,9 +9,10 @@ import android.view.View
 import androidx.core.text.HtmlCompat
 import com.verifone.psdk.sdiapplication.sdi.system.SdiSystem
 import com.verifone.payment_sdk.PsdkDeviceInformation
+import com.verifone.psdk.sdiapplication.sdi.config.Config
 
 
-fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem): Spanned {
+fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem, config: Config): Spanned {
     val sb = StringBuilder()
     sb.apply {
         append("<h3>Device Details</h3>")
@@ -29,6 +30,12 @@ fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem):
         append("<b>Model:</b> ${system.modelName()}")
         append("<br>")
         append("<b>PCI reboot time: </b>${system.pciRebootTime()}")
+        append("<br>")
+        append("<h3>Kernel Details</h3>")
+        append("<br>")
+        append("<b>EMV Contact Kernel: </b> ${config.getEmvContactKernelVersions()}")
+        append("<br>")
+        append("<b>EMV Contactless Kernel: </b> ${config.getEmvContactlessKernelVersions()}")
         append("<br>")
         append("<h3>Component versions</h3>")
         append("<br>")

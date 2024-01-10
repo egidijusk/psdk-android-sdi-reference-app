@@ -19,6 +19,8 @@ class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) 
 
     private var result = UpdateStatus.STATUS_FAILURE
     private lateinit var updateService: UpdateServiceApi
+
+    // POS app receives the update status through this event
     private val updateServiceCallback = object : IUpdateServiceCallback.Stub() {
         override fun onStatus(status: Int) {
             Log.i(TAG, "onStatus(): $status")
@@ -28,6 +30,7 @@ class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) 
 
     init {
         background {
+            // Instantiate UpdateService
             updateService = UpdateServiceApi.getInstance(app)
         }
     }

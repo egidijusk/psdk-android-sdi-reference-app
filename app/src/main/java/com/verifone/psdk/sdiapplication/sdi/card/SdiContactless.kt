@@ -8,6 +8,7 @@ import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByt
 import com.verifone.payment_sdk.*
 import java.util.*
 
+// This is responsible for processing EMV contactless transaction
 class SdiContactless(private val sdiManager: SdiManager, private val config: Config) :
     SdiCard(sdiManager = sdiManager, config = config) {
 

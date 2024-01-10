@@ -95,8 +95,10 @@ class TransactionFragment : Fragment() {
         binding.lifecycleOwner = this
     }
 
+    // Here POS app maps the touch co-ordinates with the dynamically created buttons
+    // POS app can create their own buttons but have to map the specified value for respective buttons
     private fun getSensitiveDataTouchButtons(): ArrayList<SdiTouchButton> {
-        var buttons = ArrayList<SdiTouchButton>()
+        val buttons = ArrayList<SdiTouchButton>()
 
         var rect = getGlobalVisibleRectForView(binding.button1)
         var button = SdiTouchButton(rect.left.toShort(), rect.top.toShort(), rect.width().toShort(), rect.height().toShort(), 0x31)
