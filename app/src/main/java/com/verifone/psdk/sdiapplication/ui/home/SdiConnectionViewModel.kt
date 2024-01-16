@@ -23,6 +23,7 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
         private const val TAG = "SdiConnectionViewModel"
     }
 
+    // This listener triggers callback event from PSDK
     private val psdkListener: CommerceListener2 = SimpleCommerceListener()
     private val networkListener: SdiDisconnectCallback = NetworkCallback()
     private var paymentSdk = (app as PSDKContext).paymentSDK
@@ -30,7 +31,7 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
     private var deviceInformation = MutableLiveData<PsdkDeviceInformation?>()
 
     val devInfo = Transformations.map(deviceInformation) {
-        getDeviceInformation(it, system)
+        getDeviceInformation(it, system, (app as PSDKContext).config)
     }
     var statusMessage = MutableLiveData<String?>()
     // Status Display
@@ -52,6 +53,10 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
         state.value = State.NOT_CONNECTED
     }
 
+    /*
+     * Establish the connection with PSDK based on below configuration parameters
+     * And the callback event will be triggered from PSDK through CommerceListener2
+     */
     fun initialize() {
         background {
             val config = HashMap<String, String>()
@@ -64,11 +69,16 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
         }
     }
 
+    /*
+     * Closes connection between POS app and PSDK
+     * After successful teardown, POS app have to initialize the PSDK again to perform any kind of operation
+     */
     fun teardown() {
         background {
             paymentSdk.tearDown()
         }
     }
+
     private inner class NetworkCallback : SdiDisconnectCallback() {
         override fun disconnectCallback() {
             Log.i(TAG, "connection with SDI Server is lost")

@@ -5,6 +5,7 @@ import com.verifone.payment_sdk.SdiManager
 import com.verifone.payment_sdk.SdiResultCode
 import com.verifone.psdk.sdiapplication.sdi.config.Config
 
+// This is responsible for processing swipe transaction
 class SdiSwipe(private val sdiManager: SdiManager, private val config: Config) :
     SdiCard(sdiManager = sdiManager, config = config) {
 

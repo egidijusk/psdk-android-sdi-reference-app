@@ -12,7 +12,10 @@ import com.verifone.payment_sdk.SdiEmvTxn
 
 
 
-
+/*
+ * This is responsible for processing EMV contact transaction in re-entrance mode
+ * Here POS app receives the required trigger events on particular api which are called in loop as shown in code
+ */
 class SdiContactAdvanced(private val sdiManager: SdiManager, private val config: Config) :
     SdiContact(sdiManager, config) {
 

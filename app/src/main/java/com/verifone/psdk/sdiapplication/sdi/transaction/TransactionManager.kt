@@ -26,6 +26,7 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
 
     private lateinit var listener: TransactionListener
 
+    // This sets the required listeners to PSDK and POS for handling callback events
     fun setListener(listener: TransactionListener) {
         contactTransactionBasic.setListener(listener)
         contactTransactionAdvanced.setListener(listener)
@@ -35,6 +36,7 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
         this.listener = listener
     }
 
+    // Initializes contact and ctls modules and returns the SdiResultCode
     private fun initialize(): SdiResultCode {
         var result = contactTransaction.initialize()
         if (result != SdiResultCode.OK)
@@ -44,12 +46,25 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
     }
 
 
-    // Function called from UI
+    /*
+     * Function called from UI
+     * This initiate the manual entry transaction
+     *
+     * @param amount : Transaction amount for processing
+     */
     fun startManualEntryTransactionFlow(amount: Long) {
         manualTransaction.initialize()
         manualTransaction.startTransactionFlow(amount)
     }
 
+    /*
+     * Function called from UI
+     * This initiate the EMV transaction (Invokes the required api sequences and EMV flow)
+     * Initialize, setUp Transaction, Card Detection, transaction processing flow and close framework
+     *
+     * @param amount : Transaction amount for processing
+     * @param basic  : Selects the emv contact processing way (Callback mode or Re-Entrance mode)
+     */
     fun startTransactionFlow(amount: Long, basic: Boolean) {
 
         contactTransaction = if (basic) {
@@ -112,6 +127,7 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
         }
     }
 
+    // This is called during end of the transaction, which used to clear the transaction details
     private fun exit() {
         var exitResult = ctlsTransaction.exit()
         if (exitResult != SdiResultCode.OK) {

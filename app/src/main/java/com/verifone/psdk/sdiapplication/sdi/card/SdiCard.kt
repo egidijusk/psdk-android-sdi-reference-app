@@ -25,6 +25,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
 
             val TIMEOUT_CARD_DETECT = 30000
 
+        // Synchronous api used for detecting card based on the techEnabled parameter
         fun cardDetect(techEnabled: Short, sdiManager: SdiManager): SdiCardDetectResponse {
             Log.d(TAG, "Card Detection Command (23-01)")
             val ctOptions = EnumSet.of(SdiEmvCtReaderOptions.DETECT_WRONG_ATR)
@@ -125,13 +126,13 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
 
             Log.d(TAG, "GetPin using touch buttons Command (22-01)")
             val result = sdiManager.ped.getPinTouchButtons(
-                buttons,
-                true,// PIN Bypass
+                buttons, // Button layout touch co-ordinates
+                true, // PIN Bypass
                 pinEntryTimeout,
-                0,
+                0, // Navigator Mode
                 minPinDigit,
                 maxPinDigit,
-                null // optional
+                null // language (optional)
             )
             pinResult = result
             Log.d(TAG, "Command Result: ${result.name}")
