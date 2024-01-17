@@ -19,6 +19,10 @@ import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel
 import com.verifone.payment_sdk.*
 
+/*
+ * This is responsible for processing EMV contact transaction in callback mode
+ * Here POS app receives the required trigger events on SdiEmvCallback, where POS app needs to handle the use-case(PIN, Multiple Application Prompt)
+ */
 class SdiContactBasic(private val sdiManager: SdiManager, private val config: Config):SdiContact(sdiManager, config) {
 
     companion object {
@@ -82,6 +86,7 @@ class SdiContactBasic(private val sdiManager: SdiManager, private val config: Co
         return result
     }
 
+    // This is the callback where PSDK-SDI triggers the event for EMV processing.
     private inner class EMVCallback : SdiEmvCallback() {
         @ExperimentalStdlibApi
         override fun emvCallback(type: SdiEmvCallbackType?, input: SdiEmvTxn?, output: SdiEmvTxn?) {

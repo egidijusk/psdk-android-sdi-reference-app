@@ -26,6 +26,7 @@ public class SdiConfigurationViewModel(private val app: Application) :
         private const val TAG = "EMVConfigViewModel"
     }
 
+    // This listener triggers callback event from PSDK
     private val psdkListener: CommerceListener2 = ConnectionListener()
     private var paymentSdk = (app as PSDKContext).paymentSDK
     private val emvConfig = (app as PSDKContext).config
@@ -79,7 +80,7 @@ public class SdiConfigurationViewModel(private val app: Application) :
 
     fun logCtlsConfig() {
         background {
-            Log.d(TAG, "Log CT Config ")
+            Log.d(TAG, "Log CTLS Config ")
             emvConfig.logCtlsConfiguration()
         }
     }

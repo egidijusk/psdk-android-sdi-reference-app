@@ -22,6 +22,7 @@ import com.verifone.payment_sdk.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+// This is mapped to emv contact configuration and respective operations
 class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
 
     private val ctConfig = Gson().fromJson(
@@ -289,6 +290,15 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
             e.printStackTrace()
         }
         return null
+    }
+
+    fun getEmvContactKernelVersions(): String? {
+        val result = initialize()
+        if (result != SdiResultCode.OK) return ""
+        val ctKernelInfo = sdk.sdiManager.emvCt.termData.emv.kernelVersion
+        Log.d(TAG, "emvContactKernelVersions: $ctKernelInfo")
+        exit()
+        return ctKernelInfo
     }
 
     companion object {

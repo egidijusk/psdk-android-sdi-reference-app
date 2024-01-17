@@ -14,6 +14,7 @@ import com.verifone.psdk.sdiapplication.sdi.card.SdiContactless
 import com.verifone.payment_sdk.SdiEmvCandidate
 import com.verifone.payment_sdk.SdiTouchButton
 
+// This callback triggers to POS app for PSDK notifications and PSDK callback events
 interface TransactionListener {
     fun display(message:String)
     fun showLeds(b: Boolean)
