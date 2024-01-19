@@ -80,11 +80,13 @@ class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) 
         }
     }
 
-    // Install an Android OTA
+    // Install an Android OTA package
+    // NOTE : The ota zip file used here doesn't have relevant files as this will vary respective to terminals.
+    // NOTE : This can be used as reference and respective OTA packages can be added instead of "ota_update_no_sig.zip" file
     fun installAndroidOtaPackage() {
         background {
             try {
-                val fileName = "ota_update_no_sig.zip"
+                val fileName = "ota_update_no_sig.zip" // dummy zip file
                 updateService.registerCallback(updateServiceCallback)
                 copyTestFiles(fileName)
 

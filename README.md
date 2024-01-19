@@ -127,7 +127,7 @@ Can refer under sdi->system->SdiSystem package
 
 * Install Apk
 * Un-Install Apk
-* Install Android Ota Package
+* Install Android Ota Package - Here we have a dummy file instead of the real OTA package to provide the reference for multiple terminals.
 * Install Super Package(params, APK and Android OTA file)
 
 ## Data Interface (TBD) Highest priority
