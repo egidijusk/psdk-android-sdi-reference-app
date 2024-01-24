@@ -154,7 +154,8 @@ Here SdiManual process the api sequence flow for manual card entry transaction.
 Can refer under ui->updateservice->UpdateServiceViewModel package
 
 Here UpdateServiceViewModel uses the Update Service library apis for loading the packages ( zip, ota files ) to terminal.
-In this reference app, we have shown the use case of few apis. For more details kindly check Update Service documentation.
+These packages are stored under assets folder and will be loaded into terminal through Update Service apis.
+We have shown the usage of few update service apis below for reference. For more details kindly check Update Service documentation.
 
 * Install Apk
 * Un-Install Apk
