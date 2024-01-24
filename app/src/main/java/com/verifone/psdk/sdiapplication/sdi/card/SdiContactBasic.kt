@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
@@ -69,9 +79,7 @@ class SdiContactBasic(private val sdiManager: SdiManager, private val config: Co
 //        RETURN_CANDIDATE_LIST | RETURN_AFTER_READ_RECORD | RETURN_FOR_CVM_PROCESS
         // 1st GEn AC
         val result = sdiManager.emvCt.continueOffline(sdiEmvTxn)
-
         Log.d(TAG, "Command Result: ${result.result.name}")
-
 
         retrieveTags(result.txn)
         retrieveTagsUsingApi(config.getCtTagsToFetch())

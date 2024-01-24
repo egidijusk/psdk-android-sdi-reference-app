@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.config
 
 import android.content.Context
@@ -10,8 +20,6 @@ import com.verifone.payment_sdk.*
  */
 class Config(private val context: Context, private val sdk: PaymentSdk) {
 
-    //private val ctConfig = Gson().fromJson(getDataFromAssets(context, "config/emvct.json"), EmvContactConfig::class.java)
-
     private val ctConfig = CtConfig(context, sdk)
     private val ctlsConfig =  CtlsConfig(context, sdk)
 
@@ -23,7 +31,6 @@ class Config(private val context: Context, private val sdk: PaymentSdk) {
     * Following APis are for configuring the contactless kernel
     *
     * */
-
     fun setCtlsConfiguration(): SdiResultCode {
         return ctlsConfig.setCtlsConfiguration()
     }

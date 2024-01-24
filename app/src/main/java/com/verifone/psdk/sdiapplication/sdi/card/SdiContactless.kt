@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
@@ -95,7 +105,6 @@ class SdiContactless(private val sdiManager: SdiManager, private val config: Con
         response = sdiManager.emvCtls.continueOffline(null)
         Log.i(TAG, "Command Result: ${response.result.name}")
         return response!!
-
     }
 
     // This callback will get the Led update notifications and the display notification during retap

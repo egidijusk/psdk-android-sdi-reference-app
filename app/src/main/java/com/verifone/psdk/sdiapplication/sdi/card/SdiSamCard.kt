@@ -1,9 +1,17 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
 import com.verifone.payment_sdk.SdiEmvCtReaderOptions
-import com.verifone.payment_sdk.SdiEmvOption
-import com.verifone.payment_sdk.SdiEmvOptions
 import com.verifone.payment_sdk.SdiManager
 import java.util.*
 

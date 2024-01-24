@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.system
 
 import android.content.Context
@@ -11,14 +21,8 @@ import com.verifone.payment_sdk.SdiComponentVersion
 import com.verifone.payment_sdk.SdiManager
 import com.verifone.payment_sdk.SdiSysPropertyString
 import java.util.ArrayList
-import com.verifone.updateservicelib.IUpdateServiceCallback;
-import com.verifone.updateservicelib.UpdateServiceApi
-
-
-
 
 class SdiSystem(internal val sdiManager: SdiManager) {
-
 
     companion object {
         private const val TAG = "SDISystem"

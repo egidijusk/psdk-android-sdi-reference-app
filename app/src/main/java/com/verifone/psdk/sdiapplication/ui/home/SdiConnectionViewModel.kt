@@ -1,5 +1,14 @@
-package com.verifone.psdk.sdiapplication.ui.home
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
 
+package com.verifone.psdk.sdiapplication.ui.home
 
 import android.app.Application
 import android.util.Log
@@ -7,7 +16,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.verifone.payment_sdk.*
 import com.verifone.psdk.sdiapplication.PSDKContext
-import com.verifone.psdk.sdiapplication.sdi.card.SdiSamCard
 import com.verifone.psdk.sdiapplication.sdi.system.SdiSystem
 import com.verifone.psdk.sdiapplication.ui.utils.getDeviceInformation
 import com.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
@@ -61,11 +69,10 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
         background {
             val config = HashMap<String, String>()
             config[TransactionManager.DEVICE_PROTOCOL_KEY] = TransactionManager.DEVICE_PROTOCOL_SDI
-            config[PsdkDeviceInformation.DEVICE_ADDRESS_KEY] = "vfi-terminal" //
+            config[PsdkDeviceInformation.DEVICE_ADDRESS_KEY] = "vfi-terminal"
             config[PsdkDeviceInformation.DEVICE_CONNECTION_TYPE_KEY] = "tcpip"
             paymentSdk.configureLogLevel(PsdkLogLevel.LOG_TRACE)
-            paymentSdk.initializeFromValues(psdkListener, config) // CM5
-            //mPaymentSdk.initialize(mCommerceListener) // Trinity
+            paymentSdk.initializeFromValues(psdkListener, config)
         }
     }
 

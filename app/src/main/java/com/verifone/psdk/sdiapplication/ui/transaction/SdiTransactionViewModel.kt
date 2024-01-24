@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.ui.transaction
 
 import android.app.Application
@@ -16,7 +26,6 @@ import com.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
 
 public class SdiTransactionViewModel(private val app: Application) :
     BaseViewModel(app) {
-
 
     private val amount: Long = 100L
 
@@ -51,7 +60,6 @@ public class SdiTransactionViewModel(private val app: Application) :
     var led2 = MutableLiveData(false)
     var led3 = MutableLiveData(false)
     var led4 = MutableLiveData(false)
-
 
     val showLeds = Transformations.map(ledsState) {
         if (it == true) {

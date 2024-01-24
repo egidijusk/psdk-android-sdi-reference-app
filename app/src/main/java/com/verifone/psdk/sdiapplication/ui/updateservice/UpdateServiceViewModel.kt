@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.ui.updateservice
 
 import android.app.Application
@@ -70,11 +80,13 @@ class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) 
         }
     }
 
-    // Install an Android OTA
+    // Install an Android OTA package
+    // NOTE : The ota zip file used here doesn't have relevant files as this will vary respective to terminals.
+    // NOTE : This can be used as reference and respective OTA packages can be added instead of "ota_update_no_sig.zip" file
     fun installAndroidOtaPackage() {
         background {
             try {
-                val fileName = "ota_update_no_sig.zip"
+                val fileName = "ota_update_no_sig.zip" // dummy zip file
                 updateService.registerCallback(updateServiceCallback)
                 copyTestFiles(fileName)
 

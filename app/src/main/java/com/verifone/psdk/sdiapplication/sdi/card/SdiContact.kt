@@ -1,11 +1,17 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
 import com.verifone.psdk.sdiapplication.sdi.config.Config
-import com.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
-import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.dateToString
-import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.getCurrentDateTime
-import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByteArray
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.verifone.payment_sdk.*
 
@@ -25,7 +31,6 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
     internal abstract fun startTransaction(amount: Long): SdiEmvTxnResponse
 
     internal abstract fun continueOffline(): SdiEmvTxnResponse
-
 
     override fun initialize():SdiResultCode {
         super.initialize()
