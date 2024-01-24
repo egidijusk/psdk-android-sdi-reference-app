@@ -61,6 +61,8 @@ specific to the test app and will not be much help for your integration.
 ## System Commands 
 Can refer under sdi->system->SdiSystem package
 
+These are the PSDK-SDI apis which provides the usage for system related operations as mentioned below :
+
 * sdiVersion
 * abort current command
 * serialNumber
@@ -68,20 +70,31 @@ Can refer under sdi->system->SdiSystem package
 * modelName
 * pciRebootTime
 * print html
-* print bmp (TBD need proper image)
+* print bmp
 * reboot
 * hibernate
 * shutdown
 
 ## EMV commands 
+These commands/apis provide the EMV related operation for POS app.  
 
 ### EMV Contact Configuration
+Can refer under sdi->config->CtConfig package
+
+EMV contact configuration is necessary for EMV chip payment processing. Based on these config PSDK-SDI will process the payment.
+In assets->config package we have emvct.json file, which contains the sample EMV config for contact.
+This emvct.json file is mapped into EmvContactConfig model class and then can be loaded into terminal through CtConfig.
 
 * Terminal Configuration 
 * Application Configuration 
 * CAPK Configuration
 
 ### EMV Contactless Configuration
+Can refer under sdi->config->CtlsConfig package
+
+EMV contactless configuration is necessary for EMV contactless payment processing. Based on these config PSDK-SDI will process the payment.
+In assets->config package we have emvctls.json file, which contains the sample EMV config for contactless.
+This emvctls.json file is mapped into EmvCtlsConfig model class and then can be loaded into terminal through CtlsConfig.
 
 * Terminal Configuration
 * Visa Application Configuration
@@ -90,6 +103,11 @@ Can refer under sdi->system->SdiSystem package
 * CAPK Configuration
 
 ### EMV Contact Transaction Flow
+Can refer under sdi->card->SdiContact package
+
+Here SdiContact process the api sequence flow for contact transaction based on Callback Mode and Re-entrance mode.
+By default this reference app uses Re-entrance mode for payment processing which is handled from SdiContactAdvanced.
+But Callback mode can be used as well as per the POS app requirement (This is processed from SdiContactBasic).
 
 * Card Detect ( This covers MSR as well )
 * Activate
@@ -103,6 +121,9 @@ Can refer under sdi->system->SdiSystem package
 * Wait for Card Removal (TBD)
 
 ### EMV Contactless Transaction Flow
+Can refer under sdi->card->SdiContactless package
+
+Here SdiContactless process the api sequence flow for contactless transaction based on the contactless config loaded to terminal.
 
 * Card Detect
 * Soft LED Display
@@ -111,12 +132,18 @@ Can refer under sdi->system->SdiSystem package
 * TAG retrieval
 
 ### Magstripe Transaction Flow
+Can refer under sdi->card->SdiSwipe package
+
+Here SdiSwipe process the api sequence flow for magstripe transaction.
 
 * Card Detect
 * Validation checks
 * TAG retrieval
 
 ## Manual Card Data entry
+Can refer under sdi->card->SdiManual package
+
+Here SdiManual process the api sequence flow for manual card entry transaction.
 
 * PAN Entry
 * Expiry Date
@@ -124,6 +151,10 @@ Can refer under sdi->system->SdiSystem package
 * Exception handling
 
 ## Update Service
+Can refer under ui->updateservice->UpdateServiceViewModel package
+
+Here UpdateServiceViewModel uses the Update Service library apis for loading the packages ( zip, ota files ) to terminal.
+In this reference app, we have shown the use case of few apis. For more details kindly check Update Service documentation.
 
 * Install Apk
 * Un-Install Apk
