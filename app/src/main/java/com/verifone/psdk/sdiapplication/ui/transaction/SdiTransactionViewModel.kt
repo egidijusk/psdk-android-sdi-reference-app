@@ -200,6 +200,14 @@ public class SdiTransactionViewModel(private val app: Application) :
         }
     }
 
+    fun startNfcProcessing() {
+        background {
+            transactionState.postValue(State.TransactionInProgress)
+            transactionManager.startNfcProcessingFlow()
+            transactionState.postValue(State.Idle)
+        }
+    }
+
     fun startManualEntryTransaction() {
         background {
             transactionState.postValue(State.TransactionInProgress)

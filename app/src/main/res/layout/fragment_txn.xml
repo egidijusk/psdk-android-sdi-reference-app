@@ -85,7 +85,7 @@
         <Button
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_start_txn"
+            app:layout_constraintTop_toBottomOf="@id/btn_nfc_txn"
             android:id="@+id/btn_start_manual_entry_txn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,6 +94,19 @@
             android:visibility="@{viewModel.idleState}"
             android:onClick="@{() -> viewModel.startManualEntryTransaction()}"
             android:text="@string/start_manual_entry_transaction" />
+
+        <Button
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_txn"
+            android:id="@+id/btn_nfc_txn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/button_black_border"
+            android:visibility="@{viewModel.idleState}"
+            android:onClick="@{() -> viewModel.startNfcProcessing()}"
+            android:text="@string/start_nfc_transaction" />
 
         <Button
             app:layout_constraintEnd_toEndOf="parent"

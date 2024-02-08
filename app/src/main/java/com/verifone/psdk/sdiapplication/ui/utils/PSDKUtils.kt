@@ -19,10 +19,12 @@ import android.view.View
 import androidx.core.text.HtmlCompat
 import com.verifone.psdk.sdiapplication.sdi.system.SdiSystem
 import com.verifone.payment_sdk.PsdkDeviceInformation
-import com.verifone.psdk.sdiapplication.sdi.config.Config
+import com.verifone.psdk.sdiapplication.PSDKContext
+import com.verifone.psdk.sdiapplication.sdi.card.SdiNfcCard
 
-fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem, config: Config): Spanned {
+fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem, app: PSDKContext): Spanned {
     val sb = StringBuilder()
+    val nfc = SdiNfcCard(app.sdiManager!!)
     sb.apply {
         append("<h3>Device Details</h3>")
         append("<br>")
@@ -42,9 +44,11 @@ fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem, 
         append("<br>")
         append("<h3>Kernel Details</h3>")
         append("<br>")
-        append("<b>EMV Contact Kernel: </b> ${config.getEmvContactKernelVersions()}")
+        append("<b>EMV Contact Kernel: </b> ${app.config.getEmvContactKernelVersions()}")
         append("<br>")
-        append("<b>EMV Contactless Kernel: </b> ${config.getEmvContactlessKernelVersions()}")
+        append("<b>EMV Contactless Kernel: </b> ${app.config.getEmvContactlessKernelVersions()}")
+        append("<br>")
+        append("<b>NFC version: </b> ${nfc.getVersion()}")
         append("<br>")
         append("<h3>Component versions</h3>")
         append("<br>")
