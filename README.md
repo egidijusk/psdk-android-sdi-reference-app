@@ -150,6 +150,18 @@ Here SdiManual process the api sequence flow for manual card entry transaction.
 * CVV
 * Exception handling
 
+## NFC Processing
+Can refer under sdi->card->SdiNfcCard package
+
+Here SdiNfcCard process the api sequence flow for NFC card processing.
+This flow is initiated by POS UI and proceed to SdiNfcCard through TransactionManager.
+
+* Initialize
+* NFC polling
+* Field Activation
+* APDU Exchange
+* Exit
+
 ## Update Service
 Can refer under ui->updateservice->UpdateServiceViewModel package
 
@@ -178,8 +190,6 @@ We have shown the usage of few update service apis below for reference. For more
 * Showcase reading data from card which is read from plugin.a
 
 ## VCL  (Low priority) (TBD)
-
-## NFC (TBD) // Not supported on Trinity
 
 ## VAS (TBD) // Not supported on Trinity
 
