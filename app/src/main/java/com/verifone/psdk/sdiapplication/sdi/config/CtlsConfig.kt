@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.config
 
 import android.content.Context
@@ -12,17 +22,18 @@ import com.verifone.payment_sdk.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+// This is mapped to emv contactless configuration and respective operations
 class CtlsConfig(private val context: Context, private val sdk: PaymentSdk) {
+
     private val ctlsConfig = Gson().fromJson(
         Utils.getDataFromAssets(context, "config/emvctls.json"),
         EmvCtlsConfig::class.java
     )
 
     /*
-* Following APis are for configuring the contactless kernel
-*
-* */
-
+     * Following APis are for configuring the contactless kernel
+     *
+     * */
     private fun initialize(): SdiResultCode {
         Log.d(TAG, "Ctls Init Framework Command (40-00)")
         val initOptions = SdiEmvOptions.create()
@@ -56,7 +67,6 @@ class CtlsConfig(private val context: Context, private val sdk: PaymentSdk) {
         exit()
         return result
     }
-
 
     private fun setCtlsTerminalConfiguration(): SdiResultCode {
         val termConfig = getCtlsTerminalConfig()
@@ -193,7 +203,7 @@ class CtlsConfig(private val context: Context, private val sdk: PaymentSdk) {
             sdiEmvConf.setSpecialTransactions(options)
 
             sdiEmvConf.retapFieldOff = application.retapFieldOffDFAB08.toShort(radix = 16)
-            // Paramters specific to mastercard
+            // Parameters specific to mastercard
             sdiEmvConf.terminalID = application.masterCardAid.termIdent9F1C.hexStringToByteArray()
             sdiEmvConf.terminalCountryCode =
                 application.masterCardAid.terminalCountryCode9F1A.toInt(radix = 16)
@@ -506,8 +516,16 @@ class CtlsConfig(private val context: Context, private val sdk: PaymentSdk) {
         return null
     }
 
+    fun getEmvContactlessKernelVersions(): String? {
+        val result = initialize()
+        if (result != SdiResultCode.OK) return ""
+        val ctlsKernelInfo = sdk.sdiManager.emvCtls.termData.emv.kernelVersion
+        Log.d(TAG, "emvContactlessKernelVersions: $ctlsKernelInfo")
+        exit()
+        return ctlsKernelInfo
+    }
+
     companion object {
         private const val TAG = "EMVCTLSConfig"
     }
-
 }

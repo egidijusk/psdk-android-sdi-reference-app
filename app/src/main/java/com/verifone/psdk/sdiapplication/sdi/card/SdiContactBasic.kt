@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
@@ -9,6 +19,10 @@ import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel
 import com.verifone.payment_sdk.*
 
+/*
+ * This is responsible for processing EMV contact transaction in callback mode
+ * Here POS app receives the required trigger events on SdiEmvCallback, where POS app needs to handle the use-case(PIN, Multiple Application Prompt)
+ */
 class SdiContactBasic(private val sdiManager: SdiManager, private val config: Config):SdiContact(sdiManager, config) {
 
     companion object {
@@ -62,7 +76,6 @@ class SdiContactBasic(private val sdiManager: SdiManager, private val config: Co
 
         Log.d(TAG, "EMV CT Continue Offline Command (39-11)")
         val sdiEmvTxn = SdiEmvTxn.create()
-        sdiEmvTxn.transactionSteps
 //        RETURN_CANDIDATE_LIST | RETURN_AFTER_READ_RECORD | RETURN_FOR_CVM_PROCESS
         // 1st GEn AC
         val result = sdiManager.emvCt.continueOffline(sdiEmvTxn)
@@ -73,6 +86,7 @@ class SdiContactBasic(private val sdiManager: SdiManager, private val config: Co
         return result
     }
 
+    // This is the callback where PSDK-SDI triggers the event for EMV processing.
     private inner class EMVCallback : SdiEmvCallback() {
         @ExperimentalStdlibApi
         override fun emvCallback(type: SdiEmvCallbackType?, input: SdiEmvTxn?, output: SdiEmvTxn?) {

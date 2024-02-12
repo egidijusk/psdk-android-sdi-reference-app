@@ -1,19 +1,27 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.transaction
 
-
 import android.util.Log
+import com.verifone.payment_sdk.SdiManager
+import com.verifone.payment_sdk.SdiResultCode
 import com.verifone.psdk.sdiapplication.sdi.card.*
 import com.verifone.psdk.sdiapplication.sdi.card.SdiCard.Companion.cardDetect
 import com.verifone.psdk.sdiapplication.sdi.config.Config
-import com.verifone.payment_sdk.*
 import kotlin.experimental.and
-import kotlin.experimental.or
 
 class TransactionManager(private val sdiManager: SdiManager, config: Config) {
 
     companion object {
         private const val TAG = "TransactionManager"
-
     }
 
     private val contactTransactionBasic = SdiContactBasic(sdiManager, config)
@@ -21,18 +29,22 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
     private val manualTransaction = SdiManual(sdiManager, config)
     private lateinit var contactTransaction: SdiContact
     private val ctlsTransaction = SdiContactless(sdiManager, config)
-    private var techEnabled = SdiCard.TEC_CT.or(SdiCard.TEC_CTLS)
+    private val swipeTransaction = SdiSwipe(sdiManager, config)
+    private var techEnabled = SdiCard.TEC_ALL
 
     private lateinit var listener: TransactionListener
 
+    // This sets the required listeners to PSDK and POS for handling callback events
     fun setListener(listener: TransactionListener) {
         contactTransactionBasic.setListener(listener)
         contactTransactionAdvanced.setListener(listener)
         ctlsTransaction.setListener(listener)
         manualTransaction.setListener(listener)
+        swipeTransaction.setListener(listener)
         this.listener = listener
     }
 
+    // Initializes contact and ctls modules and returns the SdiResultCode
     private fun initialize(): SdiResultCode {
         var result = contactTransaction.initialize()
         if (result != SdiResultCode.OK)
@@ -41,13 +53,25 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
         return result
     }
 
-
-    // Function called from UI
+    /*
+     * Function called from UI
+     * This initiate the manual entry transaction
+     *
+     * @param amount : Transaction amount for processing
+     */
     fun startManualEntryTransactionFlow(amount: Long) {
         manualTransaction.initialize()
         manualTransaction.startTransactionFlow(amount)
     }
 
+    /*
+     * Function called from UI
+     * This initiate the EMV transaction (Invokes the required api sequences and EMV flow)
+     * Initialize, setUp Transaction, Card Detection, transaction processing flow and close framework
+     *
+     * @param amount : Transaction amount for processing
+     * @param basic  : Selects the emv contact processing way (Callback mode or Re-Entrance mode)
+     */
     fun startTransactionFlow(amount: Long, basic: Boolean) {
 
         contactTransaction = if (basic) {
@@ -75,7 +99,7 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
                 listener.display("Present Card")
                 val detectResp = cardDetect(techEnabled, sdiManager = sdiManager)
                 if (detectResp.result == SdiResultCode.OK) {
-                    Log.d(TAG, "Failed to detect Card: ${detectResp.result.name}")
+                    Log.d(TAG, "Card detected successfully : ${detectResp.result.name}, tec : ${detectResp.tecOut}")
                     if (detectResp.tecOut == SdiCard.TEC_CT) {
                         listener.showLeds(false)
                         val ctResult = contactTransaction.startTransactionFlow(amount)
@@ -93,6 +117,9 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
                             continue
                         }
                     }
+                    if (detectResp.tecOut == SdiCard.TEC_MSR) {
+                        val swipeResult = swipeTransaction.startTransactionFlow(amount)
+                    }
                 } else {
                     listener.display("Card Read Error : ${detectResp.result.name}")
                 }
@@ -107,6 +134,7 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
         }
     }
 
+    // This is called during end of the transaction, which used to clear the transaction details
     private fun exit() {
         var exitResult = ctlsTransaction.exit()
         if (exitResult != SdiResultCode.OK) {
@@ -117,5 +145,4 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
             listener.display("Exit CT Frame Work Failed: ${exitResult.name}")
         }
     }
-
 }

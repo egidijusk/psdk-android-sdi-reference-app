@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
@@ -10,14 +20,15 @@ import com.verifone.payment_sdk.*
 import java.util.*
 import com.verifone.payment_sdk.SdiEmvTxn
 
-
-
-
+/*
+ * This is responsible for processing EMV contact transaction in re-entrance mode
+ * Here POS app receives the required trigger events on particular api which are called in loop as shown in code
+ */
 class SdiContactAdvanced(private val sdiManager: SdiManager, private val config: Config) :
     SdiContact(sdiManager, config) {
 
     companion object {
-        private const val TAG = "SdiCard"
+        private const val TAG = "SdiCardContactAdvanced"
     }
     private var amount: Long = 0
 
@@ -67,8 +78,11 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
                     continueStartTxn = true
                     val cbCandidateList = sdiEmvTxnResponse?.txn?.candidateList
                     if (cbCandidateList != null) {
+                        // UI call for user to select application and return the result of selection
                         val selection = listener.applicationSelection(cbCandidateList)
+
                         var options:SdiEmvBuildOptions?= null
+
                         when (selection) {
                             0-> options = SdiEmvBuildOptions.REUSE_EXISTING_LIST_SEL_0
                             1-> options = SdiEmvBuildOptions.REUSE_EXISTING_LIST_SEL_1
@@ -101,22 +115,12 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
         var response: SdiEmvTxnResponse? = null
         do {
             response = sdiManager.emvCt.continueOffline(sdiEmvTxn)
-            /*
-            * result READ REC
-            * fetch txn tags
-            * call continue offline with the orginal emv txn data
-            *
-            * * * result = ONLINE PIN , prompt for pin
-            * if result is ok , just call continue offline
-            * pass the original emv txn data
-            *
-            * */
             Log.d(TAG, "Command Result: ${response.result.name}")
 
             when (response.result) {
                 SdiResultCode.EMVSTATUS_APP_REQ_READREC -> {
                     Log.d(TAG, "Read Record")
-                    /* Validate if cashback is allowed
+                    /* Example usecase: Validate if cashback is allowed
                      Check PDOL if it requested for the tags you are going to change
                      prompt user for cashback
                      Update the tags you want modified ex Transaction Type, Amount , other mount and set it back in txn object
@@ -136,8 +140,11 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
                 SdiResultCode.EMVSTATUS_APP_REQ_ONL_PIN, SdiResultCode.EMVSTATUS_APP_REQ_OFFL_PIN, SdiResultCode.EMVSTATUS_APP_REQ_PLAIN_PIN -> {
                     retrieveTags(response.txn)
                     retrieveTagsUsingApi(config.getCtTagsToFetch())
+                    // Interaction with UI elements
                     listener.setSensitiveDataGreenButtonText(SdiTransactionViewModel.CONFIRM)
+                    // Interaction with UI elements
                     listener.sensitiveDataEntryTitle("Enter Pin")
+                    // Interaction with UI elements
                     listener.showSensitiveDataEntry()
                     val pinResult = getPinUsingCallback()
                     Log.d(TAG, "PIN Entry Result: ${pinResult.name}")

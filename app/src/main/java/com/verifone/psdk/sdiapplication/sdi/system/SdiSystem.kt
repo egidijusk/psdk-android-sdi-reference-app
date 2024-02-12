@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.system
 
 import android.content.Context
@@ -11,28 +21,24 @@ import com.verifone.payment_sdk.SdiComponentVersion
 import com.verifone.payment_sdk.SdiManager
 import com.verifone.payment_sdk.SdiSysPropertyString
 import java.util.ArrayList
-import com.verifone.updateservicelib.IUpdateServiceCallback;
-import com.verifone.updateservicelib.UpdateServiceApi
-
-
-
 
 class SdiSystem(internal val sdiManager: SdiManager) {
-
 
     companion object {
         private const val TAG = "SDISystem"
     }
 
+    // Prints the bitmap image
     fun printBmp(app: Context) {
         val bitmap =
-            Utils.getBitmapFromAsset(app.applicationContext, "receipt/bmp/test.bmp")
+            Utils.getBitmapFromAsset(app.applicationContext, "receipt/bmp/verifone-logo.bmp")
         val bytes = JavaUtils.convertBitmapTo1bpp(bitmap)
         Log.d(TAG, "Print Command ")
         val result = sdiManager.printer.printBitmap(bitmap!!.width, bitmap.height, bytes)
         Log.d(TAG, "Command Result: ${result.name}")
     }
 
+    // Prints the receipt from a hardcoded html format file present inside assets folder
     fun printHtml(app: Context) {
         val html = getTestHtmlReceipt(app.applicationContext, "receipt/html/receipt.html")
         sdiManager.printer.printHTML(html, false)
@@ -46,10 +52,12 @@ class SdiSystem(internal val sdiManager: SdiManager) {
                 "<div>" +
                 "<img src=\"data:image/png;base64,encoded_data_placeholder\"/>" +
                 "</div>" +
+                "<br>" +
+                "<br>" +
                 "</body>" +
                 "</html>"
         val bitmap =
-            Utils.getBitmapFromAsset(app.applicationContext, "receipt/bmp/test.bmp")
+            Utils.getBitmapFromAsset(app.applicationContext, "receipt/bmp/verifone-logo.bmp")
         var encodedString = ""
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             encodedString = getBase64EncodedBitmap(bitmap!!)
@@ -60,12 +68,15 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         Log.d(TAG, "Command Result: ${result.name}")
     }
 
+    // Abort the current command in progress
+    // Note: Not all commands can be aborted.
     fun abort() {
         Log.d(TAG, "Abort Command (20-02)")
         val result = sdiManager.system.abort()
         Log.d(TAG, "Command Result: ${result.name}")
     }
 
+    // Read terminal serial number
     fun serialNumber(): String {
         Log.d(TAG, "Serial Number Command (System Tags)")
         val response = sdiManager.system.serialNumber
@@ -74,6 +85,7 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         return response.response
     }
 
+    // Read hardware serial number through getPropertyString() api
     fun hardwareSerialNumber(): String {
         Log.d(TAG, "System Property Command HW_SERIALNO (20-1A)")
         val response = sdiManager.system.getPropertyString(SdiSysPropertyString.HW_SERIALNO, 0x01)
@@ -83,6 +95,7 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         return response.response
     }
 
+    // Read hardware model number
     fun modelName(): String {
         Log.d(TAG, "System Property Command HW_MODEL_NAME (20-1A)")
         val response = sdiManager.system.getPropertyString(SdiSysPropertyString.HW_MODEL_NAME, 0x01)
@@ -91,6 +104,7 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         return response.response
     }
 
+    // Read PCI Reboot time
     fun pciRebootTime(): String {
         Log.d(TAG, "System Property Command PCI_REBOOT_TIME (20-1A)")
         val response =
@@ -101,6 +115,7 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         return response.response
     }
 
+    // Read the SDI component installed on terminal with versions
     fun sdiVersion(): ArrayList<SdiComponentVersion>? {
         Log.d(TAG, "System Property Command SDI Versions (20-1A)")
         val response = sdiManager.system.getSdiVersion(0x01)

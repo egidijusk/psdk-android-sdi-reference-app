@@ -1,22 +1,26 @@
-package com.verifone.psdk.sdiapplication.ui.home
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
 
+package com.verifone.psdk.sdiapplication.ui.home
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
-import com.verifone.psdk.sdiapplication.PSDKContext
-import com.verifone.psdk.sdiapplication.ui.utils.getDeviceInformation
 import com.verifone.payment_sdk.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.*
+import com.verifone.psdk.sdiapplication.PSDKContext
 import com.verifone.psdk.sdiapplication.sdi.system.SdiSystem
+import com.verifone.psdk.sdiapplication.ui.utils.getDeviceInformation
+import com.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
 
-public class SdiConnectionViewModel(private val app: Application) : AndroidViewModel(app) {
+public class SdiConnectionViewModel(private val app: Application) : BaseViewModel(app) {
 
     enum class State {
         NOT_CONNECTED,
@@ -27,13 +31,15 @@ public class SdiConnectionViewModel(private val app: Application) : AndroidViewM
         private const val TAG = "SdiConnectionViewModel"
     }
 
+    // This listener triggers callback event from PSDK
     private val psdkListener: CommerceListener2 = SimpleCommerceListener()
+    private val networkListener: SdiDisconnectCallback = NetworkCallback()
     private var paymentSdk = (app as PSDKContext).paymentSDK
     lateinit var system : SdiSystem
     private var deviceInformation = MutableLiveData<PsdkDeviceInformation?>()
 
     val devInfo = Transformations.map(deviceInformation) {
-        getDeviceInformation(it, system)
+        getDeviceInformation(it, system, (app as PSDKContext).config)
     }
     var statusMessage = MutableLiveData<String?>()
     // Status Display
@@ -47,19 +53,6 @@ public class SdiConnectionViewModel(private val app: Application) : AndroidViewM
         it.equals(State.CONNECTED)
     }
 
-
-    private fun background(action: () -> Unit) {
-        // Launching within the view model scope for this example, but in production, these should
-        // be launched from some scope that lives with the application instead of the UI.
-        viewModelScope.launch {
-            performBackgroundAction(action)
-        }
-    }
-
-    private suspend fun performBackgroundAction(action: () -> Unit) = withContext(Dispatchers.Default) {
-        action()
-    }
-
     init {
         start()
     }
@@ -68,24 +61,37 @@ public class SdiConnectionViewModel(private val app: Application) : AndroidViewM
         state.value = State.NOT_CONNECTED
     }
 
+    /*
+     * Establish the connection with PSDK based on below configuration parameters
+     * And the callback event will be triggered from PSDK through CommerceListener2
+     */
     fun initialize() {
         background {
             val config = HashMap<String, String>()
             config[TransactionManager.DEVICE_PROTOCOL_KEY] = TransactionManager.DEVICE_PROTOCOL_SDI
-            config[PsdkDeviceInformation.DEVICE_ADDRESS_KEY] = "vfi-terminal" //
+            config[PsdkDeviceInformation.DEVICE_ADDRESS_KEY] = "vfi-terminal"
             config[PsdkDeviceInformation.DEVICE_CONNECTION_TYPE_KEY] = "tcpip"
             paymentSdk.configureLogLevel(PsdkLogLevel.LOG_TRACE)
-            paymentSdk.initializeFromValues(psdkListener, config) // CM5
-            //mPaymentSdk.initialize(mCommerceListener) // Trinity
+            paymentSdk.initializeFromValues(psdkListener, config)
         }
     }
 
+    /*
+     * Closes connection between POS app and PSDK
+     * After successful teardown, POS app have to initialize the PSDK again to perform any kind of operation
+     */
     fun teardown() {
         background {
             paymentSdk.tearDown()
         }
     }
 
+    private inner class NetworkCallback : SdiDisconnectCallback() {
+        override fun disconnectCallback() {
+            Log.i(TAG, "connection with SDI Server is lost")
+            paymentSdk.tearDown()
+        }
+    }
 
     private inner class SimpleCommerceListener : CommerceListener2() {
         private fun eventReceived(status: Int, type: String, message: String) {
@@ -105,7 +111,7 @@ public class SdiConnectionViewModel(private val app: Application) : AndroidViewM
                     StatusCode.SUCCESS == statusCode -> {
                         Log.i(TAG, "Initialize Success")
                         (app as PSDKContext).sdiManager = paymentSdk.sdiManager
-
+                        paymentSdk.sdiManager.setDisconnectCallback(networkListener)
                         state.postValue(State.CONNECTED)
                         system = SdiSystem(sdiManager = paymentSdk.sdiManager)
                         deviceInformation.postValue(paymentSdk.deviceInformation)
@@ -125,7 +131,7 @@ public class SdiConnectionViewModel(private val app: Application) : AndroidViewM
                     Log.i(TAG, "Teardown Failed")
                 } else -> {
                 Log.i(TAG, "Unhandled event: ${status.type}")
-            }
+                }
             }
         }
     }

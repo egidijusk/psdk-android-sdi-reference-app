@@ -11,6 +11,7 @@
         android:label="PSDK SDI POS"
         tools:layout="@layout/fragment_title" >
     </fragment>
+
     <fragment
         android:id="@+id/configurationFragment"
         android:name="com.verifone.psdk.sdiapplication.ui.config.ConfigurationFragment"
@@ -22,4 +23,11 @@
         android:name="com.verifone.psdk.sdiapplication.ui.transaction.TransactionFragment"
         android:label="Transaction Flow"
         tools:layout="@layout/fragment_txn" />
+
+    <fragment
+        android:id="@+id/updateServiceFragment"
+        android:name="com.verifone.psdk.sdiapplication.ui.updateservice.UpdateServiceFragment"
+        android:label="Update Service"
+        tools:layout="@layout/fragment_update" />
+
 </navigation>

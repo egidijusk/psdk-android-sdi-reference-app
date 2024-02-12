@@ -73,9 +73,9 @@
                 android:top="@dimen/nova_divider_grid_hairline"
                 android:left="@dimen/nova_divider_grid_hairline"
                 android:right="@dimen/nova_divider_grid_hairline"/>
-            <solid android:color="@color/vfdl_colorPrimaryDisabled" />
-            <solid android:color="@color/vfdl_colorGrey" />
-            <stroke android:width="2dp" android:color="@color/vfdl_colorAccentGrey" />
+            <solid android:color="@color/colorPrimaryDisabled" />
+            <solid android:color="@color/colorGrey" />
+            <stroke android:width="2dp" android:color="@color/colorAccentGrey" />
         </shape>
     </item>
 </selector>

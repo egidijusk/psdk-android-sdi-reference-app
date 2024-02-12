@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
@@ -6,6 +16,7 @@ import com.verifone.psdk.sdiapplication.sdi.config.Config
 import com.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel.Companion.CONFIRM
+import com.verifone.payment_sdk.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -23,6 +34,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
 
             val TIMEOUT_CARD_DETECT = 30000
 
+        // Synchronous api used for detecting card based on the techEnabled parameter
         fun cardDetect(techEnabled: Short, sdiManager: SdiManager): SdiCardDetectResponse {
             Log.d(TAG, "Card Detection Command (23-01)")
             val ctOptions = EnumSet.of(SdiEmvCtReaderOptions.DETECT_WRONG_ATR)
@@ -92,7 +104,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     In this function we are reading the required tags from the json config and passing the same
     to the PSDK SDI API to retrieve the tags.
     Once the tags are retrieved we use SDiTlv Class to parse and print the tags
-*/
+    */
     internal fun retrieveTagsUsingApi(tagsToRetrieve: List<String>) {
         val tags = ArrayList<Long>()
         for (tag in tagsToRetrieve) {
@@ -137,17 +149,17 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     fun getPinUsingCallback() = runBlocking {
         var pinResult = SdiResultCode.FAIL
         val job = launch { // launch a new coroutine and keep a reference to its Job
-            val buttons = listener.getSensitiveDataTouchCoordinates()
+            val buttons:ArrayList<SdiTouchButton> = listener.getSensitiveDataTouchCoordinates()
 
             Log.d(TAG, "GetPin using touch buttons Command (22-01)")
             val result = sdiManager.ped.getPinTouchButtons(
-                buttons,
-                true,// PIN Bypass
+                buttons, // Button layout touch co-ordinates
+                true, // PIN Bypass
                 pinEntryTimeout,
-                0,
+                0, // Navigator Mode
                 minPinDigit,
                 maxPinDigit,
-                null // optional
+                null // language (optional)
             )
             pinResult = result
             Log.d(TAG, "Command Result: ${result.name}")
@@ -213,6 +225,13 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
         return pinResult
     }
 
+    // Validation checks for the current card regarding the validation table (cardranges.json) stored on the device.
+    fun performValidationChecks(date: ByteArray, returnAdditional: Boolean): SdiDataValidationResponse {
+        Log.i(TAG, "Perform Validation Checks  Command (29-05) ")
+        val response = sdiManager.data.performValidationChecks(date, returnAdditional)
+        Log.i(TAG, "Command Result: ${response.result.name}")
+        return response
+    }
 
     private inner class StatusCallback : SdiStatusCallback() {
         override fun statusCallback(digits: Int, value: String?) {
@@ -257,6 +276,5 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
         override fun cardDetectCallback(returnCode: Int, tecOut: Short, sdiEmvTxn: SdiEmvTxn?, pluginResult: ByteArray?) {
             Log.d(TAG, "CardDetectCallback $returnCode : $tecOut : ${sdiEmvTxn?.cardType}: ${pluginResult.contentToString()}")
         }
-
     }
 }

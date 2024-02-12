@@ -20,11 +20,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.verifone.psdk.sdiapplication.ui.home.TitleFragment">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.verifone.psdk.sdiapplication.ui.home.SdiConnectionViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/titleConstraint"
         android:layout_width="match_parent"
@@ -36,49 +39,62 @@
             android:layout_height="@dimen/image_header_height"
             android:layout_marginStart="@dimen/horizontal_margin"
             android:layout_marginEnd="@dimen/horizontal_margin"
+            android:contentDescription="Logo"
             android:scaleType="fitCenter"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/verifone_logo"
-            android:contentDescription="Logo" />
+            app:srcCompat="@drawable/verifone_logo" />
 
-        <TextView
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleImage"
-            android:id="@+id/textview"
+        <ScrollView
+            android:id="@+id/SCROLLER_ID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@{viewModel.devInfo}" />
-
-        <Button
+            android:layout_marginBottom="8dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btn_connect"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_disconnect"
+            app:layout_constraintTop_toBottomOf="@id/titleImage">
+
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="@{viewModel.devInfo}" />
+
+        </ScrollView>
+
+        <Button
             android:id="@+id/btn_connect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:background="@drawable/button_black_border"
             android:onClick="@{() -> viewModel.initialize()}"
-            android:text="@string/connect" />
-        <Button
+            android:text="@string/connect"
+            app:layout_constraintBottom_toTopOf="@+id/btn_disconnect"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
             android:id="@+id/btn_disconnect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:background="@drawable/button_black_border"
             android:onClick="@{() -> viewModel.teardown()}"
-            android:text="@string/disconnect" />
+            android:text="@string/disconnect"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

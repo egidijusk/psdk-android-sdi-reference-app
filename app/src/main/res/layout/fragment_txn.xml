@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="28dp"
-                android:background="@drawable/vfdl_border"
+                android:background="@drawable/pin_entry_border"
                 android:text="@{viewModel.sensitiveDataDigits}"/>
             <GridLayout
                 android:layout_width="match_parent"
