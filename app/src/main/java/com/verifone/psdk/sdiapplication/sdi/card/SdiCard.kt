@@ -16,7 +16,6 @@ import com.verifone.psdk.sdiapplication.sdi.config.Config
 import com.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel.Companion.CONFIRM
-import com.verifone.payment_sdk.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -129,11 +128,16 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
 
     internal fun fetchEncryptedData(sensitiveTagsToRetrieve: List<String>) {
         val sdiSecureData = SdiSecureData(sdiManager.crypto, sdiManager.data)
-        val openResult = sdiSecureData.open("05")
+
+        // Use DUKPT, test keys for default sccfg file, then find the host name for UkGSC terminal
+        val hostName = "05" // This can be mapped from you sccfg config.
+        val openResult = sdiSecureData.open(hostName)
         if (openResult != SdiResultCode.OK) {
             return
         }
 
+        // We are ignoring below api response as this is only for reference, but these response details can be seen in logs
+        sdiSecureData.getCryptoVersion()
         sdiSecureData.getValidationInfo()
         sdiSecureData.getKeyInventory()
         sdiSecureData.getEncryptedPin()

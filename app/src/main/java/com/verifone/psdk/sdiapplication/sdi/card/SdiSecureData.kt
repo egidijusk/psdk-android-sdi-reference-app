@@ -1,10 +1,22 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
 import com.verifone.payment_sdk.*
+import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByteArray
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import java.util.*
 
+// This handles the security and data related operations
 class SdiSecureData(private val sdiCrypto: SdiCrypto, private val sdiData: SdiData) {
 
     companion object {
@@ -34,9 +46,17 @@ class SdiSecureData(private val sdiCrypto: SdiCrypto, private val sdiData: SdiDa
         Log.d(TAG, "Command Response : $keyResponse")
     }
 
+    // Crypto Get Versions (70-0C)
+    fun getCryptoVersion(): String {
+        Log.d(TAG, "Command Crypto Get Versions (70-0C)")
+        val response = sdiCrypto.versions
+        Log.d(TAG, "Command Response : $response")
+        return response.response
+    }
+
     // GetValidationInfo (29-06)
     fun getValidationInfo(): SdiStringResponse {
-        Log.d(TAG, "Command Get key inventory (29-06)")
+        Log.d(TAG, "Command Get Validation Info (29-06)")
         val response = sdiData.validationInfo
         Log.d(TAG, "Command Response : $response")
         return response
@@ -58,12 +78,13 @@ class SdiSecureData(private val sdiCrypto: SdiCrypto, private val sdiData: SdiDa
     fun getEncryptedData(tagList: List<String>): SdiDataEncResponse {
         Log.d(TAG, "sensitiveTagsToRetrieve : $tagList")
 
-        // TODO : Convert tagList to byteArray and then pass to SDI api
-//        val tagList = byteArrayOf(0x5A.toByte(), 0x57.toByte())
-//        val tagList = byteArrayOf(0x5A.toByte(), 0x00.toByte(), 0x57.toByte(), 0x00.toByte())
-        val tagList = byteArrayOf(0x57.toByte(), 0x28.toByte())
+        val tagListString = StringBuilder()
+        for (tag in tagList) {
+            tagListString.append(tag)
+            tagListString.append("00") // Make the tag response as variable length
+        }
+
         val appData = byteArrayOf() // Optional application data (BERTLV encoded)
-//        val options = EnumSet.of(SdiDataOption.ASCII_PAN) // data options truncation/padding
         val options = EnumSet.of(
             SdiDataOption.CONCATENATE,
             SdiDataOption.PAD_FF
@@ -75,7 +96,7 @@ class SdiSecureData(private val sdiCrypto: SdiCrypto, private val sdiData: SdiDa
         Log.d(TAG, "Command getEncData (29-00)")
         val encodedDataResponse = sdiData.getEncData(
             cryptoHandle,
-            tagList,
+            tagListString.toString().hexStringToByteArray(),
             appData,
             options,
             useStoredTx,
@@ -89,7 +110,7 @@ class SdiSecureData(private val sdiCrypto: SdiCrypto, private val sdiData: SdiDa
     // Get encrypted message data - Get Enc Message Data (29-01)
     fun getEncryptedMessageData(): SdiDataEncResponse {
         val messageTemplate =
-            "12341B58312456781B5832249988".toByteArray()  // byteArrayOf() // message template including placeholders for sensitive data elements
+            "12341B58312456781B5832249988".toByteArray() // message template including placeholders for sensitive data elements
         val placeHolder = ArrayList<SdiDataPlaceHolder>() // placeholder data
         val useStoredTx =
             false // Use stored transaction data, 00 = disabled (default) / 01 = enabled
@@ -98,7 +119,7 @@ class SdiSecureData(private val sdiCrypto: SdiCrypto, private val sdiData: SdiDa
         Log.d(TAG, "Command getEncMsgData (29-01)")
         val encodedMsgData =
             sdiData.getEncMsgData(cryptoHandle, messageTemplate, placeHolder, useStoredTx, iv)
-        Log.d(TAG, "Command Result: ${encodedMsgData.result} ")
+        Log.d(TAG, "Command Result: ${encodedMsgData.result}")
         Log.d(TAG, "Command Response: ${encodedMsgData.response.toHexString()}")
         return encodedMsgData
     }
@@ -106,7 +127,7 @@ class SdiSecureData(private val sdiCrypto: SdiCrypto, private val sdiData: SdiDa
     // Get message signature (29-04)
     fun getMessageSignature(): SdiDataEncResponse {
         val messageTemplate =
-            "12341B58312456781B5832249988".toByteArray()  // byteArrayOf() // message template including placeholders for sensitive data elements
+            "12341B58312456781B5832249988".toByteArray() // message template including placeholders for sensitive data elements
         val placeHolder = ArrayList<SdiDataPlaceHolder>() // placeholder data
         val useStoredTx =
             false // Use stored transaction data, 00 = disabled (default) / 01 = enabled
@@ -115,7 +136,7 @@ class SdiSecureData(private val sdiCrypto: SdiCrypto, private val sdiData: SdiDa
         Log.d(TAG, "Command getMsgSignature (29-04)")
         val encodedMsgSignature =
             sdiData.getMsgSignature(cryptoHandle, messageTemplate, placeHolder, useStoredTx, iv)
-        Log.d(TAG, "Command Result: ${encodedMsgSignature.result} ")
+        Log.d(TAG, "Command Result: ${encodedMsgSignature.result}")
         Log.d(TAG, "Command Response: ${encodedMsgSignature.response.toHexString()}")
         return encodedMsgSignature
     }
