@@ -168,7 +168,16 @@ We have shown the usage of few update service apis below for reference. For more
 * https://confluence.verifone.com:8443/pages/viewpage.action?pageId=380320847
 * https://bitbucket.verifone.com:8443/projects/IFADK/repos/dev-adk-sdi-client/browse/src/sdi-client.cpp
 
-## Crypto Interface (TBD) Highest priority
+## Crypto Interface
+Can refer under sdi->card->SdiSecureData package
+
+Here SdiSecureData shows the sample usage for below mentioned crypto operations.
+
+* Open Connection
+* Crypto Component Versions
+* Key Inventory Details
+* Get Encrypted Pin
+* Close Connection
 
 ## Pin Entry (TBD) Highest priority
 * Pin entry with keypad (Need Android Device)
