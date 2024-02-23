@@ -11,6 +11,7 @@
 package com.verifone.psdk.sdiapplication.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,10 @@ open class BaseViewModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             action()
         }
+    }
+
+    protected fun showToastMessage(message: String) {
+        onUiThread { Toast.makeText(app, message, Toast.LENGTH_SHORT).show() }
     }
 
     private suspend fun performBackgroundAction(action: () -> Unit) =
