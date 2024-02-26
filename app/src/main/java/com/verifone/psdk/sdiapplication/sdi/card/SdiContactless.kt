@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
@@ -8,6 +18,7 @@ import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByt
 import com.verifone.payment_sdk.*
 import java.util.*
 
+// This is responsible for processing EMV contactless transaction
 class SdiContactless(private val sdiManager: SdiManager, private val config: Config) :
     SdiCard(sdiManager = sdiManager, config = config) {
 
@@ -94,7 +105,6 @@ class SdiContactless(private val sdiManager: SdiManager, private val config: Con
         response = sdiManager.emvCtls.continueOffline(null)
         Log.i(TAG, "Command Result: ${response.result.name}")
         return response!!
-
     }
 
     // This callback will get the Led update notifications and the display notification during retap
@@ -162,11 +172,6 @@ class SdiContactless(private val sdiManager: SdiManager, private val config: Con
                 //if 0x15 // probably for MC torn transaction test case
                 //listener.display("Re-tap")
             }
-            /*   val emvcotextId: Int =
-                   data.obtain(messageTag).obtain(ctlsDisplay).obtain(emvcoDisplayTextId).number
-
-               Log.d(TAG, "EMVCO Display Text: ${emvcotextId.toString(16)}")
-               // Please see phone and MC's torn transaction test case*/
         }
     }
 }

@@ -1,5 +1,14 @@
-package com.verifone.psdk.sdiapplication.ui.config
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
 
+package com.verifone.psdk.sdiapplication.ui.config
 
 import android.app.Application
 import android.util.Log
@@ -10,7 +19,6 @@ import com.verifone.payment_sdk.Status
 import com.verifone.psdk.sdiapplication.PSDKContext
 import com.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
 
-
 public class SdiConfigurationViewModel(private val app: Application) :
     BaseViewModel(app) {
 
@@ -18,6 +26,7 @@ public class SdiConfigurationViewModel(private val app: Application) :
         private const val TAG = "EMVConfigViewModel"
     }
 
+    // This listener triggers callback event from PSDK
     private val psdkListener: CommerceListener2 = ConnectionListener()
     private var paymentSdk = (app as PSDKContext).paymentSDK
     private val emvConfig = (app as PSDKContext).config
@@ -71,7 +80,7 @@ public class SdiConfigurationViewModel(private val app: Application) :
 
     fun logCtlsConfig() {
         background {
-            Log.d(TAG, "Log CT Config ")
+            Log.d(TAG, "Log CTLS Config ")
             emvConfig.logCtlsConfiguration()
         }
     }

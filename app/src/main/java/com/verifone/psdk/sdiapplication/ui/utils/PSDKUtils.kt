@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.ui.utils
 
 import android.content.Context
@@ -12,9 +22,9 @@ import com.verifone.payment_sdk.PsdkDeviceInformation
 import com.verifone.payment_sdk.ScannerBarcodeFormatEnum
 import com.verifone.payment_sdk.ScannerConfiguration
 import com.verifone.psdk.sdiapplication.sdi.system.SdiSystem
+import com.verifone.psdk.sdiapplication.sdi.config.Config
 
-
-fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem): Spanned {
+fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem, config: Config): Spanned {
     val sb = StringBuilder()
     sb.apply {
         append("<h3>Device Details</h3>")
@@ -33,6 +43,12 @@ fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem):
         append("<br>")
         append("<b>PCI reboot time: </b>${system.pciRebootTime()}")
         append("<br>")
+        append("<h3>Kernel Details</h3>")
+        append("<br>")
+        append("<b>EMV Contact Kernel: </b> ${config.getEmvContactKernelVersions()}")
+        append("<br>")
+        append("<b>EMV Contactless Kernel: </b> ${config.getEmvContactlessKernelVersions()}")
+        append("<br>")
         append("<h3>Component versions</h3>")
         append("<br>")
         for (component in system.sdiVersion()!!) {
@@ -40,13 +56,13 @@ fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem):
             append("<br>")
         }
     }
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
     } else {
         return HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }
-
 
 fun getGlobalVisibleRectForView(view: View): Rect {
     val rect = Rect()

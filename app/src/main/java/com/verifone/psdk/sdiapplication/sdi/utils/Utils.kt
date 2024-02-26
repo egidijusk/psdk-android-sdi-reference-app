@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.verifone.psdk.sdiapplication.sdi.utils
 
 import android.content.Context
@@ -10,7 +20,6 @@ import java.io.IOException
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class Utils {
 
@@ -37,7 +46,6 @@ class Utils {
         fun ByteArray.toHexString(): String =
             joinToString(separator = "") { eachByte -> "%02X".format(eachByte) }
 
-
         fun getTestHtmlReceipt(context: Context, fileName: String): String {
             var contents = ""
             try {
@@ -53,7 +61,6 @@ class Utils {
             return contents
         }
 
-
         @RequiresApi(Build.VERSION_CODES.O)
         fun getBase64EncodedBitmap(bitmap: Bitmap): String {
             val byteArrayOutputStream = ByteArrayOutputStream()
@@ -62,6 +69,7 @@ class Utils {
 
             return Base64.getEncoder().encodeToString(byteArray)
         }
+
         fun getBitmapFromAsset(context: Context, filePath: String?): Bitmap? {
             val assetManager = context.assets
             val istr: InputStream
@@ -90,5 +98,4 @@ class Utils {
             return contents
         }
     }
-
 }
