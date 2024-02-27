@@ -56,8 +56,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "com.google.android.material:material:$supportlibVersion"
 
-    // Gson
+    // Required for Barcode scan implementation
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'androidx.preference:preference-ktx:1.1.1'
 
     testImplementation 'junit:junit:4.12'
     testImplementation "io.mockk:mockk:1.9.3"
