@@ -31,5 +31,6 @@
     <string name="install_super_package">Install Super Package</string>
     <string name="install_android_ota_package">Install Android Ota</string>
     <string name="uninstall_package">UnInstall Package</string>
+    <string name="last_recovery_log_status">Last Recovery Log Status</string>
 
 </resources>

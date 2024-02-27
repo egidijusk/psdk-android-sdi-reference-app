@@ -12,15 +12,17 @@ package com.verifone.psdk.sdiapplication.ui.updateservice
 
 import android.app.Application
 import android.os.ParcelFileDescriptor
+import android.os.RemoteException
 import android.util.Log
-import android.widget.Toast
 import com.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
 import com.verifone.updateservicelib.IUpdateServiceCallback
+import com.verifone.updateservicelib.RecoveryLogStatus
 import com.verifone.updateservicelib.UpdateServiceApi
 import com.verifone.updateservicelib.UpdateStatus
 import java.io.File
 import java.io.FileOutputStream
 
+// This is responsible for handling Update Service apis as per UI request call
 class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) {
 
     companion object {
@@ -122,6 +124,49 @@ class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) 
         }
     }
 
+    // This API can be used to get the status of the last Android OTA by returning the data from the recovery logs.
+    // If a log form an install is found, the bundle will be populated, otherwise it will be empty.
+    fun fetchLastRecoveryStatus() {
+        background {
+            var status: String
+            try {
+                val bundleStatus = updateService.lastRecoveryLogStatus
+                if (bundleStatus != null) {
+                    bundleStatus.classLoader = RecoveryLogStatus::class.java.classLoader
+                    val recoveryLogStatus: RecoveryLogStatus? =
+                        bundleStatus.getParcelable(RecoveryLogStatus.RECOVERY_LOG_STATUS_PARCELABLE_KEY)
+                    if (recoveryLogStatus != null) {
+                        status =
+                            when (recoveryLogStatus.recoveryStatus) {
+                                RecoveryLogStatus.RECOVERY_STATUS_UNKNOWN -> "RECOVERY_STATUS_UNKNOWN"
+                                RecoveryLogStatus.RECOVERY_STATUS_PENDING -> "RECOVERY_STATUS_PENDING"
+                                RecoveryLogStatus.RECOVERY_STATUS_SUCCESS -> "RECOVERY_STATUS_SUCCESS"
+                                RecoveryLogStatus.RECOVERY_STATUS_ABORTED -> "RECOVERY_STATUS_ABORTED"
+                                RecoveryLogStatus.RECOVERY_STATUS_FAILED -> "RECOVERY_STATUS_FAILED"
+                                else -> "UNKNOWN STATUS"
+                            }
+
+                        Log.i(TAG, "OTA File name: " + recoveryLogStatus.otaFileName)
+                        Log.i(TAG, "Target Build: " + recoveryLogStatus.targetBuild)
+                        Log.i(TAG, "Recovery Status: " + recoveryLogStatus.recoveryStatus + ":" + status)
+                        Log.i(TAG, "Recovery Log creation ms: " + recoveryLogStatus.recoveryLogCreationMs)
+                        Log.i(TAG, "OTA Update error code: " + if (recoveryLogStatus.otaErrorCode != 0) recoveryLogStatus.otaErrorCode else "Not Available")
+                    } else {
+                        status = "No RecoveryLogStatus found"
+                        Log.i(TAG, status)
+                    }
+                } else {
+                    status = "LastRecoveryLogStatus is empty"
+                    Log.i(TAG, status)
+                }
+            } catch (e : RemoteException) {
+                e.printStackTrace()
+                status = "Exception occurs, please try again"
+            }
+            showToastMessage(status)
+        }
+    }
+
     private fun showResult(status: Int) {
         val message: String =
             when (status) {
@@ -135,7 +180,7 @@ class UpdateServiceViewModel(private val app: Application) : BaseViewModel(app) 
                     "Result: failed ($status)"
                 }
             }
-        onUiThread { Toast.makeText(app, message, Toast.LENGTH_SHORT).show() }
+        showToastMessage(message)
     }
 
     private fun copyTestFiles(fileName: String) {
