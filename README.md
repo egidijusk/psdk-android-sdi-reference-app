@@ -173,6 +173,7 @@ We have shown the usage of few update service apis below for reference. For more
 * Un-Install Apk
 * Install Android Ota Package - Here we have a dummy file instead of the real OTA package to provide the reference for multiple terminals.
 * Install Super Package(params, APK and Android OTA file)
+* Fetch Last Android OTA Update Status
 
 ## Data Interface (TBD) Highest priority
 * Sample sccfg.json
