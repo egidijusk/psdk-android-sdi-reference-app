@@ -81,7 +81,8 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
         return SdiResultCode.OK
     }
 
-     abstract fun startTransactionFlow(amount: Long): SdiResultCode
+    abstract fun startTransactionFlow(amount: Long): SdiResultCode
+
     // Retrieve the required tags from the response
     internal fun retrieveTags(data: SdiEmvTxn) {
         Log.d(TAG, "Amount: 9F02: ${data.amount}")
@@ -99,10 +100,10 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     }
 
     /*
-    Retrieve the required tags afterwards using fetchTnxTags API
-    In this function we are reading the required tags from the json config and passing the same
-    to the PSDK SDI API to retrieve the tags.
-    Once the tags are retrieved we use SDiTlv Class to parse and print the tags
+    * Retrieve the required tags afterwards using fetchTnxTags API
+    * In this function we are reading the required tags from the json config and passing the same
+    * to the PSDK SDI API to retrieve the tags.
+    * Once the tags are retrieved we use SDiTlv Class to parse and print the tags
     */
     internal fun retrieveTagsUsingApi(tagsToRetrieve: List<String>) {
         val tags = ArrayList<Long>()
@@ -126,10 +127,15 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
         }
     }
 
+    /*
+    * This function manages the api calls of SdiSecureData(SdiCrypto and SdiData module apis)
+    * This might fail on terminal as it needs proper security config and payment keys to be loaded
+    * We have added this sample code to provide the reference of api flows and its usage.
+    */
     internal fun fetchEncryptedData(sensitiveTagsToRetrieve: List<String>) {
         val sdiSecureData = SdiSecureData(sdiManager.crypto, sdiManager.data)
 
-        val hostName = "05" // This can be mapped from you sccfg config.
+        val hostName = "05" // This should be mapped from sccfg config.
         val openResult = sdiSecureData.open(hostName)
         if (openResult != SdiResultCode.OK) {
             return
