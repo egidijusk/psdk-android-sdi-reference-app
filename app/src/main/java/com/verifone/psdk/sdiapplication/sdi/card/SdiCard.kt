@@ -129,14 +129,13 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     internal fun fetchEncryptedData(sensitiveTagsToRetrieve: List<String>) {
         val sdiSecureData = SdiSecureData(sdiManager.crypto, sdiManager.data)
 
-        // Use DUKPT, test keys for default sccfg file, then find the host name for UkGSC terminal
         val hostName = "05" // This can be mapped from you sccfg config.
         val openResult = sdiSecureData.open(hostName)
         if (openResult != SdiResultCode.OK) {
             return
         }
 
-        // We are ignoring below api response as this is only for reference, but these response details can be seen in logs
+        // We are ignoring below api response as this is only for reference, but these response details can be found in logs
         sdiSecureData.getCryptoVersion()
         sdiSecureData.getValidationInfo()
         sdiSecureData.getKeyInventory()
@@ -144,9 +143,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
         sdiSecureData.getEncryptedData(sensitiveTagsToRetrieve)
         sdiSecureData.getEncryptedMessageData()
         sdiSecureData.getMessageSignature()
-
         sdiSecureData.close()
-        sdiSecureData.clearDataStore()
     }
 
     // PIN Entry using Status Callback method
