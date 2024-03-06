@@ -30,6 +30,9 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
     private lateinit var contactTransaction: SdiContact
     private val ctlsTransaction = SdiContactless(sdiManager, config)
     private val swipeTransaction = SdiSwipe(sdiManager, config)
+    private val nfcTransaction = SdiNfcCard(sdiManager)
+
+    // This field is used for enabling the card reader detecting interfaces during detection process
     private var techEnabled = SdiCard.TEC_ALL
 
     private lateinit var listener: TransactionListener
@@ -62,6 +65,20 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
     fun startManualEntryTransactionFlow(amount: Long) {
         manualTransaction.initialize()
         manualTransaction.startTransactionFlow(amount)
+    }
+
+    /*
+     * Function called from UI
+     * This initiate the NFC processing
+     */
+    fun startNfcProcessingFlow() {
+        var result = nfcTransaction.initialize()
+        if (SdiResultCode.OK == result) {
+            result = nfcTransaction.startTransaction()
+            if (SdiResultCode.OK != result) listener.display("NFC Error : ${result.name}")
+        } else {
+            listener.display("NFC initialization failed : ${result.name}")
+        }
     }
 
     /*

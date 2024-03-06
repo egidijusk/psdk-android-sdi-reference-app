@@ -39,7 +39,7 @@ public class SdiConnectionViewModel(private val app: Application) : BaseViewMode
     private var deviceInformation = MutableLiveData<PsdkDeviceInformation?>()
 
     val devInfo = Transformations.map(deviceInformation) {
-        getDeviceInformation(it, system, (app as PSDKContext).config)
+        getDeviceInformation(it, system, app as PSDKContext)
     }
     var statusMessage = MutableLiveData<String?>()
     // Status Display

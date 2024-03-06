@@ -102,7 +102,7 @@ class SdiContactless(private val sdiManager: SdiManager, private val config: Con
 
     private fun continueOffline(): SdiEmvTxnResponse {
 
-        Log.i(TAG, "EMV CT Continue Offline Command (40-11) ")
+        Log.i(TAG, "EMV CTLS Continue Offline Command (40-11) ")
         var response: SdiEmvTxnResponse? = null
         response = sdiManager.emvCtls.continueOffline(null)
         Log.i(TAG, "Command Result: ${response.result.name}")
