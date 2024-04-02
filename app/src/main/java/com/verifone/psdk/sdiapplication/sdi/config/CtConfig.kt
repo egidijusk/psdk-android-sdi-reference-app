@@ -169,6 +169,10 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
         return ctConfig.fetchTags
     }
 
+    fun getSensitiveTagsToFetch(): List<String> {
+        return ctConfig.sensitiveTags
+    }
+
     fun logConfiguration() {
         if (initialize()  == SdiResultCode.OK) {
             val terminalConfig = logTerminalConfig()
@@ -184,6 +188,7 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
                 terminal = terminalConfig!!,
                 capks = capkConfig,
                 fetchTags = listOf(),
+                sensitiveTags = listOf()
             )
             Log.d(TAG, "~~~~~~~~~~~~~~~~Contact Configuration Start~~~~~~~~~~~~~~~~~~")
             Log.d(TAG, GsonBuilder().setPrettyPrinting().create().toJson(contactConfig.terminal))

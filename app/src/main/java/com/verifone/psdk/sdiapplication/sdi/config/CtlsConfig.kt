@@ -308,6 +308,10 @@ class CtlsConfig(private val context: Context, private val sdk: PaymentSdk) {
         return ctlsConfig.fetchTags
     }
 
+    fun getSensitiveTagsToFetch(): List<String> {
+        return ctlsConfig.sensitiveTags
+    }
+
     fun logConfiguration() {
         if (initialize() == SdiResultCode.OK) {
             val terminalConfig = logTerminalConfig()
@@ -323,7 +327,8 @@ class CtlsConfig(private val context: Context, private val sdk: PaymentSdk) {
                 terminal = terminalConfig!!,
                 capks = capkConfig,
                 fetchTags = listOf(),
-               mastercard = logMastercardAidConfig()
+                sensitiveTags = listOf(),
+                mastercard = logMastercardAidConfig()
             )
             Log.d(TAG, "~~~~~~~~~~~~~~~~Contactless Configuration Start~~~~~~~~~~~~~~~~~~")
             Log.d(TAG, GsonBuilder().setPrettyPrinting().create().toJson(ctlsConfig.terminal))

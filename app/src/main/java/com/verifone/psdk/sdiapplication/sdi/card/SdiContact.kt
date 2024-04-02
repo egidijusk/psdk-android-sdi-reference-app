@@ -78,6 +78,7 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
             Log.d(TAG, "First GEN AC response: ${response.result.name}")
             when (response.result) {
                 SdiResultCode.EMVSTATUS_ARQC -> {
+                    fetchEncryptedData(config.getCtSensitiveTagsToFetch())
                     // Go to Host for approval
                     // change host response code to decimal value of Amount entry
                     val genAcResponse = continueOnline(true, byteArrayOf(0x30, 0x30))

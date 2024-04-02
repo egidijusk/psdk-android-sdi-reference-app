@@ -11,15 +11,14 @@
 package com.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
+import com.verifone.payment_sdk.*
 import com.verifone.psdk.sdiapplication.sdi.config.Config
 import com.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel.Companion.CONFIRM
-import com.verifone.payment_sdk.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
-import kotlin.collections.ArrayList
 
 abstract class SdiCard(private val sdiManager: SdiManager, private val config: Config) {
 
@@ -82,7 +81,8 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
         return SdiResultCode.OK
     }
 
-     abstract fun startTransactionFlow(amount: Long): SdiResultCode
+    abstract fun startTransactionFlow(amount: Long): SdiResultCode
+
     // Retrieve the required tags from the response
     internal fun retrieveTags(data: SdiEmvTxn) {
         Log.d(TAG, "Amount: 9F02: ${data.amount}")
@@ -100,10 +100,10 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     }
 
     /*
-    Retrieve the required tags afterwards using fetchTnxTags API
-    In this function we are reading the required tags from the json config and passing the same
-    to the PSDK SDI API to retrieve the tags.
-    Once the tags are retrieved we use SDiTlv Class to parse and print the tags
+    * Retrieve the required tags afterwards using fetchTnxTags API
+    * In this function we are reading the required tags from the json config and passing the same
+    * to the PSDK SDI API to retrieve the tags.
+    * Once the tags are retrieved we use SDiTlv Class to parse and print the tags
     */
     internal fun retrieveTagsUsingApi(tagsToRetrieve: List<String>) {
         val tags = ArrayList<Long>()
@@ -125,6 +125,31 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
                 Log.d(TAG, "TAG ${tag.toString(radix = 16)}: $value")
             }
         }
+    }
+
+    /*
+    * This function manages the api calls of SdiSecureData(SdiCrypto and SdiData module apis)
+    * This might fail on terminal as it needs proper security config and payment keys to be loaded
+    * We have added this sample code to provide the reference of api flows and its usage.
+    */
+    internal fun fetchEncryptedData(sensitiveTagsToRetrieve: List<String>) {
+        val sdiSecureData = SdiSecureData(sdiManager.crypto, sdiManager.data)
+
+        val hostName = "05" // This should be mapped from sccfg config.
+        val openResult = sdiSecureData.open(hostName)
+        if (openResult != SdiResultCode.OK) {
+            return
+        }
+
+        // We are ignoring below api response as this is only for reference, but these response details can be found in logs
+        sdiSecureData.getCryptoVersion()
+        sdiSecureData.getValidationInfo()
+        sdiSecureData.getKeyInventory()
+        sdiSecureData.getEncryptedPin()
+        sdiSecureData.getEncryptedData(sensitiveTagsToRetrieve)
+        sdiSecureData.getEncryptedMessageData()
+        sdiSecureData.getMessageSignature()
+        sdiSecureData.close()
     }
 
     // PIN Entry using Status Callback method

@@ -14,6 +14,7 @@ data class EmvContactConfig(
     val applications: List<Application>,
     val capks: List<Capk>,
     val fetchTags: List<String>,
+    val sensitiveTags: List<String>,
     val terminal: Terminal
 ) {
     data class Application(
