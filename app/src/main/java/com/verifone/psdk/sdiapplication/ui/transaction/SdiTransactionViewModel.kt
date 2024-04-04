@@ -28,7 +28,6 @@ public class SdiTransactionViewModel(private val app: Application) :
     BaseViewModel(app) {
 
     private val amount: Long = 100L
-
     enum class State {
         Idle,
         TransactionInProgress,
@@ -48,6 +47,11 @@ public class SdiTransactionViewModel(private val app: Application) :
     private val transactionManager =
         TransactionManager((app as PSDKContext).paymentSDK.sdiManager, app.config)
     private val sdiSystem = SdiSystem((app as PSDKContext).paymentSDK.sdiManager)
+    val showSoftKeypad = if (sdiSystem.isPhysicalKeyboardPresent()) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
     private var sensitiveDataTouchButtons = MutableLiveData<ArrayList<SdiTouchButton>>()
     private var ledsState = MutableLiveData(false)
     private var transactionState = MutableLiveData(State.Idle)

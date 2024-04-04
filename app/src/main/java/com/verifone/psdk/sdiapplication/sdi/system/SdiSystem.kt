@@ -19,6 +19,7 @@ import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.getBase64Encod
 import com.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.getTestHtmlReceipt
 import com.verifone.payment_sdk.SdiComponentVersion
 import com.verifone.payment_sdk.SdiManager
+import com.verifone.payment_sdk.SdiSysPropertyInt
 import com.verifone.payment_sdk.SdiSysPropertyString
 import java.util.ArrayList
 
@@ -93,6 +94,14 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         Log.d(TAG, "Command Result: ${response.result.name}")
 
         return response.response
+    }
+    fun isPhysicalKeyboardPresent(): Boolean {
+        Log.d(TAG, "System Property Command KEYBOARD_HW (20-1A)")
+        val response = sdiManager.system.getPropertyInt(SdiSysPropertyInt.KEYBOARD_HW, 0x01)
+        Log.d(TAG, "Command Response : ${response.response}")
+        Log.d(TAG, "Command Result: ${response.result.name}")
+
+        return (response.response == 0x01)
     }
 
     // Read hardware model number
