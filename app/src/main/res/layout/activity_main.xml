@@ -3,7 +3,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.verifone.psdk.sdiapplication.MainActivity">
+    tools:context="com.priv.verifone.psdk.sdiapplication.MainActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout"
@@ -22,7 +22,7 @@
 
             <fragment
                 android:id="@+id/myNavHostFragment"
-                android:name="com.verifone.psdk.sdiapplication.ui.utils.NavHostFragmentWithDefaultAnimations"
+                android:name="com.priv.verifone.psdk.sdiapplication.ui.utils.NavHostFragmentWithDefaultAnimations"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:navGraph="@navigation/navigation"
