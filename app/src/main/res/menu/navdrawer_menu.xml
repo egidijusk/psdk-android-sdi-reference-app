@@ -13,4 +13,8 @@
         android:id="@+id/updateServiceFragment"
         android:icon="@drawable/btn_circle"
         android:title="@string/update_service" />
+    <item
+        android:id="@+id/operatingModeFragment"
+        android:icon="@drawable/btn_circle"
+        android:title="@string/operating_mode" />
 </menu>

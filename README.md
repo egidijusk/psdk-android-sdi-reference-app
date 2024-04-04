@@ -150,6 +150,18 @@ Here SdiManual process the api sequence flow for manual card entry transaction.
 * CVV
 * Exception handling
 
+## NFC Processing
+Can refer under sdi->card->SdiNfcCard package
+
+Here SdiNfcCard process the api sequence flow for NFC card processing.
+This flow is initiated by POS UI and proceed to SdiNfcCard through TransactionManager.
+
+* Initialize
+* NFC polling
+* Field Activation
+* APDU Exchange
+* Exit
+
 ## Update Service
 Can refer under ui->updateservice->UpdateServiceViewModel package
 
@@ -161,6 +173,7 @@ We have shown the usage of few update service apis below for reference. For more
 * Un-Install Apk
 * Install Android Ota Package - Here we have a dummy file instead of the real OTA package to provide the reference for multiple terminals.
 * Install Super Package(params, APK and Android OTA file)
+* Fetch Last Android OTA Update Status
 
 ## Data Interface (TBD) Highest priority
 * Sample sccfg.json
@@ -168,7 +181,16 @@ We have shown the usage of few update service apis below for reference. For more
 * https://confluence.verifone.com:8443/pages/viewpage.action?pageId=380320847
 * https://bitbucket.verifone.com:8443/projects/IFADK/repos/dev-adk-sdi-client/browse/src/sdi-client.cpp
 
-## Crypto Interface (TBD) Highest priority
+## Crypto Interface
+Can refer under sdi->card->SdiSecureData package
+
+Here SdiSecureData shows the sample usage for below mentioned crypto operations.
+
+* Open Connection
+* Crypto Component Versions
+* Key Inventory Details
+* Get Encrypted Pin
+* Close Connection
 
 ## Pin Entry (TBD) Highest priority
 * Pin entry with keypad (Need Android Device)
@@ -178,8 +200,6 @@ We have shown the usage of few update service apis below for reference. For more
 * Showcase reading data from card which is read from plugin.a
 
 ## VCL  (Low priority) (TBD)
-
-## NFC (TBD) // Not supported on Trinity
 
 ## VAS (TBD) // Not supported on Trinity
 

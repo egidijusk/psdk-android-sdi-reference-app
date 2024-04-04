@@ -19,11 +19,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.verifone.psdk.sdiapplication.ui.config.ConfigurationFragment">
+    tools:context="com.priv.verifone.psdk.sdiapplication.ui.config.ConfigurationFragment">
     <data>
         <variable
             name="viewModel"
-            type="com.verifone.psdk.sdiapplication.ui.config.SdiConfigurationViewModel" />
+            type="com.priv.verifone.psdk.sdiapplication.ui.config.SdiConfigurationViewModel" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
 

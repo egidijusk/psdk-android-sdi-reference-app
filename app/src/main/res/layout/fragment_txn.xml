@@ -19,11 +19,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.verifone.psdk.sdiapplication.ui.transaction.TransactionFragment">
+    tools:context="com.priv.verifone.psdk.sdiapplication.ui.transaction.TransactionFragment">
     <data>
         <variable
             name="viewModel"
-            type="com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel" />
+            type="com.priv.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/titleConstraint"
@@ -85,7 +85,7 @@
         <Button
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_start_txn"
+            app:layout_constraintTop_toBottomOf="@id/btn_nfc_txn"
             android:id="@+id/btn_start_manual_entry_txn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,6 +94,19 @@
             android:visibility="@{viewModel.idleState}"
             android:onClick="@{() -> viewModel.startManualEntryTransaction()}"
             android:text="@string/start_manual_entry_transaction" />
+
+        <Button
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_txn"
+            android:id="@+id/btn_nfc_txn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/button_black_border"
+            android:visibility="@{viewModel.idleState}"
+            android:onClick="@{() -> viewModel.startNfcProcessing()}"
+            android:text="@string/start_nfc_transaction" />
 
         <Button
             app:layout_constraintEnd_toEndOf="parent"
@@ -133,6 +146,19 @@
             android:visibility="@{viewModel.idleState}"
             android:onClick="@{() -> viewModel.printHtml()}"
             android:text="@string/print_html" />
+
+        <Button
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_print_html"
+            android:id="@+id/btn_scan_barcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/button_black_border"
+            android:visibility="@{viewModel.idleState}"
+            android:onClick="@{(view) -> viewModel.scanBarcode(view)}"
+            android:text="@string/scan_barcode" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/pin_entry_layout"

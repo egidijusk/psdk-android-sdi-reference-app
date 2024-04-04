@@ -19,13 +19,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.verifone.psdk.sdiapplication.ui.updateservice.UpdateServiceFragment">
+    tools:context="com.priv.verifone.psdk.sdiapplication.ui.updateservice.UpdateServiceFragment">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.verifone.psdk.sdiapplication.ui.updateservice.UpdateServiceViewModel" />
+            type="com.priv.verifone.psdk.sdiapplication.ui.updateservice.UpdateServiceViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,7 +71,6 @@
                 android:text="@string/install_android_ota_package" />
 
             <Button
-                android:id="@+id/btn_print_bmp_hacked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -79,6 +78,15 @@
                 android:background="@drawable/button_black_border"
                 android:onClick="@{() -> viewModel.installSuperPackage()}"
                 android:text="@string/install_super_package" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin"
+                android:background="@drawable/button_black_border"
+                android:onClick="@{() -> viewModel.fetchLastRecoveryStatus()}"
+                android:text="@string/last_recovery_log_status" />
 
         </LinearLayout>
 

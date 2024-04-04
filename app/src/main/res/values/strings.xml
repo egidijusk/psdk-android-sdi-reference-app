@@ -21,14 +21,20 @@
     <string name="print_bmp">Print BMP</string>
     <string name="print_html">Print HTML</string>
     <string name="print_bmp_hacked">Print BMP (Hacked)</string>
+    <string name="scan_barcode">Scan Barcode</string>
     <string name="log_ct_config">Log Contact Configuration</string>
     <string name="log_ctls_config">Log CTLS Configuration</string>
     <string name="start_manual_entry_transaction">Manual Entry Transaction</string>
+    <string name="start_nfc_transaction">Process NFC card</string>
     <string name="update_service">Update Service</string>
     <string name="install_apk">Install Apk</string>
     <string name="uninstall_apk">UnInstall Apk</string>
     <string name="install_super_package">Install Super Package</string>
     <string name="install_android_ota_package">Install Android Ota</string>
     <string name="uninstall_package">UnInstall Package</string>
+    <string name="last_recovery_log_status">Last Recovery Log Status</string>
+    <string name="operating_mode">Operating Mode</string>
+    <string name="standard_mode">Standard Mode</string>
+    <string name="kiosk_mode">Kiosk Mode</string>
 
 </resources>
