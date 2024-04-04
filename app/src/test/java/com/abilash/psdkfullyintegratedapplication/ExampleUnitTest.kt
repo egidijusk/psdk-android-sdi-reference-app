@@ -1,4 +1,4 @@
-package com.verifone.psdk.sdiapplication
+package com.priv.verifone.psdk.sdiapplication
 
 import org.junit.Test
 

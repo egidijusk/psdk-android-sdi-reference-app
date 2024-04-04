@@ -19,11 +19,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.verifone.psdk.sdiapplication.ui.transaction.TransactionFragment">
+    tools:context="com.priv.verifone.psdk.sdiapplication.ui.transaction.TransactionFragment">
     <data>
         <variable
             name="viewModel"
-            type="com.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel" />
+            type="com.priv.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/titleConstraint"
