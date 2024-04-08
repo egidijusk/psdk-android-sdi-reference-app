@@ -63,18 +63,49 @@ class SdiContactless(private val sdiManager: SdiManager, private val config: Con
 
     override fun startTransactionFlow(amount: Long): SdiResultCode {
 
-        val resp = continueOffline()
-        listener.display("Continue Offline: ${resp.result.name}")
-        retrieveTags(resp.txn)
-        retrieveTagsUsingApi(config.getCtlsTagsToFetch())
+        val response = continueOffline()
+        listener.display("Continue Offline: ${response.result.name}")
+
+        when (response.result) {
+            SdiResultCode.EMVSTATUS_ARQC -> {
+                // Fetch transaction data and send online request to Host for approval
+                retrieveTags(response.txn)
+                retrieveTagsUsingApi(config.getCtlsTagsToFetch())
+                crypto.getSensitiveEncryptedData(config.getCtlsSensitiveTagsToFetch())
+
+                Log.d(TAG, "Transaction Approved")
+                listener.display("Transaction Approved")
+            }
+
+            SdiResultCode.EMVSTATUS_AAC -> {
+                Log.d(TAG, "Offline Decline")
+                listener.display("Offline Decline")
+            }
+
+            SdiResultCode.EMVSTATUS_TC -> {
+                Log.d(TAG, "Offline Approved")
+                listener.display("Offline Approved")
+            }
+
+            SdiResultCode.EMVSTATUS_ABORT -> {
+                Log.d(TAG, "Transaction Aborted")
+                listener.display("Transaction Aborted")
+            }
+
+            else -> {
+                Log.d(TAG, "First GEN AC response not handled: ${response.result.name}")
+                listener.display("First GEN AC response not handled: ${response.result.name}")
+                Log.d(TAG, "Transaction completed")
+            }
+        }
 
         sdiManager.smartCardCtls.smartPowerOff(EnumSet.of(SdiEmvCtlsReaderOptions.DETECT_REMOVAL))
-        var result : SdiResultCode?
-        do  {
+        var result: SdiResultCode?
+        do {
             result = sdiManager.smartCardCtls.cardRemoval(0)
         } while (result != SdiResultCode.OK)
         Log.i(TAG, "Card Removed")
-        return resp.result
+        return response.result
     }
 
     fun setupTransaction(amount: Long): SdiEmvTxnResponse {

@@ -19,7 +19,6 @@ import com.verifone.usbconnman.Constants
 import com.verifone.usbconnman.Constants.SerialDeviceNumber
 import java.nio.charset.StandardCharsets
 
-
 // This is responsible for usb operations
 class UsbViewModel(private val app: Application) : BaseViewModel(app), UsbEventListener {
 

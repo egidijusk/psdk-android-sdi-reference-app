@@ -10,7 +10,6 @@
 
 package com.priv.verifone.psdk.sdiapplication.ui.platform
 
-
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -29,7 +28,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.priv.verifone.psdk.sdiapplication.R
 import com.priv.verifone.psdk.sdiapplication.databinding.FragmentPlatformBinding
 import com.priv.verifone.psdk.sdiapplication.viewmodel.PsdkViewModelFactory
-
 
 class PlatformFragment : Fragment() {
 
@@ -100,5 +98,4 @@ class PlatformFragment : Fragment() {
             }
         }
     }
-
 }

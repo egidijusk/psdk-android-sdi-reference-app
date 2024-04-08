@@ -62,7 +62,7 @@ class Config(private val context: Context, private val sdk: PaymentSdk) {
 
     // Returns all the configured EMV contactless kernels in terminal
     fun getEmvContactlessKernelVersions(): String? {
-        return ctlsConfig.getEmvContactlessKernelVersions()
+        return ctlsConfig.getEmvContactlessKernelVersions()?.replace(";", "<br>")
     }
 
     fun logCtConfiguration() {

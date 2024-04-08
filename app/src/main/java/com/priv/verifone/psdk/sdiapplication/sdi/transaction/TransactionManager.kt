@@ -144,6 +144,8 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
                 transactionComplete = true
             }
             exit()
+        } else {
+            listener.display("Failed to initialize the emv component.. Please try again")
         }
     }
 

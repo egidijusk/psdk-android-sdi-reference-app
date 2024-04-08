@@ -163,9 +163,9 @@ This flow is initiated by POS UI and proceed to SdiNfcCard through TransactionMa
 * Exit
 
 ## Update Service
-Can refer under ui->updateservice->UpdateServiceViewModel package
+Can refer under tms->TmsService package
 
-Here UpdateServiceViewModel uses the Update Service library apis for loading the packages ( zip, ota files ) to terminal.
+Here TmsService uses the Update Service library apis for loading the packages ( zip, ota files ) to terminal.
 These packages are stored under assets folder and will be loaded into terminal through Update Service apis.
 We have shown the usage of few update service apis below for reference. For more details kindly check Update Service documentation.
 
@@ -182,14 +182,15 @@ We have shown the usage of few update service apis below for reference. For more
 * https://bitbucket.verifone.com:8443/projects/IFADK/repos/dev-adk-sdi-client/browse/src/sdi-client.cpp
 
 ## Crypto Interface
-Can refer under sdi->card->SdiSecureData package
+Can refer under sdi->crypto->Crypto package
 
-Here SdiSecureData shows the sample usage for below mentioned crypto operations.
+Here Crypto shows the sample usage for below mentioned crypto operations.
 
 * Open Connection
 * Crypto Component Versions
 * Key Inventory Details
 * Get Encrypted Pin
+* Get Sensitive Card Data(Encrypted)
 * Close Connection
 
 ## Pin Entry (TBD) Highest priority
