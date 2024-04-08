@@ -84,8 +84,11 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
             Log.d(TAG, "First GEN AC response: ${response.result.name}")
             when (response.result) {
                 SdiResultCode.EMVSTATUS_ARQC -> {
-                    // Go to Host for approval
-                    // change host response code to decimal value of Amount entry
+                    // Fetch transaction data and send online request to Host for approval
+                    crypto.getSensitiveEncryptedData(config.getCtSensitiveTagsToFetch())
+
+                    // Change host response code to decimal value of Amount entry
+                    // Map the host response for below api call to execute 2nd GenC execution
                     val genAcResponse = continueOnline(true, byteArrayOf(0x30, 0x30))
                     if (genAcResponse.result == SdiResultCode.EMVSTATUS_TC) {
                         listener.display("Transaction Approved")

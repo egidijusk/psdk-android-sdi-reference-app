@@ -11,11 +11,8 @@
 package com.priv.verifone.psdk.sdiapplication.ui.platform
 
 import android.app.Application
-import android.app.admin.DevicePolicyManager
 import android.bluetooth.BluetoothAdapter
-import android.content.ComponentName
 import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
@@ -25,7 +22,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.priv.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
-
 
 // This is responsible for platform operations
 class PlatformViewModel(private val app: Application) : BaseViewModel(app) {

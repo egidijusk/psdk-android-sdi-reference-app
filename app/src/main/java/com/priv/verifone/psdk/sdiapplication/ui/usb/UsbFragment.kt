@@ -10,7 +10,6 @@
 
 package com.priv.verifone.psdk.sdiapplication.ui.usb
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +20,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.priv.verifone.psdk.sdiapplication.R
 import com.priv.verifone.psdk.sdiapplication.databinding.FragmentUsbBinding
 import com.priv.verifone.psdk.sdiapplication.viewmodel.PsdkViewModelFactory
-
 
 class UsbFragment : Fragment() {
 

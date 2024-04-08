@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--
     <item
         android:id="@+id/configurationFragment"
         android:icon="@drawable/btn_circle"
         android:title="@string/emv_config" />
-        Enable after initial demo, if we use this it will remove the default config and this only has Visa and MC-->
     <item
         android:id="@+id/transactionFragment"
         android:icon="@drawable/btn_circle"
