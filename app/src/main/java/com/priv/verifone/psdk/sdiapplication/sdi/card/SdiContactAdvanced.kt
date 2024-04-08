@@ -159,6 +159,9 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
                         response.result == SdiResultCode.EMVSTATUS_APP_REQ_PLAIN_PIN) {
                         validateOfflinePin()
                     }
+                    if (response.result == SdiResultCode.EMVSTATUS_APP_REQ_ONL_PIN && pinResult == SdiResultCode.OK) {
+                        crypto.getEncryptedPinBlock()
+                    }
                     continueOffline = true
                 }
                 // 1st GEN AC Result

@@ -13,6 +13,7 @@ package com.priv.verifone.psdk.sdiapplication.sdi.card
 import android.util.Log
 import com.verifone.payment_sdk.*
 import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
+import com.priv.verifone.psdk.sdiapplication.sdi.crypto.Crypto
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.priv.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel.Companion.CONFIRM
@@ -65,7 +66,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
 
     private val cardDetectCallback: CardDetectCallback = CardDetectCallback()
     private val statusCallback: StatusCallback = StatusCallback()
-
+    internal val crypto = Crypto(sdiManager)
     internal lateinit var listener: TransactionListener
 
     open fun setListener(callback: TransactionListener) {
@@ -132,25 +133,6 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     * This might fail on terminal as it needs proper security config and payment keys to be loaded
     * We have added this sample code to provide the reference of api flows and its usage.
     */
-    internal fun fetchEncryptedData(sensitiveTagsToRetrieve: List<String>) {
-        val sdiSecureData = SdiSecureData(sdiManager.crypto, sdiManager.data)
-
-        val hostName = "05" // This should be mapped from sccfg config.
-        val openResult = sdiSecureData.open(hostName)
-        if (openResult != SdiResultCode.OK) {
-            return
-        }
-
-        // We are ignoring below api response as this is only for reference, but these response details can be found in logs
-        sdiSecureData.getCryptoVersion()
-        sdiSecureData.getValidationInfo()
-        sdiSecureData.getKeyInventory()
-        sdiSecureData.getEncryptedPin()
-        sdiSecureData.getEncryptedData(sensitiveTagsToRetrieve)
-        sdiSecureData.getEncryptedMessageData()
-        sdiSecureData.getMessageSignature()
-        sdiSecureData.close()
-    }
 
     // PIN Entry using Status Callback method
     fun getPinUsingCallback() = runBlocking {

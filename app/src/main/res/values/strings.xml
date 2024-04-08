@@ -33,8 +33,12 @@
     <string name="install_android_ota_package">Install Android Ota</string>
     <string name="uninstall_package">UnInstall Package</string>
     <string name="last_recovery_log_status">Last Recovery Log Status</string>
-    <string name="operating_mode">Operating Mode</string>
     <string name="standard_mode">Standard Mode</string>
     <string name="kiosk_mode">Kiosk Mode</string>
-
+    <string name="wifi">WiFi</string>
+    <string name="platform_features">Platform Features</string>
+    <string name="device_admin_description">Device Admin Description</string>
+    <string name="device_admin">Device Admin</string>
+    <string name="send">Send</string>
+    <string name="usb">USB</string>
 </resources>

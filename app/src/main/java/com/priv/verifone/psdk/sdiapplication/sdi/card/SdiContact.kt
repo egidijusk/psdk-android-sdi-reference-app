@@ -42,6 +42,12 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
         Log.d(TAG, "Command result: ${result?.name}")
         return result!!
     }
+    fun waitForCardRemoval() {
+        // Wait for card removal
+        Log.d(TAG, "Command waitForRemoval ")
+        val result = sdiManager.cardDetect.waitForRemoval(30)
+        Log.d(TAG, "Command Result: ${result.name}")
+    }
 
     fun exit() : SdiResultCode {
         Log.d(TAG, "End Transaction Command (39-15)")
@@ -55,10 +61,10 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
     // Activates the chip card here
     private fun cardActivate(): SdiBinaryResponse {
         // Smart Card Activate Command (41-02)
-        Log.d(TAG, "Smart Card Activate(41-02)")
+        Log.d(TAG, "Smart Card Activate Command (41-02)")
         val smartCardResponse: SdiBinaryResponse = sdiManager.smartCardCt.activate()
 
-        Log.i(TAG, "result: ${smartCardResponse.result.name} " +
+        Log.i(TAG, "Command result: ${smartCardResponse.result.name} " +
                     "response:${smartCardResponse.response.toHexString()} ")
 
         return smartCardResponse
@@ -78,7 +84,6 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
             Log.d(TAG, "First GEN AC response: ${response.result.name}")
             when (response.result) {
                 SdiResultCode.EMVSTATUS_ARQC -> {
-                    fetchEncryptedData(config.getCtSensitiveTagsToFetch())
                     // Go to Host for approval
                     // change host response code to decimal value of Amount entry
                     val genAcResponse = continueOnline(true, byteArrayOf(0x30, 0x30))
@@ -110,6 +115,7 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
                 }
             }
         }
+        waitForCardRemoval()
         return SdiResultCode.OK
     }
 

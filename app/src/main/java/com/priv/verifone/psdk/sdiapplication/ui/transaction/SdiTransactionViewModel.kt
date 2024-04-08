@@ -234,16 +234,13 @@ public class SdiTransactionViewModel(private val app: Application) :
     fun setSensitiveDataTouchButtons(pinTouchButtons: ArrayList<SdiTouchButton>) {
         this.sensitiveDataTouchButtons.postValue(pinTouchButtons)
     }
-
     private inner class ConnectionListener : CommerceListener2() {
         private fun eventReceived(status: Int, type: String, message: String) {
             Log.i(TAG, "Received event: $type with status: $status message: $message")
         }
-
         override fun handleCommerceEvent(event: CommerceEvent) {
             eventReceived(event.status, event.type, event.message)
         }
-
         override fun handleStatus(status: Status) {
             eventReceived(status.status, status.type, status.message)
             Log.d(TAG, "handleStatus statusCode: ${status.status}")

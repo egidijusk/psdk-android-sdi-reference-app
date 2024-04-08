@@ -23,11 +23,14 @@ import com.verifone.payment_sdk.ScannerBarcodeFormatEnum
 import com.verifone.payment_sdk.ScannerConfiguration
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiNfcCard
+import com.priv.verifone.psdk.sdiapplication.sdi.crypto.Crypto
 import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiSystem
+import com.verifone.payment_sdk.SdiCrypto
 
 fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem, app: PSDKContext): Spanned {
     val sb = StringBuilder()
     val nfc = SdiNfcCard(app.sdiManager!!)
+    val crypto = Crypto(app.sdiManager!!)
     sb.apply {
         append("<h3>Device Details</h3>")
         append("<br>")
@@ -44,6 +47,9 @@ fun getDeviceInformation(deviceInfo: PsdkDeviceInformation?, system: SdiSystem, 
         append("<b>Model:</b> ${system.modelName()}")
         append("<br>")
         append("<b>PCI reboot time: </b>${system.pciRebootTime()}")
+        append("<br>")
+        append("<br>")
+        append("<b>Key Inventory: </b>${crypto.keyInventory()}")
         append("<br>")
         append("<h3>Kernel Details</h3>")
         append("<br>")

@@ -67,7 +67,6 @@ class SdiContactless(private val sdiManager: SdiManager, private val config: Con
         listener.display("Continue Offline: ${resp.result.name}")
         retrieveTags(resp.txn)
         retrieveTagsUsingApi(config.getCtlsTagsToFetch())
-        fetchEncryptedData(config.getCtlsSensitiveTagsToFetch())
 
         sdiManager.smartCardCtls.smartPowerOff(EnumSet.of(SdiEmvCtlsReaderOptions.DETECT_REMOVAL))
         var result : SdiResultCode?

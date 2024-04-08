@@ -16,9 +16,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.priv.verifone.psdk.sdiapplication.ui.config.SdiConfigurationViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.home.SdiConnectionViewModel
-import com.priv.verifone.psdk.sdiapplication.ui.operatingmode.OperatingModeViewModel
+import com.priv.verifone.psdk.sdiapplication.ui.platform.PlatformViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.updateservice.UpdateServiceViewModel
+import com.priv.verifone.psdk.sdiapplication.ui.usb.UsbViewModel
 
 class PsdkViewModelFactory(
     private val application: Application,
@@ -38,8 +39,11 @@ class PsdkViewModelFactory(
         if (modelClass.isAssignableFrom(UpdateServiceViewModel::class.java)) {
             return UpdateServiceViewModel(application) as T
         }
-        if (modelClass.isAssignableFrom(OperatingModeViewModel::class.java)) {
-            return OperatingModeViewModel(application) as T
+        if (modelClass.isAssignableFrom(PlatformViewModel::class.java)) {
+            return PlatformViewModel(application) as T
+        }
+        if (modelClass.isAssignableFrom(UsbViewModel::class.java)) {
+            return UsbViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

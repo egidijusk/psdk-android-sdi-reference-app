@@ -8,7 +8,8 @@
 * without prior written approval from VeriFone, Inc.
 */
 
-package com.priv.verifone.psdk.sdiapplication.ui.operatingmode
+package com.priv.verifone.psdk.sdiapplication.ui.usb
+
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,36 +19,35 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.priv.verifone.psdk.sdiapplication.R
-import com.priv.verifone.psdk.sdiapplication.databinding.FragmentOperatingModeBinding
-import com.priv.verifone.psdk.sdiapplication.databinding.FragmentUpdateBinding
+import com.priv.verifone.psdk.sdiapplication.databinding.FragmentUsbBinding
 import com.priv.verifone.psdk.sdiapplication.viewmodel.PsdkViewModelFactory
 
-class OperatingModeFragment : Fragment() {
+
+class UsbFragment : Fragment() {
 
     companion object {
-        private const val TAG = "OperatingModeFragment"
+        private const val TAG = "UsbFragment"
     }
 
-    private lateinit var viewModel: OperatingModeViewModel
-    private lateinit var binding: FragmentOperatingModeBinding
+    private lateinit var viewModel: UsbViewModel
+    private lateinit var binding: FragmentUsbBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_operating_mode, container, false)
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_usb, container, false)
         setHasOptionsMenu(true)
         viewModel = ViewModelProvider(
             requireActivity(), PsdkViewModelFactory(requireActivity().application)
-        ).get(OperatingModeViewModel::class.java)
-        viewModel.setCurrentMode()
+        ).get(UsbViewModel::class.java)
         binding.viewModel = viewModel
+
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 }

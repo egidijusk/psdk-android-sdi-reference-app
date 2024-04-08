@@ -143,10 +143,6 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
                 listener.showLeds(false)
                 transactionComplete = true
             }
-            // Wait for card removal
-            Log.d(TAG, "Wait for removal (CT Only)")
-            //val response = sdiManager.cardDetect.waitForRemoval(30)
-            Log.d(TAG, "Card removed")
             exit()
         }
     }
