@@ -101,7 +101,6 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
                 SdiResultCode.EMVSTATUS_AAC -> {
                     Log.d(TAG, "Offline Decline")
                     listener.display("Offline Decline")
-
                 }
                 SdiResultCode.EMVSTATUS_TC -> {
                     Log.d(TAG, "Offline Approved")
@@ -135,11 +134,9 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
         // resp 0x3030 - approved
         // resp 0x3035 - decline
         val result = sdiManager.emvCt.continueOnline(onlineResult, resp, sdiEmvTxn)
-
         Log.d(TAG, "Command Result: ${result.result.name}")
 
         retrieveTags(result.txn)
-
         retrieveTagsUsingApi(config.getCtTagsToFetch())
         return result
     }
