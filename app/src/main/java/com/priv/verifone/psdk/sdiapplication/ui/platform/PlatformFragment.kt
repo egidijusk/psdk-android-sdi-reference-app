@@ -12,7 +12,6 @@ package com.priv.verifone.psdk.sdiapplication.ui.platform
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -45,6 +44,7 @@ class PlatformFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_platform, container, false)
         setHasOptionsMenu(true)
+        checkAndRequestSystemWritePermission()
         viewModel = ViewModelProvider(
             requireActivity(), PsdkViewModelFactory(requireActivity().application)
         ).get(PlatformViewModel::class.java)
@@ -67,7 +67,7 @@ class PlatformFragment : Fragment() {
                     newBrightness!!
                 )
             })
-        checkAndRequestSystemWritePermission()
+
         var isUpdatingCheck = false
         viewModel.getBluetoothEnabled()?.observe(viewLifecycleOwner, Observer { isEnabled ->
             isUpdatingCheck = true  // Set flag to indicate programmatic change
@@ -89,13 +89,11 @@ class PlatformFragment : Fragment() {
     }
 
     private fun checkAndRequestSystemWritePermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.System.canWrite(requireActivity())) {
-                val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-                intent.data = Uri.parse("package:" + requireActivity().packageName)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }
+        if (!Settings.System.canWrite(requireActivity())) {
+            val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+            intent.data = Uri.parse("package:" + requireActivity().packageName)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
     }
 }

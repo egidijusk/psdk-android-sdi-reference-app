@@ -90,9 +90,6 @@ class SdiManual(private val sdiManager: SdiManager, private val config: Config) 
                     listener.sensitiveDataEntryTitle("Enter CVV")
                     listener.sensitiveDigitsEntered("")
                     result = CONTINUE
-                    // if 0x14
-                    //if 0x15 // probably for MC torn transaction test case
-                    //listener.display("Re-tap")
                 }
             }
             return result
