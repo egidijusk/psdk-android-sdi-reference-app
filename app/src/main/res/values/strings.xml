@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">VerifoneSDITraining</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Verifone SDK</string>
+    <string name="nav_header_subtitle">PSDK SDI</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="start_transaction">Start Transaction</string>
+    <string name="start_manual_entry_transaction">Manual Entry Transaction</string>
+    <string name="start_nfc_transaction">Start NFC Transaction</string>
+    <string name="print_html">Print HTML</string>
+    <string name="scan_barcode">Scan Barcode</string>
+    <string name="transaction">Transaction Options</string>
+    <string name="menu_updateservice">Update Service</string>
+    <string name="menu_transaction">Transaction</string>
+    <string name="last_recovery_log_status">Last Log Recovery Status</string>
+    <string name="install_super_package">Install Super Package</string>
+    <string name="install_android_ota_package">Install Android OTA Package</string>
+    <string name="uninstall_apk">Uninstall Package</string>
+    <string name="install_apk">Install APK</string>
+    <string name="set_contact_configuration">Set Contact Configuration</string>
+    <string name="set_ctls_config">Set Contactless Configuration</string>
+    <string name="menu_config">EMV Configuration</string>
+    <string name="send">Send</string>
+    <string name="logs">Transfer Logs</string>
+    <string name="standard_mode">Standard</string>
+    <string name="kiosk_mode">Kiosk</string>
+    <string name="install_vrk_payload">Install VRK Payload</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="menu_usb">USB</string>
+    <string name="crash">Crash</string>
+</resources>

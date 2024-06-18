@@ -1,0 +1,38 @@
+package com.priv.verifone.psdk.sdiapplication.ui.configuration
+
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.priv.verifone.psdk.sdiapplication.PSDKContext
+import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
+import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.BaseViewModel
+
+class ConfigurationViewModel(application: Application) : BaseViewModel(application) {
+
+    companion object {
+        private const val TAG = "ConfigurationViewModel"
+    }
+
+    private val _text = MutableLiveData<String>().apply {
+        value = "This is EMV Configuration Fragment"
+    }
+    val text: LiveData<String> = _text
+    private var paymentSdk = (application as PSDKContext).paymentSDK
+    private val emvConfig = Config(paymentSdk)
+
+    fun setContactConfiguration() {
+        background {
+            val result = emvConfig.setContactConfiguration()
+            Log.d(TAG, " CT config result: ${result.name}")
+            _text.postValue(" CT config result: ${result.name}")
+        }
+    }
+
+    fun setContactlessConfiguration() {
+        background {
+            val result = emvConfig.setCtlsConfiguration()
+            _text.postValue(" Ctls config result: ${result.name}")
+        }
+    }
+}

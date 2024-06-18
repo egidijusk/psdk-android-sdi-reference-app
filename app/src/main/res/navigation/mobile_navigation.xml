@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.priv.verifone.psdk.sdiapplication.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_config"
+        android:name="com.priv.verifone.psdk.sdiapplication.ui.configuration.ConfigurationFragment"
+        android:label="@string/menu_config"
+        tools:layout="@layout/fragment_configuration" />
+
+    <fragment
+        android:id="@+id/nav_transaction"
+        android:name="com.priv.verifone.psdk.sdiapplication.ui.transaction.TransactionFragment"
+        android:label="@string/menu_transaction"
+        tools:layout="@layout/fragment_transaction" />
+
+    <fragment
+        android:id="@+id/nav_updateservice"
+        android:name="com.priv.verifone.psdk.sdiapplication.ui.updateservice.UpdateServiceFragment"
+        android:label="@string/menu_updateservice"
+        tools:layout="@layout/fragment_updateservice" />
+    <fragment
+        android:id="@+id/nav_usb"
+        android:name="com.priv.verifone.psdk.sdiapplication.ui.usb.UsbFragment"
+        android:label="@string/menu_usb"
+        tools:layout="@layout/fragment_usb" />
+</navigation>
