@@ -18,17 +18,15 @@ import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexString
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.verifone.payment_sdk.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 // This is mapped to emv contactless configuration and respective operations
-class CtlsConfig(private val context: Context, private val sdk: PaymentSdk) {
+class CtlsConfig(private val sdk: PaymentSdk) {
 
-    private val ctlsConfig = Gson().fromJson(
-        Utils.getDataFromAssets(context, "config/emvctls.json"),
-        EmvCtlsConfig::class.java
-    )
+    private val ctlsConfig = PSDKContext.ctlsConfigData
 
     /*
      * Following APis are for configuring the contactless kernel
@@ -514,15 +512,6 @@ class CtlsConfig(private val context: Context, private val sdk: PaymentSdk) {
             e.printStackTrace()
         }
         return null
-    }
-
-    fun getEmvContactlessKernelVersions(): String? {
-        val result = initialize()
-        if (result != SdiResultCode.OK) return ""
-        val ctlsKernelInfo = sdk.sdiManager.emvCtls.termData.emv.kernelVersion
-        Log.d(TAG, "emvContactlessKernelVersions: $ctlsKernelInfo")
-        exit()
-        return ctlsKernelInfo
     }
 
     companion object {

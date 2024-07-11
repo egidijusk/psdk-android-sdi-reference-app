@@ -13,10 +13,13 @@ package com.priv.verifone.psdk.sdiapplication.sdi.crypto
 import android.util.Log
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByteArray
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
+import com.verifone.payment_sdk.SdiDataEncResponse
+import com.verifone.payment_sdk.SdiDataOption
 import com.verifone.payment_sdk.SdiDataPlaceHolder
 import com.verifone.payment_sdk.SdiIntegerResponse
 import com.verifone.payment_sdk.SdiManager
 import com.verifone.payment_sdk.SdiResultCode
+import java.util.EnumSet
 
 // This handles the security and secure data related operations
 class Crypto(val sdiManager: SdiManager) {
@@ -27,10 +30,9 @@ class Crypto(val sdiManager: SdiManager) {
         // These handles are usually the hostnames which configured in SCCFG config
         // So these values may varies with respective to the terminal with different SCCFG config
         // Crypto api or encryption process may fails in case of wrong configuration
-        private const val PIN_HANDLE = "05" // HostName used for PIN ENCRYPTION process
-        private const val DATA_HANDLE = "07" // HostName used for DATA ENCRYPTION process
-        private const val MAC_HANDLE =
-            "TDES_DUKPT_MAC" // HostName used for MAC GENERATION and VERIFICATION process
+        private const val PIN_HANDLE = "TDES_DUKPT_PIN" // HostName used for PIN ENCRYPTION process
+        private const val DATA_HANDLE = "TDES_DUKPT_DATA" // HostName used for DATA ENCRYPTION process
+        private const val MAC_HANDLE = "TDES_DUKPT_MAC" // HostName used for MAC GENERATION and VERIFICATION process
     }
 
     private fun open(host: String): Int? {
@@ -102,15 +104,13 @@ class Crypto(val sdiManager: SdiManager) {
                 tagListString.append(tag)
                 tagListString.append("00") // Make the tag response as variable length
             }
-
             val appData = byteArrayOf() // Optional application data (BERTLV encoded)
-            val options = null // data options truncation/padding
-            val useStoredTx =
-                false // Use stored transaction data, 00 = disabled (default) / 01 = enabled
+            val options: EnumSet<SdiDataOption>? = null // data options truncation/padding
+            val useStoredTx = false // Use stored transaction data
             val iv = null // optional initialization vector
 
             Log.d(TAG, "Command getEncData (29-00)")
-            val encodedDataResponse = sdiManager.data.getEncData(
+            val encodedDataResponse: SdiDataEncResponse = sdiManager.data.getEncData(
                 handle,
                 tagListString.toString().hexStringToByteArray(),
                 appData,
@@ -119,7 +119,9 @@ class Crypto(val sdiManager: SdiManager) {
                 iv
             )
             Log.d(TAG, "Command Result: ${encodedDataResponse.result} ")
-            Log.d(TAG, "Command Response: ${encodedDataResponse.response.toHexString()}")
+            Log.d(TAG, "Command Response: ${encodedDataResponse?.response?.toHexString()}")
+            Log.d(TAG, "Command KSN: ${encodedDataResponse?.ksn?.toHexString()}")
+            Log.d(TAG, "Command IV: ${encodedDataResponse?.iv?.toHexString()}")
             sdiManager.crypto.close(handle)
         } else {
             Log.d(TAG, "Command Result: Crypto Open Failed")

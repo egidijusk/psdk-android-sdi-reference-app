@@ -30,12 +30,13 @@ class TmsService(private val app: Application) {
 
     private var result = UpdateStatus.STATUS_FAILURE
     private lateinit var updateService: UpdateServiceApi
-
+    private lateinit var callback:TmsServiceCallback
     // POS app receives the update status through this event
     private val updateServiceCallback = object : IUpdateServiceCallback.Stub() {
         override fun onStatus(status: Int) {
             Log.i(TAG, "onStatus(): $status")
             updateService.unbind()
+            callback.onStatus(status)
         }
     }
 
@@ -46,6 +47,9 @@ class TmsService(private val app: Application) {
         }).start()
     }
 
+    fun setCallback(callback: TmsServiceCallback) {
+        this.callback = callback
+    }
     // Install an Android APK
     fun installApk(fileName: String): Int {
         try {
@@ -104,6 +108,22 @@ class TmsService(private val app: Application) {
             val fileDescriptor =
                 ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
             result = updateService.installPackage(fileName, fileDescriptor)
+            Log.d(TAG, "installPackage: $result")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return result
+    }
+
+    fun installVRKPayloadPackage(fileName: String): Int {
+        try {
+            updateService.registerCallback(updateServiceCallback)
+            copyTestFiles(fileName)
+
+            val file = File(app.cacheDir, fileName)
+            val fileDescriptor =
+                ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
+            result = updateService.installJSONKeyBlob(fileName, fileDescriptor)
             Log.d(TAG, "installPackage: $result")
         } catch (e: Exception) {
             e.printStackTrace()

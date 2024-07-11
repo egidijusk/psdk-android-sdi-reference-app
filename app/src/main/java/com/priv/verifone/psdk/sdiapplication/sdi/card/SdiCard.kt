@@ -12,16 +12,16 @@ package com.priv.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
 import com.verifone.payment_sdk.*
-import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
 import com.priv.verifone.psdk.sdiapplication.sdi.crypto.Crypto
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
-import com.priv.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel.Companion.CONFIRM
+import com.priv.verifone.psdk.sdiapplication.utils.Constants
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
+import kotlin.collections.ArrayList
 
-abstract class SdiCard(private val sdiManager: SdiManager, private val config: Config) {
+abstract class SdiCard(private val sdiManager: SdiManager) {
 
     companion object {
         private const val TAG = "SdiCard"
@@ -49,13 +49,9 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
                 sdiTecOptions, true, TIMEOUT_CARD_DETECT, null, null, null, null
             )
             Log.d(TAG, "Command Result: ${response.result.name}")
+            Log.d(TAG, "Command Response: ${response.emvOut}")
             return response
         }
-    }
-
-    enum class Card {
-        Success,
-        FallbackToChip
     }
 
     internal var txnCounter = 1
@@ -67,14 +63,14 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     private val cardDetectCallback: CardDetectCallback = CardDetectCallback()
     private val statusCallback: StatusCallback = StatusCallback()
     internal val crypto = Crypto(sdiManager)
-    internal lateinit var listener: TransactionListener
+    internal lateinit var uiListener: TransactionListener
 
     open fun setListener(callback: TransactionListener) {
-        this.listener = callback
+        this.uiListener = callback
     }
 
     open fun initialize(): SdiResultCode {
-
+        Log.d(TAG, "initialize")
         // Will update once R&D is done
         sdiManager.setCardDetectCallback(cardDetectCallback)
         // it is for PIN entry and for manual entry search for 9F-XX in SDI docs
@@ -138,7 +134,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     fun getPinUsingCallback() = runBlocking {
         var pinResult = SdiResultCode.FAIL
         val job = launch { // launch a new coroutine and keep a reference to its Job
-            val buttons:ArrayList<SdiTouchButton> = listener.getSensitiveDataTouchCoordinates()
+            val buttons:ArrayList<SdiTouchButton> = uiListener.getSensitiveDataTouchCoordinates()
 
             Log.d(TAG, "GetPin using touch buttons Command (22-01)")
             val result = sdiManager.ped.getPinTouchButtons(
@@ -152,7 +148,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
             )
             pinResult = result
             Log.d(TAG, "Command Result: ${result.name}")
-            listener.display(result.name)
+            uiListener.display(result.name)
         }
         job.join() // wait until child coroutine completes
         return@runBlocking pinResult
@@ -162,7 +158,7 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     fun getPinUsingPolling() = runBlocking {
         var pinResult = SdiResultCode.OK
         val job = launch { // launch a new coroutine and keep a reference to its Job
-            val buttons = listener.getSensitiveDataTouchCoordinates()
+            val buttons = uiListener.getSensitiveDataTouchCoordinates()
             val startPinResult = sdiManager.ped.startPin(
                 buttons, 0, 0, minPinDigit, maxPinDigit, true, false
             )
@@ -177,13 +173,13 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
                     current += "*"
                     digit++
                 }
-                listener.sensitiveDigitsEntered(current)
+                uiListener.sensitiveDigitsEntered(current)
                 pollResult = sdiManager.ped.pollPin()
             }
             val resp = sdiManager.ped.pollPin()
             Log.d(TAG, "Poll PIN Status : ${resp.pin.name}")
             Log.d(TAG, "Poll PIN result : ${resp.result.name}")
-            listener.display(resp.pin.name)
+            uiListener.display(resp.pin.name)
             pinResult = resp.result
             val stopPinResult = sdiManager.ped.stopPin()
             Log.d(TAG, "Stop PIN result : ${stopPinResult.name}")
@@ -193,11 +189,12 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
         return@runBlocking pinResult
     }
 
-    // PIN Entry using Status Callback method in SDi thread
+    // PIN Entry using Status Callback method in SDI thread
+    // wont work
     fun getPin(): SdiResultCode {
-        var pinResult = SdiResultCode.FAIL
+        val pinResult: SdiResultCode
 
-        val buttons = listener.getSensitiveDataTouchCoordinates()
+        val buttons = uiListener.getSensitiveDataTouchCoordinates()
         val result = sdiManager.ped.getPinTouchButtons(
             buttons,
             true,
@@ -207,7 +204,6 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
             maxPinDigit,
             SdiLanguage.ENGLISH
         )
-        result.ordinal
         Log.d(TAG, "PIN result : ${result.name}")
         pinResult = result
 
@@ -218,7 +214,22 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
     fun performValidationChecks(date: ByteArray, returnAdditional: Boolean): SdiDataValidationResponse {
         Log.i(TAG, "Perform Validation Checks  Command (29-05) ")
         val response = sdiManager.data.performValidationChecks(date, returnAdditional)
+        //Check results will deliver 01 if check is OK, 00 if check is failed
+        // and FF if check has not been performed because it's disabled in the validation table.
+        //In case of IIN is used no check results are delivered.
         Log.i(TAG, "Command Result: ${response.result.name}")
+        Log.i(TAG, "Command Result Matching Record: ${response.match.record} " +
+                "luhnCheck: ${response.match.luhnCheck} " +
+                "expirationCheck: ${response.match.expirationCheck} " +
+                "activationCheck: ${response.match.activationCheck}")
+        for (record in response.additional) {
+            Log.i(TAG, "Command Result Additional Record : ${record.record}, " +
+                    "activationCheck: ${record.activationCheck} " +
+                    "expirationCheck:${record.expirationCheck} " +
+                    "luhnCheck:${record.luhnCheck}")
+        }
+        val crypto = Crypto(sdiManager)
+        crypto.getSensitiveEncryptedData(listOf("57"))
         return response
     }
 
@@ -234,29 +245,29 @@ abstract class SdiCard(private val sdiManager: SdiManager, private val config: C
 
             if (digits == 254) {
                 // 0xFE
-                listener.display("PAN entered but not confirmed, correction still possible")
+                uiListener.display("PAN entered but not confirmed, correction still possible")
                 // Change Enter button to Confirm
-                listener.setSensitiveDataGreenButtonText(CONFIRM)
+                uiListener.setSensitiveDataGreenButtonText(Constants.CONFIRM)
                 if (value == null || value.isEmpty()) {
-                    listener.sensitiveDigitsEntered(current)
+                    uiListener.sensitiveDigitsEntered(current)
                 } else {
-                    listener.sensitiveDigitsEntered(value)
+                    uiListener.sensitiveDigitsEntered(value)
                 }
             }
             else  if (digits == 253) {
                 // 0xFD Invalid expiry date entered, already entered expiry date is deleted, re-entry necessary
-                listener.display("Invalid expiry date entered, please re-enter")
-                listener.sensitiveDigitsEntered("")
+                uiListener.display("Invalid expiry date entered, please re-enter")
+                uiListener.sensitiveDigitsEntered("")
             } else  if (digits == 252) {
-                listener.display("PAN, Expiry date or CVV not completely entered, additional digit entry necessary")
+                uiListener.display("PAN, Expiry date or CVV not completely entered, additional digit entry necessary")
                 // 0xFC PAN, Expiry date or CVV not completely entered, additional digit entry necessary
             } else  if (digits == 251) {
                 // 0xFB PAN, Expiry date or CVV maximum number of digits reached, additional digits will be ignored
-                listener.display("PAN, Expiry date or CVV maximum number of digits reached, additional digits will be ignored")
+                uiListener.display("PAN, Expiry date or CVV maximum number of digits reached, additional digits will be ignored")
             } else if (value == null || value.isEmpty()) {
-                listener.sensitiveDigitsEntered(current)
+                uiListener.sensitiveDigitsEntered(current)
             } else {
-                listener.sensitiveDigitsEntered(value)
+                uiListener.sensitiveDigitsEntered(value)
             }
         }
     }

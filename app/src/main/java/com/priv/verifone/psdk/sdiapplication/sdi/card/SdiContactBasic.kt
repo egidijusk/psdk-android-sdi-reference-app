@@ -11,19 +11,18 @@
 package com.priv.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
-import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.dateToString
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByteArray
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
-import com.priv.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel
+import com.priv.verifone.psdk.sdiapplication.utils.Constants.Companion.CONFIRM
 import com.verifone.payment_sdk.*
 
 /*
  * This is responsible for processing EMV contact transaction in callback mode
  * Here POS app receives the required trigger events on SdiEmvCallback, where POS app needs to handle the use-case(PIN, Multiple Application Prompt)
  */
-class SdiContactBasic(private val sdiManager: SdiManager, private val config: Config):SdiContact(sdiManager, config) {
+class SdiContactBasic(private val sdiManager: SdiManager):SdiContact(sdiManager) {
 
     companion object {
         private const val TAG = "SdiCardCT"
@@ -82,17 +81,17 @@ class SdiContactBasic(private val sdiManager: SdiManager, private val config: Co
         Log.d(TAG, "Command Result: ${result.result.name}")
 
         retrieveTags(result.txn)
-        retrieveTagsUsingApi(config.getCtTagsToFetch())
+        //retrieveTagsUsingApi(config.getCtTagsToFetch())
         return result
     }
 
     // This is the callback where PSDK-SDI triggers the event for EMV processing.
     private inner class EMVCallback : SdiEmvCallback() {
         @ExperimentalStdlibApi
-        override fun emvCallback(type: SdiEmvCallbackType?, input: SdiEmvTxn?, output: SdiEmvTxn?) {
+        override fun emvCallback(type: SdiEmvCallbackType, input: SdiEmvTxn?, output: SdiEmvTxn?) {
+            Log.d(TAG, "EMV Callback ${type.name}")
             when (type) {
                 SdiEmvCallbackType.REDUCE_CANDIDATES -> {
-                    Log.d(TAG, "EMV Callback ${type?.name}")
                     val cbCandidateList = input?.cbCandidateList
                     // Send list to UI for selection
                     if (cbCandidateList != null) {
@@ -110,35 +109,36 @@ class SdiContactBasic(private val sdiManager: SdiManager, private val config: Co
                     Log.d(TAG, "Pin Info: ${input?.pinInfo?.toString(16)}")
                     Log.d(TAG, "Pin Info: ${input?.pinInfo?.toString()}")
 
-                    Log.d(TAG, "EMV Callback ${type?.name}")
-                    listener.setSensitiveDataGreenButtonText(SdiTransactionViewModel.CONFIRM)
-                    listener.sensitiveDataEntryTitle("Enter Pin")
-                    listener.showSensitiveDataEntry()
+                    uiListener.setSensitiveDataGreenButtonText(CONFIRM)
+                    uiListener.sensitiveDataEntryTitle("Enter Pin")
+                    uiListener.showSensitiveDataEntry()
                     val result = getPinUsingCallback()
                     // We need to find out how to read PinInfo field, that has information on whether
                     // the PIN is online or offline, it toggles between value 0 and 2
-                    if (result == SdiResultCode.OK) {
+                    if (result == SdiResultCode.OK && input?.pinInfo?.toInt() == 1) {
                         validateOfflinePin()
                     }
                     if (output != null) {
                         Log.d(TAG, "EMV Callback return PIN Status : code : ${result.ordinal.toShort()} name: ${result.name}")
-
                         Log.d(TAG, "Setting PIN Info: ${output.setPINInfo(result.ordinal.toShort())}")
+                        //
                     }
-                    listener.pinEntryComplete()
+                    uiListener.pinEntryComplete()
                 }
-                SdiEmvCallbackType.LOCAL_CHECKS -> Log.d(TAG, "EMV Callback ${type.name}")
+                SdiEmvCallbackType.LOCAL_CHECKS -> {
+                    Log.d(TAG, "EMV Callback ${type.name}")
+                }
                 else -> {
                     retrieveTags(input!!)
-                    retrieveTagsUsingApi(config.getCtTagsToFetch())
+                    //retrieveTagsUsingApi(config.getCtTagsToFetch())
                     val today = Utils.getCurrentDateTime()
                     val date = today.dateToString("yyMMdd").hexStringToByteArray()
                     val time = today.dateToString("hhmmss").hexStringToByteArray()
-                    val amount = input!!.amount
+                    val amount = input.amount
                     output!!.transactionDate = date
-                    output!!.transactionTime = time
-                    output!!.amount =amount + amount
-                    output!!.cashbackAmount = amount
+                    output.transactionTime = time
+                    output.amount =amount + amount
+                    output.cashbackAmount = amount
                     Log.d(TAG, "EMV Callback ${type?.name}")
                 }
             }

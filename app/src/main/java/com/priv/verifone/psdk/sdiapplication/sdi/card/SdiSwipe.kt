@@ -13,11 +13,10 @@ package com.priv.verifone.psdk.sdiapplication.sdi.card
 import android.util.Log
 import com.verifone.payment_sdk.SdiManager
 import com.verifone.payment_sdk.SdiResultCode
-import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
 
 // This is responsible for processing swipe transaction
-class SdiSwipe(private val sdiManager: SdiManager, private val config: Config) :
-    SdiCard(sdiManager = sdiManager, config = config) {
+class SdiSwipe(private val sdiManager: SdiManager) :
+    SdiCard(sdiManager = sdiManager) {
 
     companion object {
         private const val TAG = "SdiSwipe"
@@ -27,12 +26,11 @@ class SdiSwipe(private val sdiManager: SdiManager, private val config: Config) :
 
     override fun startTransactionFlow(amount: Long): SdiResultCode {
         val response = performValidationChecks(DATE, returnAdditional = true)
-        Log.d(TAG, "Matching Record : ${response.match}")
 
-        retrieveTagsUsingApi(config.getMagstripeTagsToFetch())
+        //retrieveTagsUsingApi(config.getMagstripeTagsToFetch())
 
         // Go to Host for approval
-        listener.display("Transaction Approved")
+        uiListener.display("Transaction Approved")
         Log.d(TAG, "Transaction Approved")
         return SdiResultCode.OK
     }

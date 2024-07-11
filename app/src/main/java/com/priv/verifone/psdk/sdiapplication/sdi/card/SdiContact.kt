@@ -11,9 +11,11 @@
 package com.priv.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
-import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
+import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
+import com.priv.verifone.psdk.sdiapplication.utils.Constants
 import com.verifone.payment_sdk.*
+import java.util.EnumSet
 
 /*
  * This is responsible for handling EMV contact transaction apis
@@ -21,12 +23,13 @@ import com.verifone.payment_sdk.*
  * Any one of them can be used for processing chip transaction based on the user requirement
  * This class uses SdiContactBasic or SdiContactAdvanced internally based on the selected mode for transaction processing
  */
-abstract class SdiContact(private val sdiManager: SdiManager, private val config: Config)
-    : SdiCard(sdiManager= sdiManager, config = config) {
+abstract class SdiContact(private val sdiManager: SdiManager)
+    : SdiCard(sdiManager= sdiManager) {
 
     companion object {
         private const val TAG = "SdiCardCT"
     }
+    val configData = PSDKContext.ctConfigData
 
     internal abstract fun startTransaction(amount: Long): SdiEmvTxnResponse
 
@@ -38,10 +41,12 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
         val initOptions = SdiEmvOptions.create()
         initOptions.setOption(SdiEmvOption.TRACE, true)
         initOptions.setOption(SdiEmvOption.TRACE_ADK_LOG, true)
+        initOptions.setOption(SdiEmvOption.VIRT_1, true)
         val result = sdiManager.emvCt?.initFramework(60, initOptions)
         Log.d(TAG, "Command result: ${result?.name}")
         return result!!
     }
+
     fun waitForCardRemoval() {
         // Wait for card removal
         Log.d(TAG, "Command waitForRemoval ")
@@ -52,6 +57,7 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
     fun exit() : SdiResultCode {
         Log.d(TAG, "End Transaction Command (39-15)")
         sdiManager.emvCt.endTransaction(0)
+
         Log.d(TAG, "Exit CT Framework Command (39 00)")
         val result = sdiManager.emvCt?.exitFramework(null)
         Log.d(TAG, "Command result: ${result?.name}")
@@ -74,49 +80,66 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
 
         val activateResp = cardActivate()
         if (activateResp.result != SdiResultCode.OK) {
-            listener.display("Failed to Activate smartCard reader: ${activateResp.result.name}")
+            uiListener.display("Failed to Activate smartCard reader: ${activateResp.result.name}")
             return activateResp.result
         }
         // Card Activated, start transaction sequence
-        val startTxnResp = startTransaction(amount)
+        val startTxnResp = startTransaction(amount) // exceute
+
         if (startTxnResp.result == SdiResultCode.OK) {
             val response = continueOffline()
             Log.d(TAG, "First GEN AC response: ${response.result.name}")
             when (response.result) {
                 SdiResultCode.EMVSTATUS_ARQC -> {
                     // Fetch transaction data and send online request to Host for approval
-                    crypto.getSensitiveEncryptedData(config.getCtSensitiveTagsToFetch())
-
+                    crypto.getSensitiveEncryptedData(configData.sensitiveTags)
+                    // SCA - RETRY ONLINE PIN
+                    /*
+                        uiListener.setSensitiveDataGreenButtonText(Constants.CONFIRM)
+                        // Interaction with UI elements
+                        uiListener.sensitiveDataEntryTitle("Re Enter Pin")
+                        // Interaction with UI elements
+                        uiListener.showSensitiveDataEntry() // showing PIN entry
+                        val pinResult = getPinUsingCallback()
+                        Log.d(TAG, "PIN Entry Result: ${pinResult.name}")
+                        if (pinResult == SdiResultCode.ERR_PED_BYPASS) {
+                            Log.d(TAG, "PIN Entry Result: ${pinResult.name}")
+                        } else if (pinResult == SdiResultCode.ERR_CANCELLED || pinResult == SdiResultCode.ERR_PED_TIMEOUT) {
+                            Log.d(TAG, "PIN Entry Result: ${pinResult.name}")
+                        }
+                        crypto.getEncryptedPinBlock()
+                    */
                     // Change host response code to decimal value of Amount entry
                     // Map the host response for below api call to execute 2nd GenC execution
                     val genAcResponse = continueOnline(true, byteArrayOf(0x30, 0x30))
                     if (genAcResponse.result == SdiResultCode.EMVSTATUS_TC) {
-                        listener.display("Transaction Approved")
+                        uiListener.display("Transaction Approved")
                         Log.d(TAG, "Transaction Approved")
                     } else {
                         Log.d(TAG, "Transaction Declined Offline")
-                        listener.display("Transaction Offline")
+                        uiListener.display("Transaction Offline")
                     }
                 }
                 SdiResultCode.EMVSTATUS_AAC -> {
                     Log.d(TAG, "Offline Decline")
-                    listener.display("Offline Decline")
+                    uiListener.display("Offline Decline")
                 }
                 SdiResultCode.EMVSTATUS_TC -> {
                     Log.d(TAG, "Offline Approved")
-                    listener.display("Offline Approved")
+                    uiListener.display("Offline Approved")
                 }
                 SdiResultCode.EMVSTATUS_ABORT-> {
                     Log.d(TAG, "Transaction Aborted")
-                    listener.display("Transaction Aborted")
+                    uiListener.display("Transaction Aborted")
                 }
                 else -> {
                     Log.d(TAG, "First GEN AC response not handled: ${response.result.name}")
-                    listener.display("First GEN AC response not handled: ${response.result.name}")
+                    uiListener.display("First GEN AC response not handled: ${response.result.name}")
                     Log.d(TAG, "Transaction completed")
                 }
             }
         }
+        uiListener.waitForCardRemoval()
         waitForCardRemoval()
         return SdiResultCode.OK
     }
@@ -137,21 +160,24 @@ abstract class SdiContact(private val sdiManager: SdiManager, private val config
         Log.d(TAG, "Command Result: ${result.result.name}")
 
         retrieveTags(result.txn)
-        retrieveTagsUsingApi(config.getCtTagsToFetch())
+        retrieveTagsUsingApi(configData.fetchTags)
         return result
     }
 
     @ExperimentalStdlibApi
     internal fun validateOfflinePin() {
         Log.d(TAG, "Send Offline PIN Command (41-05)")
+
         val offlinePinResponse = sdiManager.smartCardCt.sendOfflinePIN()
         Log.d(TAG, "Command Response: ${offlinePinResponse.response.toString(16)}")
         Log.d(TAG, "Command Result: ${offlinePinResponse.result}")
         val result = offlinePinResponse.response.toString(16)
-
+        //SW1 SW2
+        // 90 00
+        // 90 03
         if (result != "9000" && result.length == 4) {
             val attempts = result[3] // Remaining attempt for offline pin entry
-            listener.display("Invalid PIN, please re-try. Attempts left: ${attempts.digitToInt(16)}")
+            uiListener.display("Invalid PIN, please re-try. Attempts left: ${attempts.digitToInt(16)}")
         }
     }
 }

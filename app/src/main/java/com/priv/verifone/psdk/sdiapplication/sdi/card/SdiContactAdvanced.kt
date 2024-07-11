@@ -11,21 +11,21 @@
 package com.priv.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
-import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.dateToString
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByteArray
-import com.priv.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel
+import com.priv.verifone.psdk.sdiapplication.utils.Constants.Companion.CONFIRM
 import com.verifone.payment_sdk.*
 import java.util.*
 import com.verifone.payment_sdk.SdiEmvTxn
+import kotlin.collections.ArrayList
 
 /*
  * This is responsible for processing EMV contact transaction in re-entrance mode
  * Here POS app receives the required trigger events on particular api which are called in loop as shown in code
  */
-class SdiContactAdvanced(private val sdiManager: SdiManager, private val config: Config) :
-    SdiContact(sdiManager, config) {
+class SdiContactAdvanced(private val sdiManager: SdiManager) :
+    SdiContact(sdiManager) {
 
     companion object {
         private const val TAG = "SdiCardContactAdvanced"
@@ -51,12 +51,15 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
         txnOptions.setCtOption(SdiEmvCtTransactionOption.EMV_CT_SELOP_CBCK_APPLI_SEL, true)
         ctTxnConfig.setTransactionOptions(txnOptions)
 
+        /* Exclude configured AID for transaction */
+        ctTxnConfig.setExcludeAID(ArrayList<ByteArray>().apply { add("A0000000032020".hexStringToByteArray())})
+
         val today = Utils.getCurrentDateTime()
         val date = today.dateToString("yyMMdd").hexStringToByteArray()
         val time = today.dateToString("hhmmss").hexStringToByteArray()
 
         var continueStartTxn: Boolean
-        var sdiEmvTxnResponse: SdiEmvTxnResponse? = null
+        var sdiEmvTxnResponse: SdiEmvTxnResponse?
 
         do {
             sdiEmvTxnResponse = sdiManager.emvCt.startTransaction(
@@ -79,7 +82,8 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
                     val cbCandidateList = sdiEmvTxnResponse?.txn?.candidateList
                     if (cbCandidateList != null) {
                         // UI call for user to select application and return the result of selection
-                        val selection = listener.applicationSelection(cbCandidateList)
+                        Log.d(TAG, cbCandidateList.toString())
+                        val selection = uiListener.applicationSelection(cbCandidateList)
 
                         var options:SdiEmvBuildOptions?= null
 
@@ -97,11 +101,14 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
 
                 else -> continueStartTxn = false
             }
-            if (sdiEmvTxnResponse.result != SdiResultCode.OK) {
-                Log.e(TAG, "Failed to start transaction")
-            }
-        }while(continueStartTxn)
 
+        }while(continueStartTxn)
+        if (sdiEmvTxnResponse?.result != SdiResultCode.OK) {
+            Log.e(TAG, "Failed to start transaction")
+        }
+        if (sdiEmvTxnResponse?.txn != null) {
+            retrieveTags(sdiEmvTxnResponse.txn)
+        }
         return sdiEmvTxnResponse!!
     }
 
@@ -112,7 +119,7 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
         Log.d(TAG, "EMV CT Continue Offline Command (39-11)")
         val sdiEmvTxn = SdiEmvTxn.create()
 
-        var response: SdiEmvTxnResponse? = null
+        var response: SdiEmvTxnResponse?
         do {
             response = sdiManager.emvCt.continueOffline(sdiEmvTxn)
             Log.d(TAG, "Command Result: ${response.result.name}")
@@ -120,10 +127,12 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
             when (response.result) {
                 SdiResultCode.EMVSTATUS_APP_REQ_READREC -> {
                     Log.d(TAG, "Read Record")
-                    /* Example usecase: Validate if cashback is allowed
-                     Check PDOL if it requested for the tags you are going to change
-                     prompt user for cashback
-                     Update the tags you want modified ex Transaction Type, Amount , other mount and set it back in txn object
+                    // show cash ui based on emv tags
+                    /*
+                     //Example usecase: Validate if cashback is allowed
+                     // Check PDOL if it requested for the tags you are going to change
+                     //prompt user for cashback
+                     // Update the tags you want modified ex Transaction Type, Amount , other mount and set it back in txn object
                     val today = Utils.getCurrentDateTime()
                     val date = today.dateToString("yyMMdd").hexStringToByteArray()
                     val time = today.dateToString("hhmmss").hexStringToByteArray()
@@ -134,19 +143,21 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
                     */
                     continueOffline = true
                     retrieveTags(response.txn)
-                    retrieveTagsUsingApi(config.getCtTagsToFetch())
+                    //retrieveTagsUsingApi(config.getCtTagsToFetch())
                 }
                 // MS_DECLINE_AAC for requestCardData after read record
-                SdiResultCode.EMVSTATUS_APP_REQ_ONL_PIN, SdiResultCode.EMVSTATUS_APP_REQ_OFFL_PIN, SdiResultCode.EMVSTATUS_APP_REQ_PLAIN_PIN -> {
+                SdiResultCode.EMVSTATUS_APP_REQ_ONL_PIN,
+                SdiResultCode.EMVSTATUS_APP_REQ_OFFL_PIN,
+                SdiResultCode.EMVSTATUS_APP_REQ_PLAIN_PIN -> {
                     retrieveTags(response.txn)
-                    retrieveTagsUsingApi(config.getCtTagsToFetch())
+                    //retrieveTagsUsingApi(config.getCtTagsToFetch())
                     // Interaction with UI elements
-                    listener.setSensitiveDataGreenButtonText(SdiTransactionViewModel.CONFIRM)
+                    uiListener.setSensitiveDataGreenButtonText(CONFIRM)
                     // Interaction with UI elements
-                    listener.sensitiveDataEntryTitle("Enter Pin")
+                    uiListener.sensitiveDataEntryTitle("Enter Pin")
                     // Interaction with UI elements
-                    listener.showSensitiveDataEntry()
-                    val pinResult = getPinUsingCallback()
+                    uiListener.showSensitiveDataEntry() // showing PIN entry
+                    val pinResult = getPinUsingPolling()
                     Log.d(TAG, "PIN Entry Result: ${pinResult.name}")
                     if (pinResult == SdiResultCode.ERR_PED_BYPASS) {
                         val txnSteps = EnumSet.of(SdiEmvTransactionSteps.MS_PIN_BYPASS)
@@ -155,11 +166,13 @@ class SdiContactAdvanced(private val sdiManager: SdiManager, private val config:
                         val txnSteps = EnumSet.of(SdiEmvTransactionSteps.MS_ABORT_TXN)
                         sdiEmvTxn.transactionSteps = txnSteps
                     }
-                    if (response.result == SdiResultCode.EMVSTATUS_APP_REQ_OFFL_PIN ||
-                        response.result == SdiResultCode.EMVSTATUS_APP_REQ_PLAIN_PIN) {
+                    if ((response.result == SdiResultCode.EMVSTATUS_APP_REQ_OFFL_PIN ||
+                        response.result == SdiResultCode.EMVSTATUS_APP_REQ_PLAIN_PIN) &&
+                        pinResult == SdiResultCode.OK) {
                         validateOfflinePin()
                     }
-                    if (response.result == SdiResultCode.EMVSTATUS_APP_REQ_ONL_PIN && pinResult == SdiResultCode.OK) {
+                    if (response.result == SdiResultCode.EMVSTATUS_APP_REQ_ONL_PIN &&
+                        pinResult == SdiResultCode.OK) {
                         crypto.getEncryptedPinBlock()
                     }
                     continueOffline = true

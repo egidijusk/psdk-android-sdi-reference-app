@@ -11,31 +11,31 @@
 package com.priv.verifone.psdk.sdiapplication.sdi.card
 
 import android.util.Log
-import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
-import com.priv.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel
-import com.priv.verifone.psdk.sdiapplication.ui.transaction.SdiTransactionViewModel.Companion.ENTER
+import com.priv.verifone.psdk.sdiapplication.utils.Constants.Companion.CONFIRM
+import com.priv.verifone.psdk.sdiapplication.utils.Constants.Companion.ENTER
 import com.verifone.payment_sdk.SdiControlCallback
 import com.verifone.payment_sdk.SdiManager
 import com.verifone.payment_sdk.SdiResultCode
 import com.verifone.payment_sdk.SdiTlv
 
-class SdiManual(private val sdiManager: SdiManager, private val config: Config) :
-    SdiCard(sdiManager, config) {
+class SdiManual(private val sdiManager: SdiManager) :
+    SdiCard(sdiManager) {
     companion object {
         private const val TAG = "SdiCardManual"
     }
     private val controlCallback: ControlCallback = ControlCallback()
 
     override fun initialize(): SdiResultCode {
+        Log.d(TAG, "initialize")
         sdiManager.setControlCallback(controlCallback)
         return super.initialize()
     }
 
     override fun startTransactionFlow(amount: Long): SdiResultCode {
-        listener.setSensitiveDataGreenButtonText(ENTER)
-        listener.sensitiveDataEntryTitle("Enter Card Number")
-        listener.showSensitiveDataEntry()
-        val buttons = listener.getSensitiveDataTouchCoordinates()
+        uiListener.setSensitiveDataGreenButtonText(ENTER)
+        uiListener.sensitiveDataEntryTitle("Enter Card Number")
+        uiListener.showSensitiveDataEntry()
+        val buttons = uiListener.getSensitiveDataTouchCoordinates()
         Log.d(TAG, "cardDataEntry Command (21-02)")
 
         // 01 to skip CVV sdiManager.system.setCVVDeactivation(0x01)
@@ -44,14 +44,15 @@ class SdiManual(private val sdiManager: SdiManager, private val config: Config) 
         val result = sdiManager.msr.cardDataEntry(buttons)
         Log.d(TAG, "Command Result response : ${result.response}")
         Log.d(TAG, "Command Result result : ${result.result.name}")
-        result.response
+        crypto.getSensitiveEncryptedData(listOf("5A"))
+
         return SdiResultCode.OK
     }
 
     private inner class ControlCallback : SdiControlCallback() {
         override fun controlCallback(data: SdiTlv?): Int {
             val CONTINUE = 1
-            val RETRY = 2
+            //val RETRY = 2
             val ABORT = 3
             val messageTag = 0xF0
             val panEnteredTag = 0xBF01
@@ -75,9 +76,9 @@ class SdiManual(private val sdiManager: SdiManager, private val config: Config) 
                     Log.d(TAG, "Pan Entered")
                     result = CONTINUE
                     // if 0x14
-                    listener.setSensitiveDataGreenButtonText(SdiTransactionViewModel.CONFIRM)
-                    listener.sensitiveDataEntryTitle("Enter Expiry Date")
-                    listener.sensitiveDigitsEntered("")
+                    uiListener.setSensitiveDataGreenButtonText(CONFIRM)
+                    uiListener.sensitiveDataEntryTitle("Enter Expiry Date")
+                    uiListener.sensitiveDigitsEntered("")
                     //if 0x15 // probably for MC torn transaction test case
                     //listener.display("Re-tap")
                 }
@@ -86,10 +87,13 @@ class SdiManual(private val sdiManager: SdiManager, private val config: Config) 
                 if (data.obtain(messageTag).count(expiryDateEntered) > 0) {
                     Log.d(TAG, "expiryDateCheck : ${data.obtain(messageTag).obtain(expiryDateEntered).count(expiryDateCheck)}")
                     Log.d(TAG, "Expiry Date Entered")
-                    listener.setSensitiveDataGreenButtonText(SdiTransactionViewModel.CONFIRM)
-                    listener.sensitiveDataEntryTitle("Enter CVV")
-                    listener.sensitiveDigitsEntered("")
+                    uiListener.setSensitiveDataGreenButtonText(CONFIRM)
+                    uiListener.sensitiveDataEntryTitle("Enter CVV")
+                    uiListener.sensitiveDigitsEntered("")
                     result = CONTINUE
+                    // if 0x14
+                    //if 0x15 // probably for MC torn transaction test case
+                    //listener.display("Re-tap")
                 }
             }
             return result

@@ -10,7 +10,6 @@
 
 package com.priv.verifone.psdk.sdiapplication.sdi.config
 
-import android.content.Context
 import com.verifone.payment_sdk.*
 
 /*
@@ -18,10 +17,10 @@ import com.verifone.payment_sdk.*
  * Load the configs(terminal, application and capk) to terminals
  * Log the loaded config
  */
-class Config(private val context: Context, private val sdk: PaymentSdk) {
+class Config(private val sdk: PaymentSdk) {
 
-    private val ctConfig = CtConfig(context, sdk)
-    private val ctlsConfig =  CtlsConfig(context, sdk)
+    private val ctConfig = CtConfig(sdk)
+    private val ctlsConfig =  CtlsConfig(sdk)
 
     fun setContactConfiguration(): SdiResultCode {
         return ctConfig.setContactConfiguration()
@@ -53,16 +52,6 @@ class Config(private val context: Context, private val sdk: PaymentSdk) {
 
     fun getMagstripeTagsToFetch(): List<String> {
         return listOf("57", "5A", "5F24", "9F02", "9F03", "5F2A", "9F35")
-    }
-
-    // Returns all the configured EMV contact kernels in terminal
-    fun getEmvContactKernelVersions(): String? {
-        return ctConfig.getEmvContactKernelVersions()
-    }
-
-    // Returns all the configured EMV contactless kernels in terminal
-    fun getEmvContactlessKernelVersions(): String? {
-        return ctlsConfig.getEmvContactlessKernelVersions()?.replace(";", "<br>")
     }
 
     fun logCtConfiguration() {

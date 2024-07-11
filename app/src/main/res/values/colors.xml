@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="success_color">#ff009688</color>
-    <color name="blue_gray">#ff4b636f</color>
-    <color name="light_blue_500">#ff03a9f4</color>
-
-    <color name="home_background">#00000000</color>
-    <color name="background">#ffffffff</color>
-
-    <color name="add_color">#fa8223</color>
-    <color name="add_color_disabled">#ffffc080</color>
-    <color name="backspace_disabled">#ffcdd3d9</color>
-
-    <color name="button_material_dark" tools:override="true">#ff5a595b</color>
-    <color name="button_material_light" tools:override="true">#ffd6d7d7</color>
-    <color name="button_disabled">#00ffffff</color>
-    <color name="button_normal">#00ffffff</color>
-    <color name="button_pressed">#fff2f4f5</color>
-    <color name="button_ghost_border">#ff494949</color>
-    <color name="calendar_active_month_bg">#fff5f7f9</color>
-
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
     <color name="red">#F44336</color>
     <color name="yellow">#F8DE31</color>
 

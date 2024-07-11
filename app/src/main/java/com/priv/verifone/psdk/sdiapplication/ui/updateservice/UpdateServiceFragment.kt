@@ -1,50 +1,64 @@
-/*
-* Copyright (c) 2021 by VeriFone, Inc.
-* All Rights Reserved.
-* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
-* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
-*
-* Use, disclosure, or reproduction is prohibited
-* without prior written approval from VeriFone, Inc.
-*/
-
 package com.priv.verifone.psdk.sdiapplication.ui.updateservice
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.priv.verifone.psdk.sdiapplication.R
-import com.priv.verifone.psdk.sdiapplication.databinding.FragmentUpdateBinding
-import com.priv.verifone.psdk.sdiapplication.viewmodel.PsdkViewModelFactory
+import com.priv.verifone.psdk.sdiapplication.databinding.FragmentUpdateserviceBinding
+import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.PsdkViewModelFactory
 
 class UpdateServiceFragment : Fragment() {
 
-    companion object {
-        private const val TAG = "UpdateServiceFragment"
-    }
+    private var _binding: FragmentUpdateserviceBinding? = null
 
-    private lateinit var viewModel: UpdateServiceViewModel
-    private lateinit var binding: FragmentUpdateBinding
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update, container, false)
-        setHasOptionsMenu(true)
-        viewModel = ViewModelProvider(
-            requireActivity(), PsdkViewModelFactory(requireActivity().application)
-        ).get(UpdateServiceViewModel::class.java)
-        binding.viewModel = viewModel
-        return binding.root
+    ): View {
+        val updateServiceViewModel = ViewModelProvider(requireActivity(),
+            PsdkViewModelFactory(requireActivity().application)
+        )[UpdateserviceViewModel::class.java]
+
+
+        _binding = FragmentUpdateserviceBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        val textView: TextView = binding.statusText
+        updateServiceViewModel.text.observe(viewLifecycleOwner) {
+            textView.text = it
+        }
+
+        binding.btnInstallApk.setOnClickListener{
+            updateServiceViewModel.installApk()
+        }
+        binding.btnInstallOta.setOnClickListener{
+            updateServiceViewModel.installAndroidOtaPackage()
+        }
+        binding.btnUninstallApk.setOnClickListener{
+            updateServiceViewModel.unInstallApk()
+        }
+        binding.btnSuperPackage.setOnClickListener{
+            updateServiceViewModel.installSuperPackage()
+        }
+        binding.btnVrkPayload.setOnClickListener{
+            updateServiceViewModel.installVrkPayload()
+        }
+        binding.btnLastRecoveryLog.setOnClickListener{
+            updateServiceViewModel.fetchLastRecoveryStatus()
+        }
+        return root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        binding.lifecycleOwner = this
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

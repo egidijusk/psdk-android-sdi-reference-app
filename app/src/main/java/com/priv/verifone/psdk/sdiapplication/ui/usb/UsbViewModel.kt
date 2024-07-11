@@ -12,9 +12,9 @@ package com.priv.verifone.psdk.sdiapplication.ui.usb
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.BaseViewModel
 import com.priv.verifone.psdk.sdiapplication.usb.UsbEventListener
 import com.priv.verifone.psdk.sdiapplication.usb.UsbService
-import com.priv.verifone.psdk.sdiapplication.viewmodel.BaseViewModel
 import com.verifone.usbconnman.Constants
 import com.verifone.usbconnman.Constants.SerialDeviceNumber
 import java.nio.charset.StandardCharsets
@@ -31,15 +31,22 @@ class UsbViewModel(private val app: Application) : BaseViewModel(app), UsbEventL
     private val usbService = UsbService()
 
     fun connect () {
-        usbService.connect(SerialDeviceNumber.SERIAL_8)
+        background {
+            usbService.connect(SerialDeviceNumber.SERIAL_8)
+        }
+
     }
 
     fun send () {
-        usbService.send("Test data")
+        background {
+            usbService.send("Test data")
+        }
     }
 
     fun disconnect() {
-        usbService.disconnect()
+        background {
+            usbService.disconnect()
+        }
     }
 
     init {
@@ -47,7 +54,6 @@ class UsbViewModel(private val app: Application) : BaseViewModel(app), UsbEventL
     }
 
     override fun onDataReceived(data: ByteArray) {
-
         receivedData.postValue("Data Received: ${String(data, StandardCharsets.UTF_8)}")
     }
 

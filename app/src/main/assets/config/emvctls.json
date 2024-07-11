@@ -66,6 +66,34 @@
           "contactlessTransactionLimitDFAB41": "000999999999",
           "contactlessCVMRequiredLimitDFAB42": "000000010000"
         }
+      },
+      {
+        "aid": "A0000000032020",
+        "kernelID": "030000",
+        "asiDFAB02": "01",
+        "appFlowCapDFAB03": "1000000000",
+        "specialTRXConfigDFAB05": "2120110000000000",
+        "retapFieldOffDFAB08": "0A",
+        "additionalTagsTRMDFAB20": "",
+        "additionalTagsCRDDFAB21": "",
+        "defaultApplicationNameDFAB22": "VISA",
+        "visaAid": {
+          "termIdent9F1C": "3132333435363738",
+          "terminalCountryCode9F1A": "0826",
+          "terminalType9F35": "22",
+          "terminalTransactionQualifier9F66": "36000000",
+          "terminalCapabilities9F33": "E06008",
+          "additionalTerminalCapabilities9F40": "F000F0A001",
+          "versionNumber9F09": "008D",
+          "merchantCategoryCode9F15": "5999",
+          "merchantIdentifier9F16": "",
+          "merchantNameAndLocation9F4E": "",
+          "tecSupportDFAB30": "01",
+          "appFlowCapDFAB31": "8203000000",
+          "contactlessFloorLimitDFAB40": "000000004000",
+          "contactlessTransactionLimitDFAB41": "000999999999",
+          "contactlessCVMRequiredLimitDFAB42": "000000010000"
+        }
       }
     ]
   },
@@ -351,7 +379,9 @@
     "9F37",
     "9F5B",
     "9F6E",
-    "9F42"
+    "9F42",
+    "DF42",
+    "9F09"
   ],
   "sensitiveTags": [
     "57",

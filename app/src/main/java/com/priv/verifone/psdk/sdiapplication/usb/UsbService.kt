@@ -24,7 +24,7 @@ class UsbService {
         private const val BAUD_RATE = 115200
         private const val DATA_BITS = 8
         private const val TIMEOUT_MS = 5000
-        private const val RECEIVE_DATA_LEN = 64
+        private const val RECEIVE_DATA_LEN = 8
 
     }
 
@@ -39,7 +39,7 @@ class UsbService {
         callback = listener
     }
 
-    fun connect(SERIAL: Constants.SerialDeviceNumber) {
+    fun connect(SERIAL: Constants.SerialDeviceNumber) { //SerialDeviceNumber.SERIAL_8
         try {
             // 1- Get UsbConnMan Instance
             usbconnman = UsbConnMan.create()
@@ -75,7 +75,7 @@ class UsbService {
             // 8- Give some time for the connection to be established
             Thread.sleep(300)
 
-            // 9- Init receiving async (Data will be received in onSerialReadCompleted in the listener above)
+            // 9- Init receiving async (Data will be received in onSerialReadCompleted in the listener below)
             status = serialConnection?.receive(RECEIVE_DATA_LEN, TIMEOUT_MS)
             Log.d(TAG, "Read from SERIAL_PORT: ${status?.name}")
 
@@ -88,11 +88,9 @@ class UsbService {
     fun disconnect() {
         serialConnection?.close()
         usbconnman?.removeListener()
-
     }
 
     fun send(data: String) {
-
         serialConnection!!.send((data + "\n\r").toByteArray(), written)
     }
 
@@ -121,7 +119,7 @@ class UsbService {
 
             } catch (e: RemoteException) {
                 Log.d(TAG, "Failed to re-register receive for COM Port")
-                // send an onError callback ??? , well its upto the application the callback
+                // send an onError callback ??? , well its upto the application this
                 //  implementation is just an example
             }
         }

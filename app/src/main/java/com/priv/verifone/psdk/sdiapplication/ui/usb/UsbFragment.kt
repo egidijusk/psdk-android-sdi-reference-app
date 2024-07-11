@@ -1,51 +1,61 @@
-/*
-* Copyright (c) 2021 by VeriFone, Inc.
-* All Rights Reserved.
-* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
-* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
-*
-* Use, disclosure, or reproduction is prohibited
-* without prior written approval from VeriFone, Inc.
-*/
-
 package com.priv.verifone.psdk.sdiapplication.ui.usb
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.priv.verifone.psdk.sdiapplication.R
 import com.priv.verifone.psdk.sdiapplication.databinding.FragmentUsbBinding
-import com.priv.verifone.psdk.sdiapplication.viewmodel.PsdkViewModelFactory
+import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.PsdkViewModelFactory
 
 class UsbFragment : Fragment() {
 
-    companion object {
-        private const val TAG = "UsbFragment"
-    }
+    private var _binding: FragmentUsbBinding? = null
 
-    private lateinit var viewModel: UsbViewModel
-    private lateinit var binding: FragmentUsbBinding
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val viewModel = ViewModelProvider(requireActivity(),
+            PsdkViewModelFactory(requireActivity().application)
+        )[UsbViewModel::class.java]
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_usb, container, false)
-        setHasOptionsMenu(true)
-        viewModel = ViewModelProvider(
-            requireActivity(), PsdkViewModelFactory(requireActivity().application)
-        ).get(UsbViewModel::class.java)
-        binding.viewModel = viewModel
 
-        return binding.root
+        _binding = FragmentUsbBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+
+        binding.btnConnect.setOnClickListener{
+            viewModel.connect()
+        }
+        binding.btnDisconnect.setOnClickListener{
+            viewModel.disconnect()
+        }
+        binding.btnSend.setOnClickListener{
+            viewModel.send()
+        }
+        viewModel.receivedData.observe(viewLifecycleOwner, Observer{data->
+            if (!data.isNullOrEmpty()) {
+                binding.receivedData.text = data
+            }
+        })
+        viewModel.operationStatus.observe(viewLifecycleOwner, Observer{status->
+            if (!status.isNullOrEmpty()) {
+                binding.status.text = status
+            }
+        })
+        return root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        binding.lifecycleOwner = viewLifecycleOwner
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

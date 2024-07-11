@@ -16,20 +16,23 @@ import com.verifone.payment_sdk.SdiResultCode
 import com.priv.verifone.psdk.sdiapplication.sdi.card.*
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiCard.Companion.cardDetect
 import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
+import com.verifone.payment_sdk.Decimal
+import java.math.BigDecimal
 import kotlin.experimental.and
+import kotlin.experimental.or
 
-class TransactionManager(private val sdiManager: SdiManager, config: Config) {
+class TransactionManager(private val sdiManager: SdiManager) {
 
     companion object {
         private const val TAG = "TransactionManager"
     }
 
-    private val contactTransactionBasic = SdiContactBasic(sdiManager, config)
-    private val contactTransactionAdvanced = SdiContactAdvanced(sdiManager, config)
-    private val manualTransaction = SdiManual(sdiManager, config)
+    private val contactTransactionBasic = SdiContactBasic(sdiManager)
+    private val contactTransactionAdvanced = SdiContactAdvanced(sdiManager)
+    private val manualTransaction = SdiManual(sdiManager)
     private lateinit var contactTransaction: SdiContact
-    private val ctlsTransaction = SdiContactless(sdiManager, config)
-    private val swipeTransaction = SdiSwipe(sdiManager, config)
+    private val ctlsTransaction = SdiContactless(sdiManager)
+    private val swipeTransaction = SdiSwipe(sdiManager)
     private val nfcTransaction = SdiNfcCard(sdiManager)
 
     // This field is used for enabling the card reader detecting interfaces during detection process
@@ -37,7 +40,7 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
 
     private lateinit var listener: TransactionListener
 
-    // This sets the required listeners to PSDK and POS for handling callback events
+    // This sets the required listener for UI Interactions in the reference app
     fun setListener(listener: TransactionListener) {
         contactTransactionBasic.setListener(listener)
         contactTransactionAdvanced.setListener(listener)
@@ -90,7 +93,7 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
      * @param basic  : Selects the emv contact processing way (Callback mode or Re-Entrance mode)
      */
     fun startTransactionFlow(amount: Long, basic: Boolean) {
-
+        techEnabled = SdiCard.TEC_ALL
         contactTransaction = if (basic) {
             // callback - simple
             contactTransactionBasic
@@ -113,7 +116,8 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
                         techEnabled = SdiCard.TEC_CT
                     }
                 }
-                listener.display("Present Card")
+
+                listener.display("$${Decimal(2, amount).toBigDecimal()}\nPresent Card")
                 val detectResp = cardDetect(techEnabled, sdiManager = sdiManager)
                 if (detectResp.result == SdiResultCode.OK) {
                     Log.d(TAG, "Card detected successfully : ${detectResp.result.name}, tec : ${detectResp.tecOut}")
@@ -125,12 +129,12 @@ class TransactionManager(private val sdiManager: SdiManager, config: Config) {
                         val ctlsResult = ctlsTransaction.startTransactionFlow(amount)
                         // Fallback to Chip, below code does not cover all use cases
                         if (ctlsResult == SdiResultCode.EMVSTATUS_TXN_EMPTY_LIST) {
-                            techEnabled = SdiCard.TEC_CT
+                            techEnabled = SdiCard.TEC_CT or SdiCard.TEC_MSR
                             listener.showLeds(false)
                             continue
                         }
                         if (ctlsResult == SdiResultCode.EMVSTATUS_TXN_CTLS_MOBILE) {
-                            techEnabled = SdiCard.TEC_CTLS
+                            techEnabled = SdiCard.TEC_ALL
                             continue
                         }
                     }

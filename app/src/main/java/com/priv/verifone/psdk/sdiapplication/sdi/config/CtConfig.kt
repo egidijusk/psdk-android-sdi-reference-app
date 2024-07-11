@@ -18,17 +18,15 @@ import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexString
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.verifone.payment_sdk.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 // This is mapped to emv contact configuration and respective operations
-class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
+open class CtConfig(private val sdk: PaymentSdk) {
 
-    private val ctConfig = Gson().fromJson(
-        Utils.getDataFromAssets(context, "config/emvct.json"),
-        EmvContactConfig::class.java
-    )
+    private val ctConfig = PSDKContext.ctConfigData
 
     fun setContactConfiguration(): SdiResultCode {
 
@@ -50,7 +48,7 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
         Log.d(TAG, "Init CT Framework Command (39 00) ")
         val initOptions = SdiEmvOptions.create()
         initOptions.setOption(SdiEmvOption.TRACE, true)
-        //initOptions.setOption(SdiEmvOption.CONFIG_MODE, true)
+        initOptions.setOption(SdiEmvOption.CONFIG_MODE, true)
         initOptions.setOption(SdiEmvOption.TRACE_ADK_LOG, true)
         val result = sdk.sdiManager?.emvCt?.initFramework(60, initOptions)
         Log.d(TAG, "Command result: ${result?.name}")
@@ -105,9 +103,9 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
         return SdiResultCode.OK
     }
 
-    private fun getCtTerminalConfig(): SdiEmvConf {
+    internal open fun getCtTerminalConfig(): SdiEmvConf {
 
-        val sdiEmvConf = SdiEmvConf.create();
+        val sdiEmvConf = SdiEmvConf.create()
         sdiEmvConf.terminalType = ctConfig.terminal.terminalType.toShort(radix = 16)
         sdiEmvConf.terminalCountryCode = ctConfig.terminal.terminalCountryCode.toInt(radix = 16)
         sdiEmvConf.terminalCapabilities =
@@ -119,7 +117,7 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
         return sdiEmvConf
     }
 
-    private fun getCtApplicationConfig(): ArrayList<SdiEmvConf> {
+    internal open fun getCtApplicationConfig(): ArrayList<SdiEmvConf> {
 
         val sdiAidConfList = ArrayList<SdiEmvConf>()
         for (application in ctConfig.applications) {
@@ -161,7 +159,7 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
         return sdiAidConfList
     }
 
-    private fun getCtCapks(): List<EmvContactConfig.Capk> {
+    internal open fun getCtCapks(): List<EmvContactConfig.Capk> {
         return ctConfig.capks
     }
 
@@ -295,15 +293,6 @@ class CtConfig(private val context: Context, private val sdk: PaymentSdk) {
             e.printStackTrace()
         }
         return null
-    }
-
-    fun getEmvContactKernelVersions(): String? {
-        val result = initialize()
-        if (result != SdiResultCode.OK) return ""
-        val ctKernelInfo = sdk.sdiManager.emvCt.termData.emv.kernelVersion
-        Log.d(TAG, "emvContactKernelVersions: $ctKernelInfo")
-        exit()
-        return ctKernelInfo
     }
 
     companion object {

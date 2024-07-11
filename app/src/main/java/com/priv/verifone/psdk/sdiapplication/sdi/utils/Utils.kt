@@ -33,6 +33,24 @@ class Utils {
             return Calendar.getInstance().time
         }
 
+        fun String.bit(bitPosition: Int) {
+            this.forEachIndexed { index, bit ->
+                if (bit == '1' ) {
+                    takeAction(index)
+                }
+            }
+        }
+
+        fun takeAction(bitPosition: Int) {
+            when (bitPosition) {
+                0 -> println("Action for bit 0: Something special for the first bit!")
+                1 -> println("Action for bit 1: Maybe toggle a setting?")
+                2 -> println("Action for bit 2: Launch a function.")
+                3 -> println("Action for bit 3: Display a message.")
+                else -> println("Action for bit $bitPosition: Default action.")
+            }
+        }
+
         fun String.hexStringToByteArray(): ByteArray {
             val result = ByteArray(this.length / 2)
             for (i in result.indices) {
