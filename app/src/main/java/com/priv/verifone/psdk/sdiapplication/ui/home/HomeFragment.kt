@@ -1,9 +1,16 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.home
 
-import android.app.UiModeManager
-import android.content.Context
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,19 +26,16 @@ import com.priv.verifone.psdk.sdiapplication.databinding.FragmentHomeBinding
 import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.PsdkViewModelFactory
 import kotlinx.coroutines.launch
 
-
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     private var _viewModel: HomeViewModel? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val viewModel get() = _viewModel!!
 
     override fun onCreateView(
@@ -91,7 +95,7 @@ class HomeFragment : Fragment() {
             // Handle the disconnect action
             viewModel.transferLogs()
         }
-        // Set a listener for changes in the checkbox state
+
         // Set a listener for changes in the checkbox state
         binding.btnDarkMode.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -102,8 +106,6 @@ class HomeFragment : Fragment() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         })
-
-        // Optionally, set the checkbox state based on the current theme
 
         // Optionally, set the checkbox state based on the current theme
         val currentNightMode = (resources.configuration.uiMode

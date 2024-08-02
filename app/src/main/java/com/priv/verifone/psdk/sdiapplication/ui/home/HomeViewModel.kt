@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.home
 
 import android.app.Application
@@ -27,7 +37,6 @@ class HomeViewModel(val app: Application) : BaseViewModel(app), ConnectionCallba
     suspend fun connect() {
         _text.postValue("Connecting...")
         val result = sdiConnection.connect()
-
     }
 
     fun disconnect() {
@@ -62,7 +71,6 @@ class HomeViewModel(val app: Application) : BaseViewModel(app), ConnectionCallba
     override fun onConnected() {
         _text.postValue("Connected")
         _info.postValue(getDeviceInformation(paymentSdk))
-
     }
 
     override fun onDisconnected() {

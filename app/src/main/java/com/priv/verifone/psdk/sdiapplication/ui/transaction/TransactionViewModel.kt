@@ -1,11 +1,17 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.transaction
 
 import android.app.Application
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.util.Log
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
@@ -19,7 +25,6 @@ import com.priv.verifone.psdk.sdiapplication.utils.Constants.Companion.CONFIRM
 import com.verifone.payment_sdk.SdiEmvCandidate
 import com.verifone.payment_sdk.SdiTouchButton
 import java.math.BigDecimal
-
 
 class TransactionViewModel(application: Application) : BaseViewModel(app = application) {
 
@@ -57,7 +62,6 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
     init {
         transactionManager.setListener(transactionListener)
     }
-
 
     private inner class TransactionListenerImpl : TransactionListener {
         // override transaction listener

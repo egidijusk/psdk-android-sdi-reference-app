@@ -124,12 +124,6 @@ abstract class SdiCard(private val sdiManager: SdiManager) {
         }
     }
 
-    /*
-    * This function manages the api calls of SdiSecureData(SdiCrypto and SdiData module apis)
-    * This might fail on terminal as it needs proper security config and payment keys to be loaded
-    * We have added this sample code to provide the reference of api flows and its usage.
-    */
-
     // PIN Entry using Status Callback method
     fun getPinUsingCallback() = runBlocking {
         var pinResult = SdiResultCode.FAIL

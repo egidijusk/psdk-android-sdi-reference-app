@@ -14,6 +14,7 @@ import android.app.Application
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.priv.verifone.psdk.sdiapplication.ui.barcodescan.ScannerViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.configuration.ConfigurationViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.home.HomeViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.transaction.TransactionViewModel
@@ -41,6 +42,9 @@ class PsdkViewModelFactory(
         }
         if (modelClass.isAssignableFrom(UsbViewModel::class.java)) {
             return UsbViewModel(application) as T
+        }
+        if (modelClass.isAssignableFrom(ScannerViewModel::class.java)) {
+            return ScannerViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
