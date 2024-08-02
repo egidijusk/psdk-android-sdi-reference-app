@@ -16,15 +16,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.priv.verifone.psdk.sdiapplication.databinding.FragmentHomeBinding
+import com.priv.verifone.psdk.sdiapplication.ui.utils.DateTimePickerUtil
+import com.priv.verifone.psdk.sdiapplication.ui.utils.DateTimeUtil
 import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.PsdkViewModelFactory
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
@@ -37,6 +39,8 @@ class HomeFragment : Fragment() {
 
     // This property is only valid between onCreateView and onDestroyView.
     private val viewModel get() = _viewModel!!
+
+    private lateinit var calendar:Calendar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,14 +70,13 @@ class HomeFragment : Fragment() {
         val btnConnect = binding.btnConnect
         val btnDisconnect = binding.btnDisconnect
         val btnLogs = binding.btnLogs
-
+        calendar = Calendar.getInstance();
         // Set up the click listeners
         btnConnect.setOnClickListener {
             // Handle the connect action
             lifecycleScope.launch {
                 viewModel.connect()
             }
-
         }
         binding.btnCrash.setOnClickListener {
             throw RuntimeException("This is a crash simulation.")
@@ -97,7 +100,7 @@ class HomeFragment : Fragment() {
         }
 
         // Set a listener for changes in the checkbox state
-        binding.btnDarkMode.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        binding.btnDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 // Enable dark mode
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -105,15 +108,35 @@ class HomeFragment : Fragment() {
                 // Disable dark mode
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
-        })
+        }
 
         // Optionally, set the checkbox state based on the current theme
         val currentNightMode = (resources.configuration.uiMode
                 and Configuration.UI_MODE_NIGHT_MASK)
         binding.btnDarkMode.isChecked = currentNightMode == Configuration.UI_MODE_NIGHT_YES
+        binding.btnSetDateTime.setOnClickListener { v -> showDateTimePicker() }
         return root
     }
+    private fun showDateTimePicker() {
+        DateTimePickerUtil.showDatePicker(requireContext()) { view, year, month, dayOfMonth ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            DateTimePickerUtil.showTimePicker(requireContext()) { view1, hourOfDay, minute ->
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                calendar.set(Calendar.MINUTE, minute)
+                calendar.set(Calendar.SECOND, 0)
 
+                // Now set the date and time using the selected values
+                setDateTime(calendar.getTimeInMillis())
+            }
+        }
+    }
+
+    private fun setDateTime(timestamp: Long) {
+        // Implement the method to set date and time as shown in the previous answer
+        DateTimeUtil.setDateTime(requireContext(), timestamp)
+    }
     override fun onStart() {
         super.onStart()
         viewModel.setCurrentMode()

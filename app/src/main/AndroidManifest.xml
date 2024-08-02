@@ -16,6 +16,9 @@
     <uses-permission android:name="android.permission.START_ACTIVITIES_FROM_BACKGROUND"
         tools:ignore="ProtectedPermissions" />
 
+    <uses-permission android:name="android.permission.SET_TIME" />
+    <uses-permission android:name="android.permission.SET_TIME_ZONE" />
+
     <!-- add tools:replace="android:allowBackup" for linking PSDK SDI -->
     <application
         android:name="com.priv.verifone.psdk.sdiapplication.PSDKContext"
