@@ -4,25 +4,25 @@
       {
         "tag": "9F35",
         "value":"22",
-        "type": "hex",
+        "type": "terminalType",
         "name": "Terminal Type"
       },
       {
         "tag": "9F1A",
         "value":"0826",
-        "type": "hex",
+        "type": "hex2bcd3",
         "name": "Terminal Country Code"
       },
       {
         "tag": "5F2A",
         "value":"0978",
-        "type": "hex",
+        "type": "hex2bcd3",
         "name": "Transaction Currency Code"
       },
       {
         "tag": "5F36",
         "value":"2",
-        "type": "int",
+        "type": "transactionExponentType",
         "name": "Transaction Currency Exponent"
       },
       {

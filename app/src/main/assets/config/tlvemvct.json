@@ -4,37 +4,37 @@
       {
         "tag": "9F35",
         "value":"22",
-        "type": "hex",
+        "type": "terminalType",
         "name": "Terminal Type"
       },
       {
         "tag": "9F1A",
         "value":"0036",
-        "type": "hex",
+        "type": "hex2bcd3",
         "name": "Terminal Country Code"
       },
       {
         "tag": "9F33",
         "value":"E0F8C8",
-        "type": "hex",
+        "type": "hex3",
         "name": "Terminal Capabilities"
       },
       {
         "tag": "9F40",
         "value":"F000F0A001",
-        "type": "hex",
+        "type": "hex5",
         "name": "Terminal Additional Capabilities"
       },
       {
         "tag": "5F2A",
         "value":"0978",
-        "type": "hex",
+        "type": "hex2bcd3",
         "name": "Transaction Currency"
       },
       {
         "tag": "5F36",
         "value":"2",
-        "type": "int",
+        "type": "transactionExponentType",
         "name": "Transaction Currency Exponent"
       }
     ]
