@@ -1,0 +1,4257 @@
+{
+  "terminal": {
+    "fields": [
+      {
+        "tag": "9F35",
+        "value":"22",
+        "type": "hex",
+        "name": "Terminal Type"
+      },
+      {
+        "tag": "9F1A",
+        "value":"0826",
+        "type": "hex",
+        "name": "Terminal Country Code"
+      },
+      {
+        "tag": "5F2A",
+        "value":"0978",
+        "type": "hex",
+        "name": "Transaction Currency Code"
+      },
+      {
+        "tag": "5F36",
+        "value":"2",
+        "type": "int",
+        "name": "Transaction Currency Exponent"
+      },
+      {
+        "tag": "DF62",
+        "value":"0075",
+        "type": "hex",
+        "name": "Beep Volume"
+      },
+      {
+        "tag": "DFD006",
+        "value":"1500",
+        "type": "hex",
+        "name": "Beep Frequency Success"
+      },
+      {
+        "tag": "DFD007",
+        "value":"0750",
+        "type": "hex",
+        "name": "Beep Frequency Alert"
+      },
+      {
+        "tag": "DFD008",
+        "value":"0A",
+        "type": "hex",
+        "name": "Second Tap Delay"
+      }
+    ]
+  },
+  "ApplicationData": [
+    {
+      "AID": "A0000000031010",
+      "KernelID": "030000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "VISA"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "Visa",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36204000"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E0F8C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "008D000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0A00000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000002500"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000001000"
+          }
+        ],
+        "drl": {
+          "name": "VisaDRLParams",
+          "tag": "FFAB01",
+          "values": [
+            {
+              "fields": [
+                {
+                  "tag": "9F5A",
+                  "name": "AppProgramId",
+                  "type": "hexBinary",
+                  "value": "3102682620"
+                },
+                {
+                  "tag": "DFAB40",
+                  "name": "ContactlessFloorLimit",
+                  "type": "amount12",
+                  "value": "000000000000"
+                },
+                {
+                  "tag": "DFAB41",
+                  "name": "ContactlessTransactionLimit",
+                  "type": "amount12",
+                  "value": "000000999999"
+                },
+                {
+                  "tag": "DFAB42",
+                  "name": "ContactlessCVMRequiredLimit",
+                  "type": "amount12",
+                  "value": "000000003001"
+                },
+                {
+                  "tag": "DFAB49",
+                  "name": "OnOffSwitch",
+                  "type": "hex1",
+                  "value": "00"
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "tag": "9F5A",
+                  "name": "AppProgramId",
+                  "type": "hexBinary",
+                  "value": "3102682612000003"
+                },
+                {
+                  "tag": "DFAB40",
+                  "name": "ContactlessFloorLimit",
+                  "type": "amount12",
+                  "value": "000000000000"
+                },
+                {
+                  "tag": "DFAB41",
+                  "name": "ContactlessTransactionLimit",
+                  "type": "amount12",
+                  "value": "000000999999"
+                },
+                {
+                  "tag": "DFAB42",
+                  "name": "ContactlessCVMRequiredLimit",
+                  "type": "amount12",
+                  "value": "000000001501"
+                },
+                {
+                  "tag": "DFAB49",
+                  "name": "OnOffSwitch",
+                  "type": "hex1",
+                  "value": "01"
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "tag": "9F5A",
+                  "name": "AppProgramId",
+                  "type": "hexBinary",
+                  "value": "3102682612"
+                },
+                {
+                  "tag": "DFAB40",
+                  "name": "ContactlessFloorLimit",
+                  "type": "amount12",
+                  "value": "000000000000"
+                },
+                {
+                  "tag": "DFAB41",
+                  "name": "ContactlessTransactionLimit",
+                  "type": "amount12",
+                  "value": "000000999999"
+                },
+                {
+                  "tag": "DFAB42",
+                  "name": "ContactlessCVMRequiredLimit",
+                  "type": "amount12",
+                  "value": "000000001501"
+                },
+                {
+                  "tag": "DFAB49",
+                  "name": "OnOffSwitch",
+                  "type": "hex1",
+                  "value": "02"
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "tag": "9F5A",
+                  "name": "AppProgramId",
+                  "type": "hexBinary",
+                  "value": "3102682600"
+                },
+                {
+                  "tag": "DFAB40",
+                  "name": "ContactlessFloorLimit",
+                  "type": "amount12",
+                  "value": "000000000000"
+                },
+                {
+                  "tag": "DFAB41",
+                  "name": "ContactlessTransactionLimit",
+                  "type": "amount12",
+                  "value": "000000999999"
+                },
+                {
+                  "tag": "DFAB42",
+                  "name": "ContactlessCVMRequiredLimit",
+                  "type": "amount12",
+                  "value": "000000002001"
+                },
+                {
+                  "tag": "DFAB49",
+                  "name": "OnOffSwitch",
+                  "type": "hex1",
+                  "value": "03"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "AID": "A0000000980840",
+      "KernelID": "030000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0D"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": "4203"
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Visa"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "Visa",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36204000"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E068C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0096000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000099999999"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000000032010",
+      "KernelID": "030000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Visa Electron"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "Visa",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36204000"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E0F8C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "008D000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000002001"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000901"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000000032020",
+      "KernelID": "030000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Visa VPay"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "Visa",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36204000"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E0F8C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "008C000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000002000"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000900"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000000033010",
+      "KernelID": "030000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0200000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0D"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": "4203"
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Visa"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "Visa",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36204000"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E068C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0096000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000099999999"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000000041010",
+      "KernelID": "020000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Mastercard"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "MasterCard",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "DF811E",
+            "name": "MagstripeCVM_aboveLimit",
+            "type": "hex1",
+            "value": "20"
+          },
+          {
+            "tag": "DF812C",
+            "name": "MagstripeCVM_belowLimit",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "DF8118",
+            "name": "ChipCVM_aboveLimit",
+            "type": "hex1",
+            "value": "60"
+          },
+          {
+            "tag": "DF8119",
+            "name": "ChipCVM_belowLimit",
+            "type": "hex1",
+            "value": "08"
+          },
+          {
+            "tag": "DF811F",
+            "name": "SecurityCapability",
+            "type": "hex1",
+            "value": "08"
+          },
+          {
+            "tag": "DF8117",
+            "name": "CardDataInputCapability",
+            "type": "hex1",
+            "value": "E0"
+          },
+          {
+            "tag": "DF8123",
+            "name": "FloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DF8124",
+            "name": "TransactionLimitNoOnDevice",
+            "type": "amount12",
+            "value": "000000002500"
+          },
+          {
+            "tag": "DF8125",
+            "name": "TransactionLimitOnDevice",
+            "type": "amount12",
+            "value": "000000200000"
+          },
+          {
+            "tag": "DF8126",
+            "name": "CVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000001000"
+          },
+          {
+            "tag": "9F09",
+            "name": "ChipVersionNumber",
+            "type": "versionNumberType",
+            "value": "0002000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F6D",
+            "name": "MSRVersionNumber",
+            "type": "versionNumberType",
+            "value": "0001"
+          },
+          {
+            "tag": "DF811B",
+            "name": "KernelConfiguration",
+            "type": "hex1",
+            "value": "30"
+          },
+          {
+            "tag": "9F53",
+            "name": "TransactionCategoryCode",
+            "type": "hex1",
+            "value": "52"
+          },
+          {
+            "tag": "DF8120",
+            "name": "TACDefault",
+            "type": "hex5",
+            "value": "FC509C8800"
+          },
+          {
+            "tag": "DF8121",
+            "name": "TACDenial",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DF8122",
+            "name": "TACOnline",
+            "type": "hex5",
+            "value": "FC509C8800"
+          },
+          {
+            "tag": "DF810C",
+            "name": "KernelID",
+            "type": "hex1",
+            "value": "02"
+          },
+          {
+            "tag": "9F1D",
+            "name": "TerminalRiskManagementData",
+            "type": "hex8",
+            "value": "647A000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "9F01",
+            "name": "AcquirerIdentifier",
+            "type": "hex6",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DF8130",
+            "name": "HoldTimeValue",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "DF812D",
+            "name": "MessageHoldTime",
+            "type": "hex3",
+            "value": "000000"
+          },
+          {
+            "tag": "DF811C",
+            "name": "TornTransactionLifetime",
+            "type": "hex2",
+            "value": "0078"
+          },
+          {
+            "tag": "DF811D",
+            "name": "TornTransactionNumber",
+            "type": "hex1",
+            "value": "02"
+          },
+          {
+            "tag": "DF8131",
+            "name": "PhoneMessageTable",
+            "type": "hex",
+            "value": "0000000000000000"
+          },
+          {
+            "tag": "DF8112",
+            "name": "TagsToRead",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "FF8102",
+            "name": "TagsToWriteBeforeGenAC",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "FF8103",
+            "name": "TagsToWriteAfterGenAC",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DF8110",
+            "name": "ProceedToFirstWriteFlag",
+            "type": "hex1",
+            "value": "FE"
+          },
+          {
+            "tag": "9F5C",
+            "name": "DSRequestedOperatorID",
+            "type": "hex8",
+            "value": "FFFFFFFFFFFFFFFF"
+          },
+          {
+            "tag": "DF8127",
+            "name": "DETimeoutValue",
+            "type": "hex2",
+            "value": "01F4"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0200000000"
+          },
+          {
+            "tag": "DF8132",
+            "name": "RR_MinGracePeriod",
+            "type": "hex2",
+            "value": "0014"
+          },
+          {
+            "tag": "DF8133",
+            "name": "RR_MaxGracePeriod",
+            "type": "hex2",
+            "value": "0032"
+          },
+          {
+            "tag": "DF8134",
+            "name": "RR_ExpTransTimeCAPDU",
+            "type": "hex2",
+            "value": "0012"
+          },
+          {
+            "tag": "DF8135",
+            "name": "RR_ExpTransTimeRAPDU",
+            "type": "hex2",
+            "value": "0018"
+          },
+          {
+            "tag": "DF8136",
+            "name": "RR_AccuracyThreshold",
+            "type": "hex2",
+            "value": "012C"
+          },
+          {
+            "tag": "DF8137",
+            "name": "RR_TransTimeMismatchThreshold",
+            "type": "hex1",
+            "value": "32"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000000043060",
+      "KernelID": "020000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Maestro"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "MasterCard",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "DF811E",
+            "name": "MagstripeCVM_aboveLimit",
+            "type": "hex1",
+            "value": "20"
+          },
+          {
+            "tag": "DF812C",
+            "name": "MagstripeCVM_belowLimit",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "DF8118",
+            "name": "ChipCVM_aboveLimit",
+            "type": "hex1",
+            "value": "40"
+          },
+          {
+            "tag": "DF8119",
+            "name": "ChipCVM_belowLimit",
+            "type": "hex1",
+            "value": "08"
+          },
+          {
+            "tag": "DF811F",
+            "name": "SecurityCapability",
+            "type": "hex1",
+            "value": "08"
+          },
+          {
+            "tag": "DF8117",
+            "name": "CardDataInputCapability",
+            "type": "hex1",
+            "value": "E0"
+          },
+          {
+            "tag": "DF8123",
+            "name": "FloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DF8124",
+            "name": "TransactionLimitNoOnDevice",
+            "type": "amount12",
+            "value": "000000002500"
+          },
+          {
+            "tag": "DF8125",
+            "name": "TransactionLimitOnDevice",
+            "type": "amount12",
+            "value": "000000200000"
+          },
+          {
+            "tag": "DF8126",
+            "name": "CVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000001000"
+          },
+          {
+            "tag": "9F09",
+            "name": "ChipVersionNumber",
+            "type": "versionNumberType",
+            "value": "0002000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F6D",
+            "name": "MSRVersionNumber",
+            "type": "versionNumberType",
+            "value": "0001000000000000000000000000000000000000"
+          },
+          {
+            "tag": "DF811B",
+            "name": "KernelConfiguration",
+            "type": "hex1",
+            "value": "B0"
+          },
+          {
+            "tag": "9F53",
+            "name": "TransactionCategoryCode",
+            "type": "hex1",
+            "value": "52"
+          },
+          {
+            "tag": "DF8120",
+            "name": "TACDefault",
+            "type": "hex5",
+            "value": "FC501C8800"
+          },
+          {
+            "tag": "DF8121",
+            "name": "TACDenial",
+            "type": "hex5",
+            "value": "0000800000"
+          },
+          {
+            "tag": "DF8122",
+            "name": "TACOnline",
+            "type": "hex5",
+            "value": "FC501C8800"
+          },
+          {
+            "tag": "DF810C",
+            "name": "KernelID",
+            "type": "hex1",
+            "value": "02"
+          },
+          {
+            "tag": "9F1D",
+            "name": "TerminalRiskManagementData",
+            "type": "hex8",
+            "value": "647A800000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "9F01",
+            "name": "AcquirerIdentifier",
+            "type": "hex6",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DF8130",
+            "name": "HoldTimeValue",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "DF812D",
+            "name": "MessageHoldTime",
+            "type": "hex3",
+            "value": "000000"
+          },
+          {
+            "tag": "DF811C",
+            "name": "TornTransactionLifetime",
+            "type": "hex2",
+            "value": "0078"
+          },
+          {
+            "tag": "DF811D",
+            "name": "TornTransactionNumber",
+            "type": "hex1",
+            "value": "02"
+          },
+          {
+            "tag": "DF8131",
+            "name": "PhoneMessageTable",
+            "type": "hex",
+            "value": "0000000000000000"
+          },
+          {
+            "tag": "DF8112",
+            "name": "TagsToRead",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "FF8102",
+            "name": "TagsToWriteBeforeGenAC",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "FF8103",
+            "name": "TagsToWriteAfterGenAC",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DF8110",
+            "name": "ProceedToFirstWriteFlag",
+            "type": "hex1",
+            "value": "FE"
+          },
+          {
+            "tag": "9F5C",
+            "name": "DSRequestedOperatorID",
+            "type": "hex8",
+            "value": "FFFFFFFFFFFFFFFF"
+          },
+          {
+            "tag": "DF8127",
+            "name": "DETimeoutValue",
+            "type": "hex2",
+            "value": "01F4"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0200000000"
+          },
+          {
+            "tag": "DF8132",
+            "name": "RR_MinGracePeriod",
+            "type": "hex2",
+            "value": "0014"
+          },
+          {
+            "tag": "DF8133",
+            "name": "RR_MaxGracePeriod",
+            "type": "hex2",
+            "value": "0032"
+          },
+          {
+            "tag": "DF8134",
+            "name": "RR_ExpTransTimeCAPDU",
+            "type": "hex2",
+            "value": "0012"
+          },
+          {
+            "tag": "DF8135",
+            "name": "RR_ExpTransTimeRAPDU",
+            "type": "hex2",
+            "value": "0018"
+          },
+          {
+            "tag": "DF8136",
+            "name": "RR_AccuracyThreshold",
+            "type": "hex2",
+            "value": "012C"
+          },
+          {
+            "tag": "DF8137",
+            "name": "RR_TransTimeMismatchThreshold",
+            "type": "hex1",
+            "value": "32"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000000042203",
+      "KernelID": "020000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0D"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": "4203"
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "US Maestro"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "MasterCard",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "DF811E",
+            "name": "MagstripeCVM_aboveLimit",
+            "type": "hex1",
+            "value": "10"
+          },
+          {
+            "tag": "DF812C",
+            "name": "MagstripeCVM_belowLimit",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "DF8118",
+            "name": "ChipCVM_aboveLimit",
+            "type": "hex1",
+            "value": "40"
+          },
+          {
+            "tag": "DF8119",
+            "name": "ChipCVM_belowLimit",
+            "type": "hex1",
+            "value": "08"
+          },
+          {
+            "tag": "DF811F",
+            "name": "SecurityCapability",
+            "type": "hex1",
+            "value": "08"
+          },
+          {
+            "tag": "DF8117",
+            "name": "CardDataInputCapability",
+            "type": "hex1",
+            "value": "E0"
+          },
+          {
+            "tag": "DF8123",
+            "name": "FloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DF8124",
+            "name": "TransactionLimitNoOnDevice",
+            "type": "amount12",
+            "value": "000099999999"
+          },
+          {
+            "tag": "DF8125",
+            "name": "TransactionLimitOnDevice",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DF8126",
+            "name": "CVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000005000"
+          },
+          {
+            "tag": "9F09",
+            "name": "ChipVersionNumber",
+            "type": "versionNumberType",
+            "value": "0002000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F6D",
+            "name": "MSRVersionNumber",
+            "type": "versionNumberType",
+            "value": "0001000000000000000000000000000000000000"
+          },
+          {
+            "tag": "DF811B",
+            "name": "KernelConfiguration",
+            "type": "hex1",
+            "value": "90"
+          },
+          {
+            "tag": "9F53",
+            "name": "TransactionCategoryCode",
+            "type": "hex1",
+            "value": "52"
+          },
+          {
+            "tag": "DF8120",
+            "name": "TACDefault",
+            "type": "hex5",
+            "value": "F45084800C"
+          },
+          {
+            "tag": "DF8121",
+            "name": "TACDenial",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DF8122",
+            "name": "TACOnline",
+            "type": "hex5",
+            "value": "F45084800C"
+          },
+          {
+            "tag": "DF810C",
+            "name": "KernelID",
+            "type": "hex1",
+            "value": "02"
+          },
+          {
+            "tag": "9F1D",
+            "name": "TerminalRiskManagementData",
+            "type": "hex8",
+            "value": "487A800000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "9F01",
+            "name": "AcquirerIdentifier",
+            "type": "hex6",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DF8130",
+            "name": "HoldTimeValue",
+            "type": "hex1",
+            "value": "0D"
+          },
+          {
+            "tag": "DF812D",
+            "name": "MessageHoldTime",
+            "type": "hex3",
+            "value": "000013"
+          },
+          {
+            "tag": "DF811C",
+            "name": "TornTransactionLifetime",
+            "type": "hex2",
+            "value": "012C"
+          },
+          {
+            "tag": "DF811D",
+            "name": "TornTransactionNumber",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DF8131",
+            "name": "PhoneMessageTable",
+            "type": "hex",
+            "value": "000001000001200000080000080020000004000004002000000100000100200000020000020020000000000000000700"
+          },
+          {
+            "tag": "DF8112",
+            "name": "TagsToRead",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "FF8102",
+            "name": "TagsToWriteBeforeGenAC",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "FF8103",
+            "name": "TagsToWriteAfterGenAC",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DF8110",
+            "name": "ProceedToFirstWriteFlag",
+            "type": "hex1",
+            "value": "FE"
+          },
+          {
+            "tag": "9F5C",
+            "name": "DSRequestedOperatorID",
+            "type": "hex8",
+            "value": "FFFFFFFFFFFFFFFF"
+          },
+          {
+            "tag": "DF8127",
+            "name": "DETimeoutValue",
+            "type": "hex2",
+            "value": "01F4"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DF8132",
+            "name": "RR_MinGracePeriod",
+            "type": "hex2",
+            "value": "0014"
+          },
+          {
+            "tag": "DF8133",
+            "name": "RR_MaxGracePeriod",
+            "type": "hex2",
+            "value": "0032"
+          },
+          {
+            "tag": "DF8134",
+            "name": "RR_ExpTransTimeCAPDU",
+            "type": "hex2",
+            "value": "0012"
+          },
+          {
+            "tag": "DF8135",
+            "name": "RR_ExpTransTimeRAPDU",
+            "type": "hex2",
+            "value": "0018"
+          },
+          {
+            "tag": "DF8136",
+            "name": "RR_AccuracyThreshold",
+            "type": "hex2",
+            "value": "012C"
+          },
+          {
+            "tag": "DF8137",
+            "name": "RR_TransTimeMismatchThreshold",
+            "type": "hex1",
+            "value": "32"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A00000002501",
+      "KernelID": "040000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Amex"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "AmericanExpress",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F6D",
+            "name": "AmexContactlessReaderCapabilities",
+            "type": "hex1",
+            "value": "C0"
+          },
+          {
+            "tag": "9F6E",
+            "name": "AmexTerminalTransactionCapabilities",
+            "type": "hex4",
+            "value": "D8F00000"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E0E888"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0001000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "9F01",
+            "name": "AcquirerIdentifier",
+            "type": "hex6",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "03"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0100000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000001500"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000001000"
+          },
+          {
+            "tag": "DFAB43",
+            "name": "TACDefault",
+            "type": "hex5",
+            "value": "DC50FC9800"
+          },
+          {
+            "tag": "DFAB44",
+            "name": "TACDenial",
+            "type": "hex5",
+            "value": "0010000000"
+          },
+          {
+            "tag": "DFAB45",
+            "name": "TACOnline",
+            "type": "hex5",
+            "value": "DE00FC9800"
+          },
+          {
+            "tag": "DFAB52",
+            "name": "UnpredictableNumberRange",
+            "type": "hex1",
+            "value": "3C"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000000651010",
+      "KernelID": "050000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "JCB"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "JCB",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F53",
+            "name": "TerminalInterchangeProfile",
+            "type": "hex3",
+            "value": "730000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "9F01",
+            "name": "AcquirerIdentifier",
+            "type": "hex6",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000001000000"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000002501"
+          },
+          {
+            "tag": "DFAB43",
+            "name": "TACDefault",
+            "type": "hex5",
+            "value": "9040008000"
+          },
+          {
+            "tag": "DFAB44",
+            "name": "TACDenial",
+            "type": "hex5",
+            "value": "0410000000"
+          },
+          {
+            "tag": "DFAB45",
+            "name": "TACOnline",
+            "type": "hex5",
+            "value": "9060009000"
+          },
+          {
+            "tag": "DFAB46",
+            "name": "RiskManagementThreshold",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB47",
+            "name": "RiskManagementTargetPercentage",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "DFAB48",
+            "name": "RiskManagementMaximumTargetPercentage",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "DFAB4B",
+            "name": "CombinationOptions",
+            "type": "hex2",
+            "value": "3B00"
+          },
+          {
+            "tag": "DFAB4C",
+            "name": "RemovalTimeout",
+            "type": "hex2",
+            "value": "0000"
+          },
+          {
+            "tag": "DFAB5B",
+            "name": "CL_TXN_Limit_ODCVM",
+            "type": "amount12alt",
+            "value": "000001000000"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000001523010",
+      "KernelID": "060000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Discover"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "Discover",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36208000"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E0F8C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0001000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000002001"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000901"
+          },
+          {
+            "tag": "DFAB58",
+            "name": "DataContainerReadIds",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB59",
+            "name": "DataContainerReadRanges",
+            "type": "hex",
+            "value": null
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000001524010",
+      "KernelID": "060000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0D"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": "4203"
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Discover"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "Discover",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36204000"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E06808"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0001000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000099999999"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000005000"
+          },
+          {
+            "tag": "DFAB58",
+            "name": "DataContainerReadIds",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB59",
+            "name": "DataContainerReadRanges",
+            "type": "hex",
+            "value": null
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A000000333010101",
+      "KernelID": "070000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Union Pay"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "ChinaUnionPay",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36004080"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E0F8C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0020000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000002000"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000900"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A000000333010102",
+      "KernelID": "070000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Union Pay"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "ChinaUnionPay",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36004080"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E0F8C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0020000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000002000"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000900"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A000000333010103",
+      "KernelID": "070000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Union Pay"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "ChinaUnionPay",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36004080"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E0F8C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0020000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000002000"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000900"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A000000333010106",
+      "KernelID": "070000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Union Pay"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "ChinaUnionPay",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36004080"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E0F8C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0020000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000002000"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000900"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A000000333010108",
+      "KernelID": "070000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0D"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": "4203"
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Union Pay"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "ChinaUnionPay",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0156"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "36004080"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E068C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0020000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "DFAB30",
+            "name": "TecSupport",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000099999999"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000005000"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000002771010",
+      "KernelID": "100000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0D"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": "4203"
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "Interac"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "Interac",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E028C8"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F5F",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "9F58",
+            "name": "MerchantTypeIndicator",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "9F59",
+            "name": "TerminalTransactionInformation",
+            "type": "hex3",
+            "value": "D8C700"
+          },
+          {
+            "tag": "9F5A",
+            "name": "TerminalTransactionType",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "9F5E",
+            "name": "TerminalOptionStatus",
+            "type": "hex2",
+            "value": "E000"
+          },
+          {
+            "tag": "9F5D",
+            "name": "ReceiptRequiredLimit",
+            "type": "amount12",
+            "value": "000000005000"
+          },
+          {
+            "tag": "DF6D",
+            "name": "TryAgainLimit",
+            "type": "hex1",
+            "value": "02"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0002000200000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "9F01",
+            "name": "AcquirerIdentifier",
+            "type": "hex6",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0300000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000008000"
+          },
+          {
+            "tag": "DFAB42",
+            "name": "ContactlessCVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB43",
+            "name": "TACDefault",
+            "type": "hex5",
+            "value": "FC78FCF800"
+          },
+          {
+            "tag": "DFAB44",
+            "name": "TACDenial",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB45",
+            "name": "TACOnline",
+            "type": "hex5",
+            "value": "FC78FCF800"
+          },
+          {
+            "tag": "DFAB46",
+            "name": "RiskManagementThreshold",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB47",
+            "name": "RiskManagementTargetPercentage",
+            "type": "hex1",
+            "value": "99"
+          },
+          {
+            "tag": "DFAB48",
+            "name": "RiskManagementMaximumTargetPercentage",
+            "type": "hex1",
+            "value": "99"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A00000038410",
+      "KernelID": "110000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "EPAL saving"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "EPAL",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E04808"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0100000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "9F01",
+            "name": "AcquirerIdentifier",
+            "type": "hex6",
+            "value": "000000000000"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "00004000"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000010000"
+          },
+          {
+            "tag": "DFAB43",
+            "name": "TACDefault",
+            "type": "hex5",
+            "value": "FFFFFFFFFF"
+          },
+          {
+            "tag": "DFAB44",
+            "name": "TACDenial",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB45",
+            "name": "TACOnline",
+            "type": "hex5",
+            "value": "FC509C9800"
+          },
+          {
+            "tag": "DFAB4A",
+            "name": "CtlsTransactionLimitCash",
+            "type": "amount12",
+            "value": "000000010000"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A00000038420",
+      "KernelID": "110000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "EPAL cheque"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "EPAL",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F33",
+            "name": "TerminalCapabilities",
+            "type": "hex3",
+            "value": "E04808"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "9F09",
+            "name": "VersionNumber",
+            "type": "versionNumberType",
+            "value": "0100000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "9F01",
+            "name": "AcquirerIdentifier",
+            "type": "hex6",
+            "value": "000000000000"
+          },
+          {
+            "tag": "9F66",
+            "name": "TerminalTransactionQualifier",
+            "type": "hex4",
+            "value": "00004000"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DFAB40",
+            "name": "ContactlessFloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DFAB41",
+            "name": "ContactlessTransactionLimit",
+            "type": "amount12",
+            "value": "000000010000"
+          },
+          {
+            "tag": "DFAB43",
+            "name": "TACDefault",
+            "type": "hex5",
+            "value": "FFFFFFFFFF"
+          },
+          {
+            "tag": "DFAB44",
+            "name": "TACDenial",
+            "type": "hex5",
+            "value": "0400000000"
+          },
+          {
+            "tag": "DFAB45",
+            "name": "TACOnline",
+            "type": "hex5",
+            "value": "FC509C9800"
+          },
+          {
+            "tag": "DFAB4A",
+            "name": "CtlsTransactionLimitCash",
+            "type": "amount12",
+            "value": "000000010000"
+          }
+        ]
+      }
+    },
+    {
+      "AID": "A0000003591010028001",
+      "KernelID": "2A0000",
+      "common": {
+        "fields": [
+          {
+            "tag": "DFAB02",
+            "name": "ASI",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DFAB03",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0C03000000"
+          },
+          {
+            "tag": "DFAB05",
+            "name": "SpecialTRXConfig",
+            "type": "bcd16",
+            "value": "2120110000000000"
+          },
+          {
+            "tag": "DFAB06",
+            "name": "ChksumEntryPoint",
+            "type": "hex4",
+            "value": "8907D85E"
+          },
+          {
+            "tag": "DFAB08",
+            "name": "RetapFieldOff",
+            "type": "hex1",
+            "value": "0A"
+          },
+          {
+            "tag": "DFAB20",
+            "name": "AdditionalTagsTRM",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB21",
+            "name": "AdditionalTagsCRD",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DFAB22",
+            "name": "DefaultApplicationName",
+            "type": "labelType",
+            "value": "girocard"
+          }
+        ]
+      },
+      "scheme": {
+        "name": "girocard",
+        "fields": [
+          {
+            "tag": "9F1C",
+            "name": "TermIdent",
+            "type": "hex8",
+            "value": "3132333435363738"
+          },
+          {
+            "tag": "9F1A",
+            "name": "TerminalCountryCode",
+            "type": "hex2bcd3",
+            "value": "0840"
+          },
+          {
+            "tag": "9F35",
+            "name": "TerminalType",
+            "type": "terminalType",
+            "value": "22"
+          },
+          {
+            "tag": "9F40",
+            "name": "AdditionalTerminalCapabilities",
+            "type": "hex5",
+            "value": "F000F0A001"
+          },
+          {
+            "tag": "DF811E",
+            "name": "MagstripeCVM_aboveLimit",
+            "type": "hex1",
+            "value": "10"
+          },
+          {
+            "tag": "DF812C",
+            "name": "MagstripeCVM_belowLimit",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "DF8118",
+            "name": "ChipCVM_aboveLimit",
+            "type": "hex1",
+            "value": "50"
+          },
+          {
+            "tag": "DF8119",
+            "name": "ChipCVM_belowLimit",
+            "type": "hex1",
+            "value": "58"
+          },
+          {
+            "tag": "DF811F",
+            "name": "SecurityCapability",
+            "type": "hex1",
+            "value": "08"
+          },
+          {
+            "tag": "DF8117",
+            "name": "CardDataInputCapability",
+            "type": "hex1",
+            "value": "20"
+          },
+          {
+            "tag": "DF8123",
+            "name": "FloorLimit",
+            "type": "amount12",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DF8124",
+            "name": "TransactionLimitNoOnDevice",
+            "type": "amount12",
+            "value": "999999999999"
+          },
+          {
+            "tag": "DF8125",
+            "name": "TransactionLimitOnDevice",
+            "type": "amount12",
+            "value": "999999999999"
+          },
+          {
+            "tag": "DF8126",
+            "name": "CVMRequiredLimit",
+            "type": "amount12",
+            "value": "000000002000"
+          },
+          {
+            "tag": "9F09",
+            "name": "ChipVersionNumber",
+            "type": "versionNumberType",
+            "value": "0002000000000000000000000000000000000000"
+          },
+          {
+            "tag": "9F6D",
+            "name": "MSRVersionNumber",
+            "type": "versionNumberType",
+            "value": "0001000000000000000000000000000000000000"
+          },
+          {
+            "tag": "DF811B",
+            "name": "KernelConfiguration",
+            "type": "hex1",
+            "value": "A0"
+          },
+          {
+            "tag": "9F53",
+            "name": "TransactionCategoryCode",
+            "type": "hex1",
+            "value": "52"
+          },
+          {
+            "tag": "DF8120",
+            "name": "TACDefault",
+            "type": "hex5",
+            "value": "FC509C8800"
+          },
+          {
+            "tag": "DF8121",
+            "name": "TACDenial",
+            "type": "hex5",
+            "value": "0000000000"
+          },
+          {
+            "tag": "DF8122",
+            "name": "TACOnline",
+            "type": "hex5",
+            "value": "FC509C8800"
+          },
+          {
+            "tag": "DF810C",
+            "name": "KernelID",
+            "type": "hex1",
+            "value": "2A"
+          },
+          {
+            "tag": "9F1D",
+            "name": "TerminalRiskManagementData",
+            "type": "hex8",
+            "value": "DC50800000000000"
+          },
+          {
+            "tag": "9F15",
+            "name": "MerchantCategoryCode",
+            "type": "hex2",
+            "value": "5999"
+          },
+          {
+            "tag": "9F16",
+            "name": "MerchantIdentifier",
+            "type": "merchantIdType",
+            "value": null
+          },
+          {
+            "tag": "9F4E",
+            "name": "MerchantNameAndLocation",
+            "type": "merchantNameType",
+            "value": null
+          },
+          {
+            "tag": "9F01",
+            "name": "AcquirerIdentifier",
+            "type": "hex6",
+            "value": "000000000000"
+          },
+          {
+            "tag": "DF8130",
+            "name": "HoldTimeValue",
+            "type": "hex1",
+            "value": "00"
+          },
+          {
+            "tag": "DF812D",
+            "name": "MessageHoldTime",
+            "type": "hex3",
+            "value": "000000"
+          },
+          {
+            "tag": "DF811C",
+            "name": "TornTransactionLifetime",
+            "type": "hex2",
+            "value": "0078"
+          },
+          {
+            "tag": "DF811D",
+            "name": "TornTransactionNumber",
+            "type": "hex1",
+            "value": "01"
+          },
+          {
+            "tag": "DF8131",
+            "name": "PhoneMessageTable",
+            "type": "hex",
+            "value": "0000000000000000"
+          },
+          {
+            "tag": "DF8112",
+            "name": "TagsToRead",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "FF8102",
+            "name": "TagsToWriteBeforeGenAC",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "FF8103",
+            "name": "TagsToWriteAfterGenAC",
+            "type": "hex",
+            "value": null
+          },
+          {
+            "tag": "DF8110",
+            "name": "ProceedToFirstWriteFlag",
+            "type": "hex1",
+            "value": "FE"
+          },
+          {
+            "tag": "9F5C",
+            "name": "DSRequestedOperatorID",
+            "type": "hex8",
+            "value": "FFFFFFFFFFFFFFFF"
+          },
+          {
+            "tag": "DF8127",
+            "name": "DETimeoutValue",
+            "type": "hex2",
+            "value": "01F4"
+          },
+          {
+            "tag": "DFAB31",
+            "name": "AppFlowCap",
+            "type": "hex5",
+            "value": "0200000000"
+          },
+          {
+            "tag": "DF8132",
+            "name": "RR_MinGracePeriod",
+            "type": "hex2",
+            "value": "0014"
+          },
+          {
+            "tag": "DF8133",
+            "name": "RR_MaxGracePeriod",
+            "type": "hex2",
+            "value": "0032"
+          },
+          {
+            "tag": "DF8134",
+            "name": "RR_ExpTransTimeCAPDU",
+            "type": "hex2",
+            "value": "0012"
+          },
+          {
+            "tag": "DF8135",
+            "name": "RR_ExpTransTimeRAPDU",
+            "type": "hex2",
+            "value": "0018"
+          },
+          {
+            "tag": "DF8136",
+            "name": "RR_AccuracyThreshold",
+            "type": "hex2",
+            "value": "012C"
+          },
+          {
+            "tag": "DF8137",
+            "name": "RR_TransTimeMismatchThreshold",
+            "type": "hex1",
+            "value": "50"
+          }
+        ]
+      }
+    }
+  ]
+}

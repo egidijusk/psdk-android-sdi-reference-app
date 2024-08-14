@@ -35,4 +35,20 @@ class ConfigurationViewModel(application: Application) : BaseViewModel(applicati
             _text.postValue(" Ctls config result: ${result.name}")
         }
     }
+
+    fun setContactConfigThroughTlvAccess() {
+        background {
+            val result = emvConfig.setContactTlvConfiguration()
+            Log.d(TAG, " CT config tlv result: ${result.name}")
+            _text.postValue(" CT config tlv result: ${result.name}")
+        }
+    }
+
+    fun setContactlessConfigThroughTlvAccess() {
+        background {
+            val result = emvConfig.setCtlsTlvConfiguration()
+            Log.d(TAG, " Ctls config tlv result: ${result.name}")
+            _text.postValue(" Ctls config tlv result: ${result.name}")
+        }
+    }
 }
