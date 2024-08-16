@@ -24,16 +24,17 @@
         tools:layout="@layout/fragment_transaction" />
 
     <fragment
-        android:id="@+id/nav_barcode_scanning"
-        android:name="com.priv.verifone.psdk.sdiapplication.ui.barcodescan.ScannerFragment"
-        android:label="@string/scan_barcode"
-        tools:layout="@layout/fragment_scanner" />
+        android:id="@+id/nav_peripheral_service"
+        android:name="com.priv.verifone.psdk.sdiapplication.ui.peripherals.PeripheralFragment"
+        android:label="@string/peripheral_service"
+        tools:layout="@layout/fragment_peripheral" />
 
     <fragment
         android:id="@+id/nav_updateservice"
         android:name="com.priv.verifone.psdk.sdiapplication.ui.updateservice.UpdateServiceFragment"
         android:label="@string/menu_updateservice"
         tools:layout="@layout/fragment_updateservice" />
+
     <fragment
         android:id="@+id/nav_usb"
         android:name="com.priv.verifone.psdk.sdiapplication.ui.usb.UsbFragment"

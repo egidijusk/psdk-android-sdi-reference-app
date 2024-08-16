@@ -17,9 +17,9 @@
             android:icon="@drawable/ic_menu_transaction"
             android:title="@string/transaction" />
         <item
-            android:id="@+id/nav_barcode_scanning"
+            android:id="@+id/nav_peripheral_service"
             android:icon="@drawable/ic_menu_scan"
-            android:title="@string/scan_barcode" />
+            android:title="@string/peripheral_service" />
         <item
             android:id="@+id/nav_updateservice"
             android:icon="@drawable/ic_menu_download"

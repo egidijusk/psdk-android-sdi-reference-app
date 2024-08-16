@@ -14,7 +14,9 @@
     <string name="start_manual_entry_transaction">Manual Entry Transaction</string>
     <string name="start_nfc_transaction">Start NFC Transaction</string>
     <string name="print_html">Print HTML</string>
+    <string name="print_bitmap">Print Bitmap</string>
     <string name="scan_barcode">Scan Barcode</string>
+    <string name="peripheral_service">Peripherals</string>
     <string name="transaction">Transaction Options</string>
     <string name="menu_updateservice">Update Service</string>
     <string name="menu_transaction">Transaction</string>
