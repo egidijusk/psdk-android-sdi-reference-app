@@ -34,4 +34,5 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="menu_usb">USB</string>
     <string name="crash">Crash</string>
+    <string name="host_mode">Host Mode</string>
 </resources>

@@ -19,6 +19,7 @@ import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.getBase64
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.getTestHtmlReceipt
 import com.verifone.payment_sdk.SdiComponentVersion
 import com.verifone.payment_sdk.SdiManager
+import com.verifone.payment_sdk.SdiResultCode
 import com.verifone.payment_sdk.SdiSysPropertyInt
 import com.verifone.payment_sdk.SdiSysPropertyString
 import java.util.ArrayList
@@ -78,6 +79,19 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         return (response.response == 0x01)
     }
 
+    fun toggleKeyboardBacklight(): Boolean {
+        Log.d(TAG, "System Property Command KEYB_BACKLIGHT (20-1A)")
+        val response = sdiManager.system.getPropertyInt(SdiSysPropertyInt.KEYB_BACKLIGHT, 0x01)
+
+        val value = if (response.response == 1) 0 else 1
+
+        val result = sdiManager.system.setPropertyInt(SdiSysPropertyInt.KEYB_BACKLIGHT, value, 0x01)
+        Log.d(TAG, "Command Result : ${result.ordinal}")
+        Log.d(TAG, "Command Result: ${result.name}")
+
+        return (result == SdiResultCode.OK)
+    }
+
     // Abort the current command in progress
     // Note: Not all commands can be aborted.
     fun abort() {
@@ -105,6 +119,7 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         return response.response
     }
 
+
     // Read hardware model number
     fun modelName(): String {
         Log.d(TAG, "System Property Command HW_MODEL_NAME (20-1A)")
@@ -121,6 +136,21 @@ class SdiSystem(internal val sdiManager: SdiManager) {
             sdiManager.system.getPropertyString(SdiSysPropertyString.PCI_REBOOT_TIME, 0x01)
         Log.d(TAG, "Command Response : ${response.response}")
         Log.d(TAG, "Command Result: ${response.result.name}")
+
+        return response.response
+    }
+
+    fun setAndroidTime(time: String): String {
+        Log.d(TAG, "System Property Command ANDROID_TIME  (20-1A)")
+        val response =
+            sdiManager.system.getPropertyString(SdiSysPropertyString.ANDROID_TIME, 0x01)
+        Log.d(TAG, "Command Response : ${response.response}")
+        Log.d(TAG, "Command Result: ${response.result.name}")
+
+        val setResponse =
+            sdiManager.system.setPropertyString(SdiSysPropertyString.ANDROID_TIME, time, 0x01)
+        Log.d(TAG, "Command Response : ${setResponse}")
+        Log.d(TAG, "Command Result: ${setResponse.name}")
 
         return response.response
     }
