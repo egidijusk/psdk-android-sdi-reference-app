@@ -12,9 +12,9 @@ enum class EmvConfigType {
             return when (configType) {
                 "transactionExponentType", "int" -> INTEGER
 
-                "terminalType", "labelType",
-                "merchantIdType", "merchantNameType",
-                "emptyString", "string" -> STRING
+                "terminalType", "labelType", "merchantIdType",
+                "merchantNameType", "versionNumberType", "emptyString",
+                "amount12", "amount12alt", "string" -> STRING
 
                 else -> ENCODED_HEX
             }

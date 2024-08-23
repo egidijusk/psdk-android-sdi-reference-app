@@ -45,25 +45,25 @@
         {
           "tag": "4F",
           "value":"A0000000031010",
-          "type": "hex",
+          "type": "aidType",
           "name": "Aid"
         },
         {
           "tag": "9F09",
           "value":"008D",
-          "type": "hex",
+          "type": "hex2",
           "name": "Application Version Number"
         },
         {
           "tag": "50",
           "value":"Visa",
-          "type": "string",
+          "type": "labelType",
           "name": "Application Label"
         },
         {
           "tag": "DF20",
           "value":"01",
-          "type": "hex",
+          "type": "hex1",
           "name": "Application selection indicator"
         },
         {
@@ -81,55 +81,55 @@
         {
           "tag": "9F1B",
           "value":"000007D0",
-          "type": "hex",
+          "type": "hex4",
           "name": "Terminal Floor Limit"
         },
         {
           "tag": "DF49",
           "value":"00000000",
-          "type": "hex",
+          "type": "hex4",
           "name": "Security Limit"
         },
         {
           "tag": "DF4A",
           "value":"E008C8",
-          "type": "hex",
+          "type": "hex3",
           "name": "Terminal Capabilities Below Limit"
         },
         {
           "tag": "DF24",
           "value":"000001F4",
-          "type": "hex",
+          "type": "hex4",
           "name": "Threshold"
         },
         {
           "tag": "DFAB47",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "Target Percentage"
         },
         {
           "tag": "DFAB48",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "Max Target Percentage"
         },
         {
           "tag": "DF21",
           "value":"0000000000",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Denial"
         },
         {
           "tag": "DF22",
           "value":"DC4004F800",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Online"
         },
         {
           "tag": "DF23",
           "value":"DC4000A800",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Default"
         },
         {
@@ -153,67 +153,67 @@
         {
           "tag": "9F16",
           "value":"202020202020202020202020202020",
-          "type": "hex",
+          "type": "hexBinary",
           "name": "Merchant Identifier"
         },
         {
           "tag": "DF3E",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "CDA Processing"
         },
         {
           "tag": "DF15",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "AC Before After"
         },
         {
           "tag": "DF2E",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "AIP CVM not supported"
         },
         {
           "tag": "9F39",
           "value":"05",
-          "type": "int",
+          "type": "hex1",
           "name": "POS Entry Mode"
         },
         {
           "tag": "DF5F",
           "value":"010102020303040405050606070708080096FFFF",
-          "type": "hex",
+          "type": "versionNumberType",
           "name": "Additional Version Numbers"
         },
         {
           "tag": "DF2B",
           "value":"3F1F170000",
-          "type": "hex",
+          "type": "hex5",
           "name": "App Flow Cap"
         },
         {
           "tag": "9F33",
           "value":"E0F8C8",
-          "type": "hex",
+          "type": "hex3",
           "name": "Terminal Capabilities"
         },
         {
           "tag": "9F1A",
           "value":"0036",
-          "type": "hex",
+          "type": "hex2bcd3",
           "name": "Terminal Country Code"
         },
         {
           "tag": "9F40",
           "value":"F000F0A001",
-          "type": "hex",
+          "type": "hex5",
           "name": "Additional Terminal Capabilities"
         },
         {
           "tag": "9F35",
           "value":"22",
-          "type": "hex",
+          "type": "terminalType",
           "name": "Terminal Type"
         }
       ]
@@ -223,25 +223,25 @@
         {
           "tag": "4F",
           "value":"A0000000032010",
-          "type": "hex",
+          "type": "aidType",
           "name": "Aid"
         },
         {
           "tag": "9F09",
           "value":"008D",
-          "type": "hex",
+          "type": "hex2",
           "name": "Application Version Number"
         },
         {
           "tag": "50",
           "value":"Visa Electron",
-          "type": "string",
+          "type": "labelType",
           "name": "Application Label"
         },
         {
           "tag": "DF20",
           "value":"01",
-          "type": "hex",
+          "type": "hex1",
           "name": "Application selection indicator"
         },
         {
@@ -259,55 +259,55 @@
         {
           "tag": "9F1B",
           "value":"000007D0",
-          "type": "hex",
+          "type": "hex4",
           "name": "Terminal Floor Limit"
         },
         {
           "tag": "DF49",
           "value":"00000000",
-          "type": "hex",
+          "type": "hex4",
           "name": "Security Limit"
         },
         {
           "tag": "DF4A",
           "value":"E008C8",
-          "type": "hex",
+          "type": "hex3",
           "name": "Terminal Capabilities Below Limit"
         },
         {
           "tag": "DF24",
           "value":"000001F4",
-          "type": "hex",
+          "type": "hex4",
           "name": "Threshold"
         },
         {
           "tag": "DFAB47",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "Target Percentage"
         },
         {
           "tag": "DFAB48",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "Max Target Percentage"
         },
         {
           "tag": "DF21",
           "value":"0000000000",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Denial"
         },
         {
           "tag": "DF22",
           "value":"DC4004F800",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Online"
         },
         {
           "tag": "DF23",
           "value":"DC4000A800",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Default"
         },
         {
@@ -331,67 +331,67 @@
         {
           "tag": "9F16",
           "value":"202020202020202020202020202020",
-          "type": "hex",
+          "type": "hexBinary",
           "name": "Merchant Identifier"
         },
         {
           "tag": "DF3E",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "CDA Processing"
         },
         {
           "tag": "DF15",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "AC Before After"
         },
         {
           "tag": "DF2E",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "AIP CVM not supported"
         },
         {
           "tag": "9F39",
           "value":"05",
-          "type": "int",
+          "type": "hex1",
           "name": "POS Entry Mode"
         },
         {
           "tag": "DF5F",
           "value":"010102020303040405050606070708080096FFFF",
-          "type": "hex",
+          "type": "versionNumberType",
           "name": "Additional Version Numbers"
         },
         {
           "tag": "DF2B",
           "value":"3F1F170000",
-          "type": "hex",
+          "type": "hex5",
           "name": "App Flow Cap"
         },
         {
           "tag": "9F33",
           "value":"E0F8C8",
-          "type": "hex",
+          "type": "hex3",
           "name": "Terminal Capabilities"
         },
         {
           "tag": "9F1A",
           "value":"0036",
-          "type": "hex",
+          "type": "hex2bcd3",
           "name": "Terminal Country Code"
         },
         {
           "tag": "9F40",
           "value":"F000F0A001",
-          "type": "hex",
+          "type": "hex5",
           "name": "Additional Terminal Capabilities"
         },
         {
           "tag": "9F35",
           "value":"22",
-          "type": "hex",
+          "type": "terminalType",
           "name": "Terminal Type"
         }
       ]
@@ -401,25 +401,25 @@
         {
           "tag": "4F",
           "value":"A0000000041010",
-          "type": "hex",
+          "type": "aidType",
           "name": "Aid"
         },
         {
           "tag": "9F09",
           "value":"008D",
-          "type": "hex",
+          "type": "hex2",
           "name": "Application Version Number"
         },
         {
           "tag": "50",
           "value":"Mastercard",
-          "type": "string",
+          "type": "labelType",
           "name": "Application Label"
         },
         {
           "tag": "DF20",
           "value":"01",
-          "type": "hex",
+          "type": "hex1",
           "name": "Application selection indicator"
         },
         {
@@ -437,55 +437,55 @@
         {
           "tag": "9F1B",
           "value":"000007D0",
-          "type": "hex",
+          "type": "hex4",
           "name": "Terminal Floor Limit"
         },
         {
           "tag": "DF49",
           "value":"00000000",
-          "type": "hex",
+          "type": "hex4",
           "name": "Security Limit"
         },
         {
           "tag": "DF4A",
           "value":"E008C8",
-          "type": "hex",
+          "type": "hex3",
           "name": "Terminal Capabilities Below Limit"
         },
         {
           "tag": "DF24",
           "value":"000001F4",
-          "type": "hex",
+          "type": "hex4",
           "name": "Threshold"
         },
         {
           "tag": "DFAB47",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "Target Percentage"
         },
         {
           "tag": "DFAB48",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "Max Target Percentage"
         },
         {
           "tag": "DF21",
           "value":"0400000000",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Denial"
         },
         {
           "tag": "DF22",
           "value":"F850ACF800",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Online"
         },
         {
           "tag": "DF23",
           "value":"FC50ACA800",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Default"
         },
         {
@@ -509,67 +509,67 @@
         {
           "tag": "9F16",
           "value":"202020202020202020202020202020",
-          "type": "hex",
+          "type": "hexBinary",
           "name": "Merchant Identifier"
         },
         {
           "tag": "DF3E",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "CDA Processing"
         },
         {
           "tag": "DF15",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "AC Before After"
         },
         {
           "tag": "DF2E",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "AIP CVM not supported"
         },
         {
           "tag": "9F39",
           "value":"05",
-          "type": "int",
+          "type": "hex1",
           "name": "POS Entry Mode"
         },
         {
           "tag": "DF5F",
           "value":"010102020303040405050606070708080096FFFF",
-          "type": "hex",
+          "type": "versionNumberType",
           "name": "Additional Version Numbers"
         },
         {
           "tag": "DF2B",
           "value":"3F1F170000",
-          "type": "hex",
+          "type": "hex5",
           "name": "App Flow Cap"
         },
         {
           "tag": "9F33",
           "value":"E0F8C8",
-          "type": "hex",
+          "type": "hex3",
           "name": "Terminal Capabilities"
         },
         {
           "tag": "9F1A",
           "value":"0036",
-          "type": "hex",
+          "type": "hex2bcd3",
           "name": "Terminal Country Code"
         },
         {
           "tag": "9F40",
           "value":"F000F0A001",
-          "type": "hex",
+          "type": "hex5",
           "name": "Additional Terminal Capabilities"
         },
         {
           "tag": "9F35",
           "value":"22",
-          "type": "hex",
+          "type": "terminalType",
           "name": "Terminal Type"
         }
       ]
@@ -579,25 +579,25 @@
         {
           "tag": "4F",
           "value":"A0000000043060",
-          "type": "hex",
+          "type": "aidType",
           "name": "Aid"
         },
         {
           "tag": "9F09",
           "value":"008D",
-          "type": "hex",
+          "type": "hex2",
           "name": "Application Version Number"
         },
         {
           "tag": "50",
           "value":"Maestro",
-          "type": "string",
+          "type": "labelType",
           "name": "Application Label"
         },
         {
           "tag": "DF20",
           "value":"01",
-          "type": "hex",
+          "type": "hex1",
           "name": "Application selection indicator"
         },
         {
@@ -615,55 +615,55 @@
         {
           "tag": "9F1B",
           "value":"000007D0",
-          "type": "hex",
+          "type": "hex4",
           "name": "Terminal Floor Limit"
         },
         {
           "tag": "DF49",
           "value":"00000000",
-          "type": "hex",
+          "type": "hex4",
           "name": "Security Limit"
         },
         {
           "tag": "DF4A",
           "value":"E008C8",
-          "type": "hex",
+          "type": "hex3",
           "name": "Terminal Capabilities Below Limit"
         },
         {
           "tag": "DF24",
           "value":"000001F4",
-          "type": "hex",
+          "type": "hex4",
           "name": "Threshold"
         },
         {
           "tag": "DFAB47",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "Target Percentage"
         },
         {
           "tag": "DFAB48",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "Max Target Percentage"
         },
         {
           "tag": "DF21",
           "value":"0400000000",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Denial"
         },
         {
           "tag": "DF22",
           "value":"F850ACF800",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Online"
         },
         {
           "tag": "DF23",
           "value":"FC50ACA000",
-          "type": "hex",
+          "type": "hex5",
           "name": "TAC Default"
         },
         {
@@ -687,67 +687,67 @@
         {
           "tag": "9F16",
           "value":"202020202020202020202020202020",
-          "type": "hex",
+          "type": "hexBinary",
           "name": "Merchant Identifier"
         },
         {
           "tag": "DF3E",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "CDA Processing"
         },
         {
           "tag": "DF15",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "AC Before After"
         },
         {
           "tag": "DF2E",
           "value":"00",
-          "type": "hex",
+          "type": "hex1",
           "name": "AIP CVM not supported"
         },
         {
           "tag": "9F39",
           "value":"05",
-          "type": "int",
+          "type": "hex1",
           "name": "POS Entry Mode"
         },
         {
           "tag": "DF5F",
           "value":"010102020303040405050606070708080096FFFF",
-          "type": "hex",
+          "type": "versionNumberType",
           "name": "Additional Version Numbers"
         },
         {
           "tag": "DF2B",
           "value":"3F1F170000",
-          "type": "hex",
+          "type": "hex5",
           "name": "App Flow Cap"
         },
         {
           "tag": "9F33",
           "value":"E0F8C8",
-          "type": "hex",
+          "type": "hex3",
           "name": "Terminal Capabilities"
         },
         {
           "tag": "9F1A",
           "value":"0036",
-          "type": "hex",
+          "type": "hex2bcd3",
           "name": "Terminal Country Code"
         },
         {
           "tag": "9F40",
           "value":"F000F0A001",
-          "type": "hex",
+          "type": "hex5",
           "name": "Additional Terminal Capabilities"
         },
         {
           "tag": "9F35",
           "value":"22",
-          "type": "hex",
+          "type": "terminalType",
           "name": "Terminal Type"
         }
       ]
