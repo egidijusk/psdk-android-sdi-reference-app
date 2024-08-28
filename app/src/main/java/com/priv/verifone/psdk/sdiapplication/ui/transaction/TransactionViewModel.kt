@@ -150,7 +150,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
     fun startTransaction() {
         background {
             transactionState.postValue(State.TransactionInProgress)
-            transactionManager.startTransactionFlow(amount, true)
+            transactionManager.startTransactionFlow(amount, false)
             transactionState.postValue(State.Idle)
         }
     }

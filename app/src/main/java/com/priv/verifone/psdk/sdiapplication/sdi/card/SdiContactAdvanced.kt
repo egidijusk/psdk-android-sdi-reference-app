@@ -52,7 +52,7 @@ class SdiContactAdvanced(private val sdiManager: SdiManager) :
         ctTxnConfig.setTransactionOptions(txnOptions)
 
         /* Exclude configured AID for transaction */
-        ctTxnConfig.setExcludeAID(ArrayList<ByteArray>().apply { add("A0000000032020".hexStringToByteArray())})
+        //ctTxnConfig.setExcludeAID(ArrayList<ByteArray>().apply { add("A0000000032020".hexStringToByteArray())})
 
         val today = Utils.getCurrentDateTime()
         val date = today.dateToString("yyMMdd").hexStringToByteArray()
