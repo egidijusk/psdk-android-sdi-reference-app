@@ -4,8 +4,7 @@ enum class EmvConfigType {
 
     INTEGER,
     STRING,
-    ENCODED_HEX,
-    ENCODED_TLV;
+    ENCODED_HEX;
 
     companion object {
         fun parseConfigType(configType: String): EmvConfigType {
@@ -13,10 +12,9 @@ enum class EmvConfigType {
                 "transactionExponentType", "int" -> INTEGER
 
                 "terminalType", "labelType", "merchantIdType",
-                "merchantNameType", "versionNumberType", "emptyString",
-                "amount12", "amount12alt", "string" -> STRING
+                "merchantNameType", "emptyString", "string" -> STRING
 
-                else -> ENCODED_HEX
+                else -> ENCODED_HEX // "amount12", "amount12alt", "versionNumberType", allHex type
             }
         }
     }
