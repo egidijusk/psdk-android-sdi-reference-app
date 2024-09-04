@@ -55,10 +55,10 @@ class CtlsConfig(private val sdk: PaymentSdk) {
 
         if (result != SdiResultCode.OK)
             return result!!
-        result = setCtlsTerminalConfiguration()
+        result = setCtlsTerminalConfiguration(getCtlsTerminalConfig())
         if (result != SdiResultCode.OK)
             return result!!
-        result = setCtlsAidConfiguration()
+        result = setCtlsAidConfiguration(getCtlsApplicationConfig())
         if (result != SdiResultCode.OK)
             return result
         result = setCtlsCapkConfiguration()
@@ -66,16 +66,27 @@ class CtlsConfig(private val sdk: PaymentSdk) {
         return result
     }
 
-    private fun setCtlsTerminalConfiguration(): SdiResultCode {
-        val termConfig = getCtlsTerminalConfig()
+    fun setCtlsTlvConfiguration(tlvConfig: TlvConfig): SdiResultCode {
+        var result = initialize()
+
+        if (result != SdiResultCode.OK)
+            return result!!
+        result = setCtlsTerminalConfiguration(tlvConfig.getCtlsTerminalConfig())
+        if (result != SdiResultCode.OK)
+            return result!!
+        result = setCtlsAidConfiguration(tlvConfig.getCtlsApplicationConfig())
+        exit()
+        return result
+    }
+
+    private fun setCtlsTerminalConfiguration(termConfig: SdiEmvConf): SdiResultCode {
         val result = sdk.sdiManager?.emvCtls?.setTermData(termConfig)
         Log.d(TAG, " Ctls Terminal config result: ${result?.name}")
         return result!!
     }
 
-    private fun setCtlsAidConfiguration(): SdiResultCode {
+    private fun setCtlsAidConfiguration(aidConfigList: ArrayList<SdiEmvConf>): SdiResultCode {
         Log.d(TAG, "Ctls AID Config ")
-        val aidConfigList = getCtlsApplicationConfig()
         for (aidConfig in aidConfigList) {
             Log.d(
                 TAG,

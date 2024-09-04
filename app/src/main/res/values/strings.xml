@@ -26,6 +26,8 @@
     <string name="uninstall_apk">Uninstall Package</string>
     <string name="install_apk">Install APK</string>
     <string name="set_contact_configuration">Set Contact Configuration</string>
+    <string name="set_contact_tlv_configuration">Set Contact Tlv Configuration</string>
+    <string name="set_ctls_tlv_configuration">Set Contactless Tlv Configuration</string>
     <string name="set_ctls_config">Set Contactless Configuration</string>
     <string name="menu_config">EMV Configuration</string>
     <string name="send">Send</string>

@@ -19,6 +19,8 @@ import com.verifone.payment_sdk.SdiManager
 import com.priv.verifone.psdk.sdiapplication.sdi.config.Config
 import com.priv.verifone.psdk.sdiapplication.sdi.config.model.EmvContactConfig
 import com.priv.verifone.psdk.sdiapplication.sdi.config.model.EmvCtlsConfig
+import com.priv.verifone.psdk.sdiapplication.sdi.config.tlvmodel.EmvContactConfigTlv
+import com.priv.verifone.psdk.sdiapplication.sdi.config.tlvmodel.EmvCtlsConfigTlv
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils
 import java.lang.Exception
 
@@ -30,8 +32,10 @@ class PSDKContext : Application() {
 
     companion object {
         lateinit var instance: PSDKContext
-        lateinit var ctConfigData : EmvContactConfig
-        lateinit var ctlsConfigData : EmvCtlsConfig
+        lateinit var ctConfigData: EmvContactConfig
+        lateinit var ctlsConfigData: EmvCtlsConfig
+        lateinit var ctConfigTlvData: EmvContactConfigTlv
+        lateinit var ctlsConfigTlvData: EmvCtlsConfigTlv
     }
 
     override fun onCreate() {
@@ -46,6 +50,14 @@ class PSDKContext : Application() {
             Utils.getDataFromAssets(this, "config/emvctls.json"),
             EmvCtlsConfig::class.java
         )
-       // config = Config(this, paymentSDK)
+        ctConfigTlvData = Gson().fromJson(
+            Utils.getDataFromAssets(this, "config/tlvemvct.json"),
+            EmvContactConfigTlv::class.java
+        )
+        ctlsConfigTlvData = Gson().fromJson(
+            Utils.getDataFromAssets(this, "config/tlvemvctls.json"),
+            EmvCtlsConfigTlv::class.java
+        )
+        // config = Config(this, paymentSDK)
     }
 }
