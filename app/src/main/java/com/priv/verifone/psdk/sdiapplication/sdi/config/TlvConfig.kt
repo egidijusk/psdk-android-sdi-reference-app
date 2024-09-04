@@ -131,7 +131,7 @@ class TlvConfig {
                 .assignBinary(field.value.hexStringToByteArray())
         }
     }
-
+/*
     fun getDrlParams(): ArrayList<SdiEmvDynamicReaderLimits> {
         val drlLimitList = ArrayList<SdiEmvDynamicReaderLimits>()
 
@@ -170,5 +170,5 @@ class TlvConfig {
         drlLimitList.add(drl4)
 
         return drlLimitList
-    }
+    }*/
 }
