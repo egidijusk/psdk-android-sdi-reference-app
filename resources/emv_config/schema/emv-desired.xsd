@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="emv">
+	<xs:complexType>
+		<xs:sequence maxOccurs="unbounded">
+			<xs:choice>
+				<xs:element name="ct" type="ctType"/>
+				<xs:element name="ctls" type="ctlsType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="emv-desired" type="xs:string" use="optional"></xs:attribute>
+	</xs:complexType>
+</xs:element>
+
+<xs:simpleType name="platformType">
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Verix"/>
+		<xs:enumeration value="VOS"/>
+		<xs:enumeration value="VOS2"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="ctType">
+	<xs:sequence>
+		<xs:element name="platform" minOccurs="0" maxOccurs="3" type="platformType"/>
+		<xs:element name="device" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:element name="L1" minOccurs="0"/>
+		<xs:element name="L2" type="kernelType" maxOccurs="unbounded"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ctlsType">
+	<xs:sequence>
+		<xs:element name="device" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:element name="antenna" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:element name="L1" minOccurs="0"/>
+		<xs:element name="L2" type="ctlsKernelType" maxOccurs="unbounded"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="kernelTypeNew">
+	<xs:restriction base="xs:normalizedString">
+		<xs:pattern value="L2[0-9]\.[0-9]\.[0-9]"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="kernelTypeOld">
+	<xs:restriction base="xs:normalizedString">
+		<xs:pattern value="L2[0-9]\.[0-9][0-9]"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="kernelType">
+	<xs:union memberTypes="kernelTypeNew kernelTypeOld"/>	
+</xs:simpleType>
+
+<xs:simpleType name="ctlsKernelTypeNew">
+	<xs:restriction base="xs:normalizedString">
+		<xs:pattern value="[A-Z][A-Z][0-9]\.[0-9]\.[0-9]"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="ctlsKernelTypeOld">
+	<xs:restriction base="xs:normalizedString">
+		<xs:pattern value="[A-Z][A-Z][0-9]\.[0-9][0-9]"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="ctlsKernelType">
+	<xs:union memberTypes="ctlsKernelTypeNew ctlsKernelTypeOld"/>	
+</xs:simpleType>
+
+</xs:schema>
