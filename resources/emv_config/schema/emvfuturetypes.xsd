@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- Future types for some ugly conversions. For instance
+	 they should not be used for XSD delivered to customer
+	 because the current framework parser up to a certain
+	 version is not able to parse -->
+
+<!-- a volume 0-100 stored as hex2 may migrate to integer -->
+<xs:simpleType name="int0-100">
+	<xs:union memberTypes="hex2">
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="100"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:union>
+</xs:simpleType>
+
+<!-- a three digit bcd value like currency stored as hex2 may migrate to bcd3 -->
+<xs:simpleType name="bcd3">
+	<xs:union memberTypes="hex2">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]{3}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:union>
+</xs:simpleType>
+
+<!-- a small interger like currency exponent stored as hex2 may migrate to int -->
+<xs:simpleType name="int0-9">
+	<xs:union memberTypes="hex2">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:union>
+</xs:simpleType>
+
+</xs:schema>
+

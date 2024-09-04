@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="CapKeys">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="CapKey" type="CapKeyType" maxOccurs="255"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:complexType name="CapKeyType">
+	<xs:all>
+		<xs:element name="Key"><!-- modulus -->
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:maxLength value="248"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="KeyLen"><!-- key length is redundant but mandatory for instance -->
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:length value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="Exponent">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="03"/><!-- for exponent 3 -->
+					<xs:enumeration value="01"/><!-- for exponent F4 = 65537 -->
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="Hash" minOccurs="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:length value="20"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="RevocationList" minOccurs="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:maxLength value="90"/><!-- hex coded serial numbers, each 3 byte -->
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+	</xs:all>
+	<xs:attribute name="Index" use="required">
+		<xs:simpleType>
+			<xs:restriction base="xs:hexBinary">
+				<xs:length value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:attribute>
+	<xs:attribute name="RID" use="required">
+		<xs:simpleType>
+			<xs:restriction base="xs:hexBinary">
+				<xs:length value="5"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:attribute>
+</xs:complexType>
+
+</xs:schema>

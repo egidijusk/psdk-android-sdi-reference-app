@@ -13,8 +13,10 @@ this will give you a high level overview of the Sdi Command sequence
 
 When raising JSD tickets, please enable specific component logs and attach them as part of ticket 
 
-Below instructions are only for onDevice Trinity (T650) terminal integrations for other integration
+Below instructions are only for onDevice Trinity or Neo terminal integrations for other integration
 models please contact Verifone support team for assistance 
+
+The log files are available under recsources/log_files
 
 ## General for all issues
 Enable SDI logs (SDI_log.conf is included in root directory of this project)

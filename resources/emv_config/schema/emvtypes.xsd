@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- hex string of arbitrary length -->
+
+<!-- self defined:
+<xs:simpleType name="hex">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="([0-9a-fA-F][0-9a-fA-F])*"/>
+	</xs:restriction>
+</xs:simpleType> -->
+
+<!-- rename approach: -->
+<xs:simpleType name="hex">
+	<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+<xs:simpleType name="hex1">
+	<xs:restriction base="xs:hexBinary">
+		<xs:length value="1"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="hex2">
+	<xs:restriction base="xs:hexBinary">
+		<xs:length value="2"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="hex3">
+	<xs:restriction base="xs:hexBinary">
+		<xs:length value="3"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="hex4">
+	<xs:restriction base="xs:hexBinary">
+		<xs:length value="4"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="hex5">
+	<xs:restriction base="xs:hexBinary">
+		<xs:length value="5"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="hex6">
+	<xs:restriction base="xs:hexBinary">
+		<xs:length value="6"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="hex8">
+	<xs:restriction base="xs:hexBinary">
+		<xs:length value="8"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="hex16">
+	<xs:restriction base="xs:hexBinary">
+		<xs:length value="16"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="hex2bcd3">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="0([0-9]){3}"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="bcd8">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="[0-9]{8}"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="bcd16">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="[0-9]{16}"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="emptyString">
+	<xs:restriction base="xs:string">
+		<xs:length value="0"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<!-- special types -->
+<xs:simpleType name="amount12">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="[0-9]{12}"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<!-- amount or non-configured value -->
+<xs:simpleType name="amount12alt">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="[0-9]{12}|D00000000000"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="terminalType">
+	<xs:restriction base="xs:string">
+		 <xs:pattern value="[1-3][1-6]"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="labelType">
+	<xs:restriction base="xs:normalizedString">
+		 <xs:maxLength value="16"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="aidType">
+	<xs:restriction base="xs:hexBinary">
+		<xs:minLength value="5"/>
+		<xs:maxLength value="16"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="versionNumberType">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="([0-9a-fA-F]{4}){0,10}"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="merchantIdType">
+	<xs:restriction base="xs:string">
+		<xs:maxLength value="15"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="merchantNameType">
+	<xs:restriction base="xs:string">
+		<xs:maxLength value="40" />
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="transactionExponentType">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="0[0-3]"/><!-- 0-3 as hex -->
+	</xs:restriction>
+</xs:simpleType>
+
+</xs:schema>
+

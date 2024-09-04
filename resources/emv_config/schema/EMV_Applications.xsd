@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:include schemaLocation="emvtypes.xsd"/>
+
+<xs:element name="ApplicationData">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Application" type="appType" maxOccurs="128"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:complexType name="appType">
+	<xs:sequence>
+		<xs:element name="VerNum" type="hex2" minOccurs="0"/>
+		<xs:element name="AppName" type="labelType" minOccurs="0"/>
+		<xs:element name="ASI" type="hex1" minOccurs="0"/>
+		<xs:element name="BrKey" type="hex2" minOccurs="0"/>
+		<xs:element name="TermIdent" type="hex8" minOccurs="0"/>
+		<xs:element name="FloorLimit" type="hex4" minOccurs="0"/>
+		<xs:element name="SecurityLimit" type="hex4" minOccurs="0"/>
+		<xs:element name="BelowLimitTerminalCapabilities" type="hex3" minOccurs="0"/>
+		<xs:element name="Threshold" type="hex4" minOccurs="0"/>
+		<xs:element name="TargetPercentage" type="hex1" minOccurs="0"/>
+		<xs:element name="MaxTargetPercentage" type="hex1" minOccurs="0"/>
+		<xs:element name="TAC_Denial" type="hex5" minOccurs="0"/>
+		<xs:element name="TAC_Online" type="hex5" minOccurs="0"/>
+		<xs:element name="TAC_Default" type="hex5" minOccurs="0"/>
+		<xs:element name="EMV_Application" type="hex" minOccurs="0"/><!-- FF for non-EMV -->
+		<xs:element name="DefaultTDOL" type="hex" minOccurs="0"/>
+		<xs:element name="DefaultDDOL" type="hex" minOccurs="0"/>
+		<xs:element name="MerchIdent" minOccurs="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:maxLength value="15"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="CDA_Processing" type="hex1" minOccurs="0"/>
+		<xs:element name="AC_BeforeAfter" type="hex1" minOccurs="0"/>
+		<xs:element name="AIP_CVM_NotSupported" type="hex1" minOccurs="0"/>
+		<xs:element name="POS_EntryMode" type="hex1" minOccurs="0"/>
+		<xs:element name="AdditionalVersionNumbers" type="versionNumberType" minOccurs="0"/>
+		<xs:element name="AppFlowCap" type="hex5" minOccurs="0"/>
+		<xs:element name="AdditionalTagsTRM" type="hex" minOccurs="0"/>
+		<xs:element name="AdditionalTagsCRD" type="hex" minOccurs="0"/>
+		<xs:element name="MandatoryTaglistCRD" type="hex" minOccurs="0"/>
+		<xs:element name="AppTermCap" type="hex3" minOccurs="0"/>
+		<xs:element name="CountryCodeTerm" type="hex2bcd3" minOccurs="0"/>
+		<xs:element name="AppTermAddCap" type="hex5" minOccurs="0"/>
+		<xs:element name="AppTerminalType" type="terminalType" minOccurs="0"/>
+		<xs:element name="AID_Prio" type="aidType" minOccurs="0" maxOccurs="5"/>
+		<xs:element name="FallbackMIDs" minOccurs="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:maxLength value="3"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="SpecialTRX" type="hex8" minOccurs="0"/>
+		<xs:element name="FallbackHandling" type="hex1" minOccurs="0"/>
+		<xs:element name="CustomerCVM" type="hex1" minOccurs="0"/>
+		<xs:element name="ChksumParams" type="hex5" minOccurs="0"/>
+		<xs:element name="ChksumASCII_EMVCO" type="hex16" minOccurs="0"/>
+		<xs:element name="MasterAID" minOccurs="0">
+			<xs:simpleType>
+				<xs:union memberTypes="emptyString aidType"/>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="TxnTypesSale" minOccurs="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="3"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="TxnTypesCash" minOccurs="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="3"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="TxnTypesCashback" minOccurs="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="3"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="TxnTypesRefund" minOccurs="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="3"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+	</xs:sequence>
+	<xs:attribute name="AID" type="aidType" use="required"/>
+</xs:complexType>
+
+</xs:schema>
+
