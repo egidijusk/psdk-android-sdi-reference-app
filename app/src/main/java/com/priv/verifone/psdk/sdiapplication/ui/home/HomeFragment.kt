@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
         val btnConnect = binding.btnConnect
         val btnDisconnect = binding.btnDisconnect
         val btnLogs = binding.btnLogs
-        calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance()
         // Set up the click listeners
         btnConnect.setOnClickListener {
             // Handle the connect action
