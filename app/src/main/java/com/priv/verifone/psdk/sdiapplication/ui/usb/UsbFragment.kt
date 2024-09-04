@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.usb
 
 import android.os.Bundle
@@ -14,8 +24,7 @@ class UsbFragment : Fragment() {
 
     private var _binding: FragmentUsbBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -27,10 +36,8 @@ class UsbFragment : Fragment() {
             PsdkViewModelFactory(requireActivity().application)
         )[UsbViewModel::class.java]
 
-
         _binding = FragmentUsbBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
 
         binding.btnConnect.setOnClickListener{
             viewModel.connect()

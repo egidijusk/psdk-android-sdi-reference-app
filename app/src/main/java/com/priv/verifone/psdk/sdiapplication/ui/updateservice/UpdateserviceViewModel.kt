@@ -1,14 +1,22 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.updateservice
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.priv.verifone.psdk.sdiapplication.tms.TmsService
 import com.priv.verifone.psdk.sdiapplication.tms.TmsServiceCallback
 import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.BaseViewModel
-import com.verifone.updateservicelib.IUpdateServiceCallback
 import com.verifone.updateservicelib.UpdateStatus
 
 class UpdateserviceViewModel(application: Application) : BaseViewModel(app = application) {
@@ -33,6 +41,7 @@ class UpdateserviceViewModel(application: Application) : BaseViewModel(app = app
     init {
         tmsService.setCallback(tmsServiceCallback)
     }
+
     // Install an Android APK
     fun installApk() {
         background {
@@ -65,6 +74,7 @@ class UpdateserviceViewModel(application: Application) : BaseViewModel(app = app
             showResult(result)
         }
     }
+
     fun installVrkPayload() {
         background {
             val fileName = "VRKv2-neo-TDES-DUKPT1.json"
@@ -95,6 +105,4 @@ class UpdateserviceViewModel(application: Application) : BaseViewModel(app = app
             }
         _text.postValue(message)
     }
-
-
 }

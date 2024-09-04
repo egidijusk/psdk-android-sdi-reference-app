@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.connection
 
 import android.util.Log
@@ -16,13 +26,14 @@ class SdiConnection(private val paymentSdk: PaymentSdk, private val callback: Co
     companion object {
         const val TAG = "SdiConnection"
     }
+
     enum class State {
         NOT_CONNECTED,
         CONNECTED,
     }
 
     private val connectionListener: CommerceListener2 = SimpleCommerceListener()
-    private var state:State = State.NOT_CONNECTED
+    private var state: State = State.NOT_CONNECTED
 
     fun connect() {
         val config = HashMap<String, String>()
@@ -70,22 +81,27 @@ class SdiConnection(private val paymentSdk: PaymentSdk, private val callback: Co
                         state = State.CONNECTED
                         callback.onConnected()
                     }
+
                     StatusCode.CONFIGURATION_REQUIRED == statusCode -> {
                         Log.i(TAG, "Configuration required")
                     }
+
                     else -> {
                         Log.i(TAG, "Initialization failed")
                     }
                 }
+
                 Status.STATUS_TEARDOWN -> if (status.status == StatusCode.SUCCESS) {
                     Log.i(TAG, "Teardown Success")
                     callback.onDisconnected()
                     state = State.NOT_CONNECTED
                 } else {
                     Log.i(TAG, "Teardown Failed")
-                } else -> {
-                Log.i(TAG, "Unhandled event: ${status.type}")
-            }
+                }
+
+                else -> {
+                    Log.i(TAG, "Unhandled event: ${status.type}")
+                }
             }
         }
     }
