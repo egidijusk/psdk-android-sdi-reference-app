@@ -1,6 +1,15 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.transaction
 
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +18,6 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.priv.verifone.psdk.sdiapplication.R
@@ -26,8 +33,7 @@ class TransactionFragment : Fragment() {
 
     private var _binding: FragmentTransactionBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     private lateinit var transactionViewModel: TransactionViewModel
 
@@ -40,7 +46,6 @@ class TransactionFragment : Fragment() {
             requireActivity(),
             PsdkViewModelFactory(requireActivity().application)
         )[TransactionViewModel::class.java]
-
 
         _binding = FragmentTransactionBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -67,7 +72,6 @@ class TransactionFragment : Fragment() {
         handleLeds()
 
         // PIN Entry Handling
-
         transactionViewModel.sensitiveDataDigits.observe(viewLifecycleOwner) {
             binding.pinEntryDigits.text = it
         }
@@ -143,7 +147,6 @@ class TransactionFragment : Fragment() {
                     showCardEntry(false)
                     showSensitiveDataEntry(false)
                     binding.textview.text = ""
-
                 }
 
                 TransactionViewModel.State.TransactionInProgress -> {

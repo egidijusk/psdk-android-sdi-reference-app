@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication
 
 import android.os.Bundle
@@ -40,7 +50,8 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_transaction, R.id.nav_updateservice, R.id.nav_config, R.id.nav_usb
+                R.id.nav_home, R.id.nav_transaction, R.id.nav_peripheral_service,
+                R.id.nav_updateservice, R.id.nav_config, R.id.nav_usb
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

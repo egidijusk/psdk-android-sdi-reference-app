@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
         android:text="@string/logs"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnSetDateTime"
         app:layout_constraintEnd_toStartOf="@+id/btn_dark_mode"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -115,8 +115,30 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
         android:text="@string/dark_mode"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnSetDateTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_logs" />
+
+    <Button
+        android:id="@+id/btnSetDateTime"
+        android:layout_width="0dp"
+        android:layout_margin="@dimen/margin"
+        android:layout_height="wrap_content"
+        android:text="Set Date and Time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnKeyboardBacklight"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/btnKeyboardBacklight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:visibility="invisible"
+        android:text="Keyboard Backlight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSetDateTime"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,11 @@
     <uses-permission android:name="android.permission.START_ACTIVITIES_FROM_BACKGROUND"
         tools:ignore="ProtectedPermissions" />
 
+    <uses-permission android:name="android.permission.SET_TIME"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.SET_TIME_ZONE"
+        tools:ignore="ProtectedPermissions" />
+
     <!-- add tools:replace="android:allowBackup" for linking PSDK SDI -->
     <application
         android:name="com.priv.verifone.psdk.sdiapplication.PSDKContext"
@@ -39,6 +44,13 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <service android:name=".MyService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.verifone.watchdog.action.REQUEST_TO_MONITOR_APP" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

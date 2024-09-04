@@ -41,7 +41,7 @@ abstract class SdiContact(private val sdiManager: SdiManager)
         val initOptions = SdiEmvOptions.create()
         initOptions.setOption(SdiEmvOption.TRACE, true)
         initOptions.setOption(SdiEmvOption.TRACE_ADK_LOG, true)
-        initOptions.setOption(SdiEmvOption.VIRT_1, true)
+        //initOptions.setOption(SdiEmvOption.VIRT_1, true)
         val result = sdiManager.emvCt?.initFramework(60, initOptions)
         Log.d(TAG, "Command result: ${result?.name}")
         return result!!

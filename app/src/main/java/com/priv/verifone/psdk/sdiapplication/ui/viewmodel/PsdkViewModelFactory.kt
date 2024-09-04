@@ -11,15 +11,14 @@
 package com.priv.verifone.psdk.sdiapplication.ui.viewmodel
 
 import android.app.Application
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.priv.verifone.psdk.sdiapplication.ui.configuration.ConfigurationViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.home.HomeViewModel
+import com.priv.verifone.psdk.sdiapplication.ui.peripherals.PeripheralViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.transaction.TransactionViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.updateservice.UpdateserviceViewModel
 import com.priv.verifone.psdk.sdiapplication.ui.usb.UsbViewModel
-
 
 class PsdkViewModelFactory(
     private val application: Application,
@@ -41,6 +40,9 @@ class PsdkViewModelFactory(
         }
         if (modelClass.isAssignableFrom(UsbViewModel::class.java)) {
             return UsbViewModel(application) as T
+        }
+        if (modelClass.isAssignableFrom(PeripheralViewModel::class.java)) {
+            return PeripheralViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

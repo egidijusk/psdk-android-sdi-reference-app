@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.home
 
 import android.app.Application
@@ -11,6 +21,7 @@ import androidx.lifecycle.MutableLiveData
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.connection.ConnectionCallback
 import com.priv.verifone.psdk.sdiapplication.connection.SdiConnection
+import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiSystem
 import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.BaseViewModel
 import com.priv.verifone.psdk.sdiapplication.utils.getDeviceInformation
 import com.verifone.persistentloggerlibrary.PersistentLoggerApi
@@ -23,11 +34,11 @@ class HomeViewModel(val app: Application) : BaseViewModel(app), ConnectionCallba
 
     private val paymentSdk = (app as PSDKContext).paymentSDK
     private val sdiConnection = SdiConnection(paymentSdk, this)
+    private lateinit var sdiSystem: SdiSystem
 
     suspend fun connect() {
         _text.postValue("Connecting...")
         val result = sdiConnection.connect()
-
     }
 
     fun disconnect() {
@@ -59,10 +70,16 @@ class HomeViewModel(val app: Application) : BaseViewModel(app), ConnectionCallba
 
     val info: LiveData<Spanned> = _info
 
+    private val _keyboardPresent = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
+    val keyboardPresent: LiveData<Boolean> = _keyboardPresent
     override fun onConnected() {
         _text.postValue("Connected")
         _info.postValue(getDeviceInformation(paymentSdk))
-
+        sdiSystem = SdiSystem(paymentSdk.sdiManager)
+        _keyboardPresent.postValue(sdiSystem.isPhysicalKeyboardPresent())
     }
 
     override fun onDisconnected() {
@@ -104,5 +121,15 @@ class HomeViewModel(val app: Application) : BaseViewModel(app), ConnectionCallba
         } catch (e: Exception) {
             Log.e(TAG, e.toString())
         }
+    }
+
+    fun toggleKeyboardBacklight() {
+        if (sdiSystem.isPhysicalKeyboardPresent()) {
+            sdiSystem.toggleKeyboardBacklight()
+        }
+    }
+
+    fun setDateTime(time: String) {
+        sdiSystem.setAndroidTime(time)
     }
 }
