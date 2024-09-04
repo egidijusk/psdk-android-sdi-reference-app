@@ -1,14 +1,20 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.sdi.config
 
 import android.util.Log
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.sdi.config.model.EmvContactConfig
-import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByteArray
 import com.verifone.payment_sdk.PaymentSdk
-import com.verifone.payment_sdk.SdiCurrency
 import com.verifone.payment_sdk.SdiEmvConf
-import com.verifone.payment_sdk.SdiEmvCtAppFlowCapabilities
-import java.util.EnumSet
 
 class CustomContactConfig(private val sdk: PaymentSdk) : CtConfig(sdk) {
     companion object {
