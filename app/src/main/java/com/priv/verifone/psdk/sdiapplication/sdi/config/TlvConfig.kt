@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.sdi.config
 
 import android.util.Log
@@ -15,6 +25,9 @@ class TlvConfig {
     companion object {
         const val TAG = "TlvConfig"
         const val F0 = 0xF0
+        const val TAG_AID = 0x4F
+        const val TAG_KERNEL_ID = 0xDF810C
+        const val TAG_DRL = 0xFFAB01
     }
 
     private val ctConfigTlv = PSDKContext.ctConfigTlvData
@@ -57,11 +70,11 @@ class TlvConfig {
             val tlvAccess = sdiEmvConf.accessTlv()
 
             sdiEmvConf.aid = applicationData.AID.hexStringToByteArray()
-            tlvAccess.obtain(F0).obtain(0x4F)
+            tlvAccess.obtain(F0).obtain(TAG_AID)
                 .assignBinary(applicationData.AID.hexStringToByteArray()) // Aid
 
             sdiEmvConf.kernelID = applicationData.KernelID.toLong(radix = 16)
-            tlvAccess.obtain(F0).obtain(0xDF810C)
+            tlvAccess.obtain(F0).obtain(TAG_KERNEL_ID)
                 .assignBinary(applicationData.KernelID.hexStringToByteArray()) // Kernel ID
 
             loadTlvAccessFields(tlvAccess, applicationData.common.fields, true) // Common fields
@@ -81,7 +94,7 @@ class TlvConfig {
         for ((drlIndex, drlValue) in drlParam.values.withIndex()) {
             val drlAccessField = SdiEmvConf.create().accessTlv()
             loadTlvAccessFields(drlAccessField, drlValue.fields, false)
-            tlvAccess.obtain(F0).obtainIndex(0xFFAB01, drlIndex + 1).assignTlv(drlAccessField)
+            tlvAccess.obtain(F0).obtainIndex(TAG_DRL, drlIndex + 1).assignTlv(drlAccessField)
         }
     }
 
