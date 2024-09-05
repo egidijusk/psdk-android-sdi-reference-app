@@ -10,12 +10,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiContactless
+import com.priv.verifone.psdk.sdiapplication.sdi.display.Display
 import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiSystem
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionManager
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.BaseViewModel
 import com.priv.verifone.psdk.sdiapplication.utils.Constants.Companion.CONFIRM
+import com.verifone.payment_sdk.Decimal
+import com.verifone.payment_sdk.SdiCurrency
 import com.verifone.payment_sdk.SdiEmvCandidate
 import com.verifone.payment_sdk.SdiTouchButton
 import java.math.BigDecimal
@@ -42,6 +45,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
     private val paymentSdk = (application as PSDKContext).paymentSDK
     private val transactionManager = TransactionManager(paymentSdk.sdiManager)
     private val transactionListener = TransactionListenerImpl()
+    private val display = Display(paymentSdk.sdiManager.display)
     var ledsState = MutableLiveData(false)
     var led1 = MutableLiveData(false)
     var led2 = MutableLiveData(false)
@@ -62,20 +66,38 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
     private inner class TransactionListenerImpl : TransactionListener {
         // override transaction listener
         override fun display(message: String) {
-            _text.postValue(message)
+            if (PSDKContext.ON_DEVICE_MODE) {
+                _text.postValue(message)
+            } else {
+                display.textMessage(message, beep = false)
+            }
         }
 
-        override fun showLeds(b: Boolean) {
-            ledsState.postValue(b)
+        override fun presentCard(tec: Short, amount: Long, currency: SdiCurrency) {
+            if (PSDKContext.ON_DEVICE_MODE) {
+                _text.postValue("$${Decimal(2, amount).toBigDecimal()} \n Present Card")
+            } else {
+                display.cardRequest(tec, amount, currency)
+            }
+        }
+
+        override fun showLeds(activateStatus: Boolean) {
+            if (PSDKContext.ON_DEVICE_MODE) {
+                ledsState.postValue(activateStatus)
+            } else {
+                display.enableLed(activateStatus)
+            }
         }
 
         override fun activateLed(led: SdiContactless.LED, activate: Boolean) {
             background {
-                when (led) {
-                    SdiContactless.LED.ONE -> led1.postValue(activate)
-                    SdiContactless.LED.TWO -> led2.postValue(activate)
-                    SdiContactless.LED.THREE -> led3.postValue(activate)
-                    SdiContactless.LED.FOUR -> led4.postValue(activate)
+                if (PSDKContext.ON_DEVICE_MODE) {
+                    when (led) {
+                        SdiContactless.LED.ONE -> led1.postValue(activate)
+                        SdiContactless.LED.TWO -> led2.postValue(activate)
+                        SdiContactless.LED.THREE -> led3.postValue(activate)
+                        SdiContactless.LED.FOUR -> led4.postValue(activate)
+                    }
                 }
             }
         }
@@ -87,43 +109,61 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
             Log.d(TAG, "${sensitiveDataTouchButtons.value?.isEmpty()}")
             Log.d(TAG, "${sensitiveDataTouchButtons.value?.size}")
 
-            return sensitiveDataTouchButtons.value!!
+            return if (PSDKContext.ON_DEVICE_MODE) {
+                sensitiveDataTouchButtons.value!!
+            } else {
+                ArrayList()
+            }
         }
 
         override fun sensitiveDataEntryTitle(message: String) {
-            sensitiveDataTitle.postValue(message)
+            if(PSDKContext.ON_DEVICE_MODE) {
+                sensitiveDataTitle.postValue(message)
+            }
         }
 
         override fun showSensitiveDataEntry() {
             Log.d(TAG, "showSensitiveDataEntry")
-            background {
-                sensitiveDataDigits.postValue("")
-                transactionState.postValue(State.SensitiveDataEntry)
+            if (PSDKContext.ON_DEVICE_MODE) {
+                background {
+                    sensitiveDataDigits.postValue("")
+                    transactionState.postValue(State.SensitiveDataEntry)
+                }
+                // TODO
+                // shows the pin entry screen
+                // wait for screen to inflate fully
+                // get coordinates once inflated then return
+                // till this is done, use  Thread.sleep to adjust
+                Thread.sleep(800)
             }
-            // TODO
-            // shows the pin entry screen
-            // wait for screen to inflate fully
-            // get coordinates once inflated then return
-            // till this is done, use  Thread.sleep to adjust
-            Thread.sleep(800)
         }
 
         override fun pinEntryComplete() {
-            sensitiveDataDigits.postValue("")
-            transactionState.postValue(State.TransactionInProgress)
+            if (PSDKContext.ON_DEVICE_MODE) {
+                sensitiveDataDigits.postValue("")
+                transactionState.postValue(State.TransactionInProgress)
+            }
         }
 
         override fun sensitiveDigitsEntered(digits: String) {
-            sensitiveDataDigits.postValue(digits)
+            if (PSDKContext.ON_DEVICE_MODE) {
+                sensitiveDataDigits.postValue(digits)
+            }
         }
 
         override fun setSensitiveDataGreenButtonText(text: String) {
-            sensitiveDataGreenButtonText.postValue(text)
+            if (PSDKContext.ON_DEVICE_MODE) {
+                sensitiveDataGreenButtonText.postValue(text)
+            }
         }
 
         override fun waitForCardRemoval() {
             transactionState.postValue(State.RemoveCard)
-            _text.postValue("Remove Card")
+            if (PSDKContext.ON_DEVICE_MODE) {
+                _text.postValue("Remove Card")
+            } else {
+                display.textMessage("Remove Card", true)
+            }
         }
 
         override fun applicationSelection(candidates: ArrayList<SdiEmvCandidate>): Int {
@@ -133,6 +173,12 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
             }
             //TODO Always returning first application till UI is implemented
             return 0
+        }
+
+        override fun endTransaction() {
+            if (!PSDKContext.ON_DEVICE_MODE) {
+                display.clearScreen()
+            }
         }
     }
 

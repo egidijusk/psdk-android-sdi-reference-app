@@ -29,6 +29,7 @@ class PSDKContext : Application() {
     //lateinit var config : Config
 
     companion object {
+        const val ON_DEVICE_MODE = false
         lateinit var instance: PSDKContext
         lateinit var ctConfigData : EmvContactConfig
         lateinit var ctlsConfigData : EmvCtlsConfig

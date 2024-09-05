@@ -1,6 +1,7 @@
 package com.priv.verifone.psdk.sdiapplication.connection
 
 import android.util.Log
+import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.verifone.payment_sdk.CommerceEvent
 import com.verifone.payment_sdk.CommerceListener2
 import com.verifone.payment_sdk.PaymentSdk
@@ -27,10 +28,18 @@ class SdiConnection(private val paymentSdk: PaymentSdk, private val callback: Co
     fun connect() {
         val config = HashMap<String, String>()
         config[TransactionManager.DEVICE_PROTOCOL_KEY] = TransactionManager.DEVICE_PROTOCOL_SDI
-        config[PsdkDeviceInformation.DEVICE_ADDRESS_KEY] = "vfi-terminal"
+        config[PsdkDeviceInformation.DEVICE_ADDRESS_KEY] = getIPAddress()
         config[PsdkDeviceInformation.DEVICE_CONNECTION_TYPE_KEY] = "tcpip"
         paymentSdk.configureLogLevel(PsdkLogLevel.LOG_TRACE)
         paymentSdk.initializeFromValues(connectionListener, config)
+    }
+
+    private fun getIPAddress(): String {
+        return if (PSDKContext.ON_DEVICE_MODE) {
+            "vfi-terminal"
+        } else {
+            "192.168.1.4" // Enter your terminal IP address here
+        }
     }
 
     fun disconnect() {

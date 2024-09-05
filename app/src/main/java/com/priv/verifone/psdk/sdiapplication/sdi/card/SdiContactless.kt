@@ -76,7 +76,6 @@ class SdiContactless(private val sdiManager: SdiManager) :
     override fun startTransactionFlow(amount: Long): SdiResultCode {
 
         val response = continueOffline()
-        uiListener.display("Continue Offline: ${response.result.name}")
 
         when (response.result) {
             SdiResultCode.EMVSTATUS_ARQC -> {
@@ -111,6 +110,7 @@ class SdiContactless(private val sdiManager: SdiManager) :
             }
         }
 
+        uiListener.waitForCardRemoval()
         sdiManager.smartCardCtls.smartPowerOff(EnumSet.of(SdiEmvCtlsReaderOptions.DETECT_REMOVAL))
         var result: SdiResultCode?
         do {

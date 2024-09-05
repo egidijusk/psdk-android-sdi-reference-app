@@ -157,7 +157,8 @@ class SdiContactAdvanced(private val sdiManager: SdiManager) :
                     uiListener.sensitiveDataEntryTitle("Enter Pin")
                     // Interaction with UI elements
                     uiListener.showSensitiveDataEntry() // showing PIN entry
-                    val pinResult = getPinUsingPolling()
+//                    val pinResult = getPinUsingPolling()
+                    val pinResult = getPinUsingCallback()
                     Log.d(TAG, "PIN Entry Result: ${pinResult.name}")
                     if (pinResult == SdiResultCode.ERR_PED_BYPASS) {
                         val txnSteps = EnumSet.of(SdiEmvTransactionSteps.MS_PIN_BYPASS)
