@@ -15,9 +15,7 @@ import com.verifone.payment_sdk.SdiManager
 import com.verifone.payment_sdk.SdiResultCode
 import com.priv.verifone.psdk.sdiapplication.sdi.card.*
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiCard.Companion.cardDetect
-import com.verifone.payment_sdk.Decimal
 import com.verifone.payment_sdk.SdiCurrency
-import java.math.BigDecimal
 import kotlin.experimental.and
 import kotlin.experimental.or
 

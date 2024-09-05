@@ -121,7 +121,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
         }
 
         override fun sensitiveDataEntryTitle(message: String) {
-            if(PSDKContext.ON_DEVICE_MODE) {
+            if (PSDKContext.ON_DEVICE_MODE) {
                 sensitiveDataTitle.postValue(message)
             }
         }
@@ -221,7 +221,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
 
     fun setAmount(amt: String) {
         var temp = amt
-        if (amt.isNullOrEmpty() ){
+        if (amt.isNullOrEmpty()) {
             temp = "100"
         }
         var amount = BigDecimal(temp)
