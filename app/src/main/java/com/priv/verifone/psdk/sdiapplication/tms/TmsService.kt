@@ -50,6 +50,7 @@ class TmsService(private val app: Application) {
     fun setCallback(callback: TmsServiceCallback) {
         this.callback = callback
     }
+
     // Install an Android APK
     fun installApk(fileName: String): Int {
         try {

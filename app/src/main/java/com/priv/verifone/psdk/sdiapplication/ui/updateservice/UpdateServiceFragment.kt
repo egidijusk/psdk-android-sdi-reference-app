@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.updateservice
 
 import android.os.Bundle
@@ -14,8 +24,7 @@ class UpdateServiceFragment : Fragment() {
 
     private var _binding: FragmentUpdateserviceBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -26,7 +35,6 @@ class UpdateServiceFragment : Fragment() {
         val updateServiceViewModel = ViewModelProvider(requireActivity(),
             PsdkViewModelFactory(requireActivity().application)
         )[UpdateserviceViewModel::class.java]
-
 
         _binding = FragmentUpdateserviceBinding.inflate(inflater, container, false)
         val root: View = binding.root

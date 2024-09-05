@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.home
 
 import android.content.res.Configuration
@@ -6,7 +16,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -22,19 +31,16 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     private var _viewModel: HomeViewModel? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val viewModel get() = _viewModel!!
 
     private lateinit var calendar:Calendar
@@ -74,7 +80,6 @@ class HomeFragment : Fragment() {
             lifecycleScope.launch {
                 viewModel.connect()
             }
-
         }
         binding.btnCrash.setOnClickListener {
             throw RuntimeException("This is a crash simulation.")
@@ -100,9 +105,9 @@ class HomeFragment : Fragment() {
             // Handle the disconnect action
             viewModel.toggleKeyboardBacklight()
         }
+
         // Set a listener for changes in the checkbox state
-        // Set a listener for changes in the checkbox state
-        binding.btnDarkMode.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        binding.btnDarkMode.setOnCheckedChangeListener{ buttonView, isChecked ->
             if (isChecked) {
                 // Enable dark mode
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -110,9 +115,7 @@ class HomeFragment : Fragment() {
                 // Disable dark mode
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
-        })
-
-        // Optionally, set the checkbox state based on the current theme
+        }
 
         // Optionally, set the checkbox state based on the current theme
         val currentNightMode = (resources.configuration.uiMode
@@ -151,13 +154,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun setDateTime(timestamp: Long) {
-
         DateTimeUtil.setDateTime(requireContext(), timestamp)
     }
+
     override fun onStart() {
         super.onStart()
         viewModel.setCurrentMode()
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

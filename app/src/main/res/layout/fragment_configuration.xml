@@ -34,12 +34,28 @@
             android:text="@string/set_contact_configuration" />
 
         <Button
+            android:id="@+id/btn_ct_tlv_config"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:text="@string/set_contact_tlv_configuration" />
+
+        <Button
             android:id="@+id/btn_ctls_config"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/margin"
             android:text="@string/set_ctls_config" />
+
+        <Button
+            android:id="@+id/btn_ctls_tlv_config"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:text="@string/set_ctls_tlv_configuration" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,7 +31,6 @@ import com.verifone.payment_sdk.SdiEmvOption
 import com.verifone.payment_sdk.SdiEmvOptions
 import com.verifone.payment_sdk.SdiResultCode
 
-
 fun getDeviceInformation(paymentSdk: PaymentSdk): Spanned {
     val sb = StringBuilder()
     val system = SdiSystem(paymentSdk.sdiManager)

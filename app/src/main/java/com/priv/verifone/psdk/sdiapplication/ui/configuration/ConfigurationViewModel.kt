@@ -1,3 +1,13 @@
+/*
+* Copyright (c) 2021 by VeriFone, Inc.
+* All Rights Reserved.
+* THIS FILE CONTAINS PROPRIETARY AND CONFIDENTIAL INFORMATION
+* AND REMAINS THE UNPUBLISHED PROPERTY OF VERIFONE, INC.
+*
+* Use, disclosure, or reproduction is prohibited
+* without prior written approval from VeriFone, Inc.
+*/
+
 package com.priv.verifone.psdk.sdiapplication.ui.configuration
 
 import android.app.Application
@@ -33,6 +43,22 @@ class ConfigurationViewModel(application: Application) : BaseViewModel(applicati
         background {
             val result = emvConfig.setCtlsConfiguration()
             _text.postValue(" Ctls config result: ${result.name}")
+        }
+    }
+
+    fun setContactConfigThroughTlvAccess() {
+        background {
+            val result = emvConfig.setContactTlvConfiguration()
+            Log.d(TAG, " CT config tlv result: ${result.name}")
+            _text.postValue(" CT config tlv result: ${result.name}")
+        }
+    }
+
+    fun setContactlessConfigThroughTlvAccess() {
+        background {
+            val result = emvConfig.setCtlsTlvConfiguration()
+            Log.d(TAG, " Ctls config tlv result: ${result.name}")
+            _text.postValue(" Ctls config tlv result: ${result.name}")
         }
     }
 }

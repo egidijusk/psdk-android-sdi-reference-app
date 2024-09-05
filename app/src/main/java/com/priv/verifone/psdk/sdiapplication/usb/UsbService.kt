@@ -25,7 +25,6 @@ class UsbService {
         private const val DATA_BITS = 8
         private const val TIMEOUT_MS = 5000
         private const val RECEIVE_DATA_LEN = 8
-
     }
 
     private var serialConnection: SerialConnection? = null
@@ -82,7 +81,6 @@ class UsbService {
         } catch (e: Throwable) {
             Log.e(TAG, "Init FAILED: ", e)
         }
-
     }
 
     fun disconnect() {

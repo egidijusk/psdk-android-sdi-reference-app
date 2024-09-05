@@ -283,7 +283,7 @@ class SdiContactless(private val sdiManager: SdiManager) :
                 }
 
                 else -> {
-
+                    Log.d(TAG, "EMV CTLS Callback ${type.name} is not been handled")
                 }
             }
         }

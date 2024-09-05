@@ -34,7 +34,6 @@ class UsbViewModel(private val app: Application) : BaseViewModel(app), UsbEventL
         background {
             usbService.connect(SerialDeviceNumber.SERIAL_8)
         }
-
     }
 
     fun send () {
