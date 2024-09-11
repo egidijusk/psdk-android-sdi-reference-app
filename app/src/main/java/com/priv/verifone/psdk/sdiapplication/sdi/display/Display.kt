@@ -28,7 +28,7 @@ class Display(private val sdiDisplay: SdiDisplay) {
     companion object {
         private const val TAG = "Display"
         private const val DISPLAY_TEXT = "text"
-        private const val TEMPLATE_ID = 1
+        private const val TEMPLATE_ID = 1 // Default template for SDI
     }
 
     fun textMessage(dataValue: String, beep: Boolean) {

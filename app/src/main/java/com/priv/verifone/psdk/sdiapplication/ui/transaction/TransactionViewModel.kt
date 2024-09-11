@@ -109,6 +109,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
         override fun getSensitiveDataTouchCoordinates(): ArrayList<SdiTouchButton> {
             // implementation is in TransactionFragment.kt
             // under getSensitiveDataTouchButtons() function
+            // NOTE : This TLV tag is supported for headless mode only (ignored for standard or off device mode).
             Log.d(TAG, "getSensitiveDataTouchCoordinates")
             Log.d(TAG, "${sensitiveDataTouchButtons.value?.isEmpty()}")
             Log.d(TAG, "${sensitiveDataTouchButtons.value?.size}")
@@ -175,7 +176,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
             if (PSDKContext.ON_DEVICE_MODE) {
                 _text.postValue("Remove Card")
             } else {
-                display.textMessage("Remove Card", true)
+                display.textMessage("Remove Card", beep = true)
             }
         }
 
