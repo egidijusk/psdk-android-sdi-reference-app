@@ -28,23 +28,28 @@ class Display(private val sdiDisplay: SdiDisplay) {
     companion object {
         private const val TAG = "Display"
         private const val DISPLAY_TEXT = "text"
+        private const val TEMPLATE_ID = 1
     }
 
     fun textMessage(dataValue: String, beep: Boolean) {
         Log.d(TAG, "Handle Display (24-03)")
-        val resultCode = sdiDisplay.text(1, DISPLAY_TEXT, dataValue, 0, null, beep, null)
+        val resultCode = sdiDisplay.text(TEMPLATE_ID, DISPLAY_TEXT, dataValue, 0, null, beep, null)
         Log.d(TAG, "Command Result: $resultCode")
     }
 
     fun asyncTextMessage(
-        valueMap: HashMap<String, String>, keyActions: HashMap<String, String>,
-        headerText: String, enterText: String,
-        clearText: String, cancelText: String
+        valueMap: HashMap<String, String>, // FFA011 (Display Data)
+        keyActions: HashMap<String, String>, // FFA106 (Additional key action)
+        headerText: String, enterText: String, clearText: String, cancelText: String
     ) {
         Log.d(TAG, "Handle Display (24-03)")
-        val dialogOptions = EnumSet.of(SdiDialogOptions.ASYNC, SdiDialogOptions.SUCCESS_LOGO)
+        val dialogOptions = EnumSet.of(
+            SdiDialogOptions.ASYNC,
+            SdiDialogOptions.STORE_ASYNC_RESULT,
+            SdiDialogOptions.SUCCESS_LOGO
+        )
         val resultCode = sdiDisplay.textWith(
-            1, dialogOptions, valueMap, keyActions,
+            TEMPLATE_ID, dialogOptions, valueMap, keyActions,
             headerText, enterText, clearText, cancelText, 0, null
         )
         Log.d(TAG, "Command Result: $resultCode")
@@ -71,32 +76,38 @@ class Display(private val sdiDisplay: SdiDisplay) {
         Log.d(TAG, "Command Result: $resultCode")
     }
 
-    fun secureInput(inputType: SdiInputType) {
+    fun secureInput(inputType: SdiInputType): String {
         Log.d(TAG, "Handle Secure Input (24-04)")
         val inputResponse =
             sdiDisplay.input(inputType, SdiLanguage.NO_LANGUAGE, 0, null, null, false, null)
         Log.d(TAG, "Command Result: $inputResponse")
+        return inputResponse.response
     }
 
-    fun menu(headLine: String, entries: ArrayList<String>) {
+    fun menu(headLine: String, entries: ArrayList<String>): Int {
         Log.d(TAG, "Handle Menu (24-05)")
         val menuResponse = sdiDisplay.menu(headLine, entries, 0, false, null)
         Log.d(TAG, "Command Result: $menuResponse")
+        return menuResponse.response
     }
 
-    fun captureSignature() {
+    // Currently Portable Network Graphics (png) format is supported.
+    // In the two piece solution this command will be executed on the EPP only.
+    fun captureSignature(): ByteArray {
         Log.d(TAG, "Handle Signature Capture (24-08)")
-        val signatureResponse = sdiDisplay.signatureCapture(SdiLanguage.NO_LANGUAGE, 0, null)
+        val signatureResponse = sdiDisplay.signatureCapture(SdiLanguage.ENGLISH, 0, null)
         Log.d(TAG, "Command Result: $signatureResponse")
         Log.d(TAG, "Captured signature: ${signatureResponse.outData.toHexString()}")
+        return signatureResponse.outData
     }
 
     // API to handle a customer specific HTML dialog for special user inputs.
     // For customized dialogs w/o user input, please use text API
+    // NOTE : This custom HTML dialog must be reviewed/signed by SDI team and deployed with SDI base installation packages.
     fun htmlDialog(htmlFileName: String, valueMap: HashMap<String, String>) {
         Log.d(TAG, "Handle HTML Dialog (24-0A)")
         val dialogResponse =
-            sdiDisplay.dialog(htmlFileName, valueMap, SdiLanguage.NO_LANGUAGE, false, null)
+            sdiDisplay.dialog(htmlFileName, valueMap, SdiLanguage.ENGLISH, false, null)
         Log.d(TAG, "Command Result: $dialogResponse")
     }
 

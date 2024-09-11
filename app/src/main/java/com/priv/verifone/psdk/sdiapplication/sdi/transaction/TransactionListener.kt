@@ -27,6 +27,7 @@ interface TransactionListener {
     fun pinEntryComplete()
     fun sensitiveDigitsEntered(digits: String)
     fun setSensitiveDataGreenButtonText(text: String)
+    fun captureSignature(): ByteArray
     fun waitForCardRemoval()
     fun applicationSelection(candidates:ArrayList<SdiEmvCandidate>): Int
     fun endTransaction()

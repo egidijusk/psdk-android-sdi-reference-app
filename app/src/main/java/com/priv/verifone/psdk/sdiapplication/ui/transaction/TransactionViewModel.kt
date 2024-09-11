@@ -161,6 +161,15 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
             }
         }
 
+        override fun captureSignature(): ByteArray {
+            return if (PSDKContext.ON_DEVICE_MODE) {
+                // TODO Add UI to capture signature and return
+                byteArrayOf()
+            } else {
+                display.captureSignature()
+            }
+        }
+
         override fun waitForCardRemoval() {
             transactionState.postValue(State.RemoveCard)
             if (PSDKContext.ON_DEVICE_MODE) {
@@ -171,12 +180,19 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
         }
 
         override fun applicationSelection(candidates: ArrayList<SdiEmvCandidate>): Int {
+            val appNameList = ArrayList<String>()
             for (app in candidates) {
                 Log.d(TAG, "Application Name: ${app.aid.toHexString()}")
                 Log.d(TAG, "Application Label: ${app.appName}")
+                appNameList.add(app.appName)
             }
-            //TODO Always returning first application till UI is implemented
-            return 0
+            return if(PSDKContext.ON_DEVICE_MODE) {
+                // TODO Always returning first application till UI is implemented
+                0
+            } else {
+                // This is will return the selected app index
+                display.menu("Select Application", appNameList)
+            }
         }
 
         override fun endTransaction() {
