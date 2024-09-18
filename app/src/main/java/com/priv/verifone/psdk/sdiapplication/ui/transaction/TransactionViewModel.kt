@@ -16,7 +16,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiContactless
-import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiSystem
+import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiUtils
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionManager
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
@@ -40,7 +40,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
     }
 
     var transactionState = MutableLiveData(State.Idle)
-    private val sdiSystem = SdiSystem((application as PSDKContext).paymentSDK.sdiManager)
+    private val sdiUtils = SdiUtils((application as PSDKContext).paymentSDK.sdiManager)
 
     // Transaction Screen Variables
     private var amount: Long = 12000L
@@ -161,7 +161,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
 
     fun abort() {
         background {
-            sdiSystem.abort()
+            sdiUtils.abort()
         }
     }
 

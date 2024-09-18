@@ -19,13 +19,12 @@ import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.getBase64
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.getTestHtmlReceipt
 import com.verifone.payment_sdk.SdiComponentVersion
 import com.verifone.payment_sdk.SdiManager
-import com.verifone.payment_sdk.SdiPrinter
 import com.verifone.payment_sdk.SdiResultCode
 import com.verifone.payment_sdk.SdiSysPropertyInt
 import com.verifone.payment_sdk.SdiSysPropertyString
 import java.util.ArrayList
 
-class SdiSystem(internal val sdiManager: SdiManager) {
+class SdiUtils(internal val sdiManager: SdiManager) {
 
     companion object {
         private const val TAG = "SDISystem"

@@ -23,7 +23,7 @@ import android.view.View
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiNfcCard
 import com.priv.verifone.psdk.sdiapplication.sdi.crypto.Crypto
-import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiSystem
+import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiUtils
 import com.verifone.payment_sdk.PaymentSdk
 import com.verifone.payment_sdk.ScannerBarcodeFormatEnum
 import com.verifone.payment_sdk.ScannerConfiguration
@@ -33,20 +33,20 @@ import com.verifone.payment_sdk.SdiResultCode
 
 fun getDeviceInformation(paymentSdk: PaymentSdk): Spanned {
     val sb = StringBuilder()
-    val system = SdiSystem(paymentSdk.sdiManager)
+    val utils = SdiUtils(paymentSdk.sdiManager)
     val nfc = SdiNfcCard(paymentSdk.sdiManager)
     val crypto = Crypto(paymentSdk.sdiManager)
     sb.apply {
         append("<h3>Device Details</h3>")
         append(softwareInfo())
         append("<br>")
-        append("<b>HW Serial Number:</b> ${system.hardwareSerialNumber()}")
+        append("<b>HW Serial Number:</b> ${utils.hardwareSerialNumber()}")
         append("<br>")
-        append("<b>Serial Number:</b> ${system.serialNumber()}")
+        append("<b>Serial Number:</b> ${utils.serialNumber()}")
         append("<br>")
-        append("<b>Model:</b> ${system.modelName()}")
+        append("<b>Model:</b> ${utils.modelName()}")
         append("<br>")
-        append("<b>PCI reboot time: </b>${system.pciRebootTime()}")
+        append("<b>PCI reboot time: </b>${utils.pciRebootTime()}")
         append("<br>")
         append("<br>")
         append("<b>Key Inventory: </b>${crypto.keyInventory()}")
@@ -61,7 +61,7 @@ fun getDeviceInformation(paymentSdk: PaymentSdk): Spanned {
         append("<br>")
         append("<h3>Component versions</h3>")
         append("<br>")
-        for (component in system.sdiVersion()!!) {
+        for (component in utils.sdiVersion()!!) {
             append("<b> ${component.name}: </b> ${component.version}")
             append("<br>")
         }
