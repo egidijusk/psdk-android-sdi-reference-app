@@ -21,9 +21,14 @@ class Config(private val sdk: PaymentSdk) {
 
     private val ctConfig = CtConfig(sdk)
     private val ctlsConfig =  CtlsConfig(sdk)
+    private val tlvConfig = TlvConfig()
 
     fun setContactConfiguration(): SdiResultCode {
         return ctConfig.setContactConfiguration()
+    }
+
+    fun setContactTlvConfiguration(): SdiResultCode {
+        return ctConfig.setContactTlvConfiguration(tlvConfig)
     }
 
     /*
@@ -32,6 +37,10 @@ class Config(private val sdk: PaymentSdk) {
     * */
     fun setCtlsConfiguration(): SdiResultCode {
         return ctlsConfig.setCtlsConfiguration()
+    }
+
+    fun setCtlsTlvConfiguration(): SdiResultCode {
+        return ctlsConfig.setCtlsTlvConfiguration(tlvConfig)
     }
 
     fun getCtTagsToFetch(): List<String> {

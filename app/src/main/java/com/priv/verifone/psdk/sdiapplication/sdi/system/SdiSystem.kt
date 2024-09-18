@@ -19,6 +19,7 @@ import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.getBase64
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.getTestHtmlReceipt
 import com.verifone.payment_sdk.SdiComponentVersion
 import com.verifone.payment_sdk.SdiManager
+import com.verifone.payment_sdk.SdiPrinter
 import com.verifone.payment_sdk.SdiResultCode
 import com.verifone.payment_sdk.SdiSysPropertyInt
 import com.verifone.payment_sdk.SdiSysPropertyString
@@ -119,7 +120,6 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         return response.response
     }
 
-
     // Read hardware model number
     fun modelName(): String {
         Log.d(TAG, "System Property Command HW_MODEL_NAME (20-1A)")
@@ -132,6 +132,7 @@ class SdiSystem(internal val sdiManager: SdiManager) {
     // Read PCI Reboot time
     fun pciRebootTime(): String {
         Log.d(TAG, "System Property Command PCI_REBOOT_TIME (20-1A)")
+
         val response =
             sdiManager.system.getPropertyString(SdiSysPropertyString.PCI_REBOOT_TIME, 0x01)
         Log.d(TAG, "Command Response : ${response.response}")

@@ -11,9 +11,13 @@ class MyService : Service() {
         return null
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        launchApp()
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // Code for the service to execute
-        launchApp()
         return START_STICKY
     }
 

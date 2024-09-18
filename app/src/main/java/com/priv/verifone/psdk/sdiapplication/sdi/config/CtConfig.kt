@@ -33,13 +33,26 @@ open class CtConfig(private val sdk: PaymentSdk) {
         var result = initialize()
         if (result != SdiResultCode.OK)
             return result!!
-        result = setCtTerminalConfiguration()
+        result = setCtTerminalConfiguration(getCtTerminalConfig())
         if (result != SdiResultCode.OK)
             return result!!
-        result = setCtAidConfiguration()
+        result = setCtAidConfiguration(getCtApplicationConfig())
         if (result != SdiResultCode.OK)
             return result
         result = setCtCapkConfiguration()
+        exit()
+        return result
+    }
+
+    fun setContactTlvConfiguration(tlvConfig: TlvConfig): SdiResultCode {
+
+        var result = initialize()
+        if (result != SdiResultCode.OK)
+            return result!!
+        result = setCtTerminalConfiguration(tlvConfig.getCtTerminalConfig())
+        if (result != SdiResultCode.OK)
+            return result!!
+        result = setCtAidConfiguration(tlvConfig.getCtApplicationConfig())
         exit()
         return result
     }
@@ -62,18 +75,16 @@ open class CtConfig(private val sdk: PaymentSdk) {
         return result!!
     }
 
-    private fun setCtTerminalConfiguration(): SdiResultCode {
-        val termConfig = getCtTerminalConfig()
-        Log.d(TAG, " CT Terminal config Command (39-01)")
-        val result = sdk.sdiManager?.emvCt?.setTermData(termConfig)
+    private fun setCtTerminalConfiguration(terminalConfig: SdiEmvConf): SdiResultCode {
+        Log.d(TAG, " CT Set Terminal config Command (39-01)")
+        val result = sdk.sdiManager?.emvCt?.setTermData(terminalConfig)
         Log.d(TAG, " Command result: ${result?.name}")
         return result!!
     }
 
-    private fun setCtAidConfiguration(): SdiResultCode {
-        val aidConfigList = getCtApplicationConfig()
+    private fun setCtAidConfiguration(aidConfigList: ArrayList<SdiEmvConf>): SdiResultCode {
         for (aidConfig in aidConfigList) {
-            Log.d(TAG, " CT AID Config Command (39-02) : ${aidConfig.aid.toHexString()}")
+            Log.d(TAG, " CT Set AID Config Command (39-02) : ${aidConfig.aid.toHexString()}")
             val result = sdk.sdiManager?.emvCt?.setAppData(aidConfig.aid, aidConfig)
             Log.d(TAG, " Command result: ${result?.name}")
             if (result != SdiResultCode.OK) {
@@ -86,7 +97,7 @@ open class CtConfig(private val sdk: PaymentSdk) {
     private fun setCtCapkConfiguration(): SdiResultCode {
         val capks = getCtCapks()
         for (capk in capks) {
-            Log.d(TAG, " CT Capk Config Command (39-03) : ${capk.rid}")
+            Log.d(TAG, " CT Set Capk Config Command (39-03) : ${capk.rid}")
             val result = sdk.sdiManager?.emvCt?.setCAPKey(
                 capk.rid.hexStringToByteArray(),
                 capk.indexDF09.toShort(radix = 16),

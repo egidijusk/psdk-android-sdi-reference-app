@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:include schemaLocation="emvtypes.xsd"/>
+
+<xs:simpleType name="kernelIdType">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="[a-zA-Z0-9]{2}|[a-zA-Z0-9]{6}"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:element name="ApplicationData">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Application" type="appType" maxOccurs="128"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:complexType name="appType">
+	<xs:sequence>
+		<xs:element name="ASI_DFAB02" type="hex1" minOccurs="0"/>
+		<xs:element name="AppFlowCap_DFAB03" type="hex5" minOccurs="0"/>
+		<xs:element name="PriorityApplications_DFAB04" type="aidType" minOccurs="0" maxOccurs="5"/>
+		<xs:element name="SpecialTRXConfig_DFAB05" type="bcd16" minOccurs="0"/>
+		<xs:element name="ChksumEntryPoint_DFAB06" type="hex4" minOccurs="0"/>
+		<xs:element name="ChksumKernel_DFAB07" minOccurs="0">
+			<xs:simpleType>
+				<xs:union memberTypes="emptyString hex4 hex16"/>
+			</xs:simpleType>		
+		</xs:element>		
+		<xs:element name="RetapFieldOff_DFAB08" type="hex1" minOccurs="0"/>
+		<xs:element name="AdditionalTagsTRM_DFAB20" type="hex" minOccurs="0"/>
+		<xs:element name="AdditionalTagsCRD_DFAB21" type="hex" minOccurs="0"/>
+		<xs:element name="DefaultApplicationName_DFAB22" type="labelType" minOccurs="0"/>
+		<xs:element name="InternalKernelId_DFAB23" type="kernelIdType" minOccurs="0"/>
+		<xs:choice>
+			<xs:element name="MasterCard" type="masterCardType"/><!-- KernelID 020000 -->
+			<xs:element name="Visa" type="visaType"/><!-- KernelID 030000 -->
+			<xs:element name="AmericanExpress" type="amexType"/><!-- KernelID 040000 -->
+			<xs:element name="JCB" type="jcbType"/><!-- KernelID 050000 -->
+			<xs:element name="Discover" type="discoverType"/><!-- KernelID 060000 -->			
+			<xs:element name="ChinaUnionPay" type="cupType"/><!-- KernelID 070000 -->
+			<xs:element name="VisaAsiaPacific" type="visaAsiaPacificType"/><!-- KernelID 010000 -->				
+			<xs:element name="Interac" type="interacType"/><!-- KernelID 100000 -->
+			<xs:element name="EPAL" type="epalType"/><!-- KernelID 110000 -->
+			<xs:element name="RuPay" type="ruPayType"/><!-- KernelID 120000 -->
+			<xs:element name="Gemalto" type="gemaltoType"/><!-- KernelID 130000 -->
+			<xs:element name="PagoBancomat" type="pagoBancomatType"/><!-- KernelID 140000 -->
+			<xs:element name="WISE" type="wiseType"/><!-- KernelID 160000 -->
+			<xs:element name="CPACE" type="cpaceType"/><!-- KernelID 2E0000 -->
+			<xs:element name="girocard" type="masterCardType"/><!-- KernelID 2A0000 -->
+			<xs:element name="MIR" type="mirType"/><!-- KernelID 810643 -->
+			<xs:element name="SIBS" type="sibsType"/><!-- KernelID C14D42 -->
+			<xs:element name="domestic" type="domesticType" /><!-- KernelID F00000 -->			
+		</xs:choice>
+	</xs:sequence>
+	<xs:attribute name="AID" type="aidType" use="required"/>
+	<xs:attribute name="KernelID" type="hex3" use="required"/>	
+</xs:complexType>
+
+<xs:complexType name="domesticType">
+	<xs:all minOccurs="0">
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="masterCardType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="MagstripeCVM_aboveLimit_DF811E" type="hex1"/>
+		<xs:element name="MagstripeCVM_belowLimit_DF812C" type="hex1"/>
+		<xs:element name="ChipCVM_aboveLimit_DF8118" type="hex1"/>
+		<xs:element name="ChipCVM_belowLimit_DF8119" type="hex1"/>
+		<xs:element name="SecurityCapability_DF811F" type="hex1"/>
+		<xs:element name="CardDataInputCapability_DF8117" type="hex1"/>
+		<xs:element name="FloorLimit_DF8123" type="amount12"/>
+		<xs:element name="TransactionLimitNoOnDevice_DF8124" type="amount12"/>
+		<xs:element name="TransactionLimitOnDevice_DF8125" type="amount12"/>
+		<xs:element name="CVMRequiredLimit_DF8126" type="amount12"/>
+		<xs:element name="ChipVersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MSRVersionNumber_9F6D" type="versionNumberType"/>
+		<xs:element name="KernelConfiguration_DF811B" type="hex1"/>
+		<xs:element name="TransactionCategoryCode_9F53" type="hex1"/>
+		<xs:element name="TACDefault_DF8120" type="hex5"/>
+		<xs:element name="TACDenial_DF8121" type="hex5"/>
+		<xs:element name="TACOnline_DF8122" type="hex5"/>
+		<xs:element name="KernelID_DF810C" type="hex1"/>
+		<xs:element name="TerminalRiskManagementData_9F1D" type="hex8"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantIdentifier_9F16" type="merchantIdType"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="AcquirerIdentifier_9F01" type="hex6"/>
+		<xs:element name="HoldTimeValue_DF8130" type="hex1"/>
+		<xs:element name="MessageHoldTime_DF812D" type="hex3"/>
+		<xs:element name="TornTransactionLifetime_DF811C" type="hex2"/>
+		<xs:element name="TornTransactionNumber_DF811D" type="hex1"/>
+		<xs:element name="PhoneMessageTable_DF8131" type="hex"/>
+		<xs:element name="TagsToRead_DF8112" type="hex"/>
+		<xs:element name="TagsToWriteBeforeGenAC_FF8102" type="hex"/>
+		<xs:element name="TagsToWriteAfterGenAC_FF8103" type="hex"/>
+		<xs:element name="ProceedToFirstWriteFlag_DF8110" type="hex1"/>
+		<xs:element name="DSRequestedOperatorID_9F5C" type="hex8"/>
+		<xs:element name="DETimeoutValue_DF8127" type="hex2"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="RR_MinGracePeriod_DF8132" type="hex2"/>
+		<xs:element name="RR_MaxGracePeriod_DF8133" type="hex2"/>
+		<xs:element name="RR_ExpTransTimeCAPDU_DF8134" type="hex2"/>
+		<xs:element name="RR_ExpTransTimeRAPDU_DF8135" type="hex2"/>
+		<xs:element name="RR_AccuracyThreshold_DF8136" type="hex2"/>
+		<xs:element name="RR_TransTimeMismatchThreshold_DF8137" type="hex1"/>
+		<xs:element name="MerchantCustomData_9F7C">
+			<xs:simpleType>
+				<xs:restriction base="xs:hexBinary">
+					<xs:maxLength value="20"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>		
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="visaType">
+	<xs:sequence>
+		<xs:element name="TermIdent_9F1C" type="hex8" minOccurs="0"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3" minOccurs="0"/>
+		<xs:element name="TerminalType_9F35" type="terminalType" minOccurs="0"/>
+		<xs:element name="TerminalTransactionQualifier_9F66" type="hex4" minOccurs="0"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3" minOccurs="0"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5" minOccurs="0"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType" minOccurs="0"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2" minOccurs="0"/>
+		<xs:element name="MerchantIdentifier_9F16" type="merchantIdType" minOccurs="0"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType" minOccurs="0"/>
+		<xs:element name="TecSupport_DFAB30" type="hex1" minOccurs="0"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5" minOccurs="0"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12" minOccurs="0"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12" minOccurs="0"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12" minOccurs="0"/>
+		<xs:element name="VisaDRLParams_FFAB01" minOccurs="0" maxOccurs="256">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="AppProgramId_9F5A">
+						<xs:simpleType>
+							<xs:restriction base="xs:hexBinary">
+								<xs:minLength value="1"/>
+								<xs:maxLength value="16"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+					<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+					<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+					<xs:element name="OnOffSwitch_DFAB49" type="hex1"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="amexType">
+	<xs:sequence>
+		<xs:element name="TermIdent_9F1C" type="hex8" minOccurs="0"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3" minOccurs="0"/>
+		<xs:element name="TerminalType_9F35" type="terminalType" minOccurs="0"/>
+		<xs:element name="AmexContactlessReaderCapabilities_9F6D" type="hex1" minOccurs="0"/>
+		<xs:element name="AmexTerminalTransactionCapabilities_9F6E" type="hex4" minOccurs="0"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3" minOccurs="0"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5" minOccurs="0"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType" minOccurs="0"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2" minOccurs="0"/>
+		<xs:element name="MerchantIdentifier_9F16" type="merchantIdType" minOccurs="0"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType" minOccurs="0"/>
+		<xs:element name="AcquirerIdentifier_9F01" type="hex6" minOccurs="0"/>
+		<xs:element name="TecSupport_DFAB30" type="hex1" minOccurs="0"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5" minOccurs="0"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12" minOccurs="0"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12" minOccurs="0"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12" minOccurs="0"/>
+		<xs:element name="TACDefault_DFAB43" type="hex5" minOccurs="0"/>
+		<xs:element name="TACDenial_DFAB44" type="hex5" minOccurs="0"/>
+		<xs:element name="TACOnline_DFAB45" type="hex5" minOccurs="0"/>
+		<xs:element name="AmexDRLParams_FFAB01" minOccurs="0" maxOccurs="256">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+					<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+					<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+					<xs:element name="OnOffSwitch_DFAB49" type="hex1"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="UnpredictableNumberRange_DFAB52" type="hex1" minOccurs="0"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="discoverType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalTransactionQualifier_9F66" type="hex4"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="TecSupport_DFAB30" type="hex1"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+		<xs:element name="DataContainerReadIds_DFAB58" type="hex"/>
+		<xs:element name="DataContainerReadRanges_DFAB59" type="hex"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="jcbType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalInterchangeProfile_9F53" type="hex3"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="AcquirerIdentifier_9F01" type="hex6"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+		<xs:element name="TACDefault_DFAB43" type="hex5"/>
+		<xs:element name="TACDenial_DFAB44" type="hex5"/>
+		<xs:element name="TACOnline_DFAB45" type="hex5"/>
+		<xs:element name="RiskManagementThreshold_DFAB46" type="amount12"/>
+		<xs:element name="RiskManagementTargetPercentage_DFAB47" type="hex1"/>
+		<xs:element name="RiskManagementMaximumTargetPercentage_DFAB48" type="hex1"/>
+		<xs:element name="CombinationOptions_DFAB4B" type="hex2"/>
+		<xs:element name="RemovalTimeout_DFAB4C" type="hex2"/>
+		<xs:element name="CL_TXN_Limit_ODCVM_DFAB5B" type="amount12alt"/> <!-- value "D000..." means not configured -->
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="cupType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalTransactionQualifier_9F66" type="hex4"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantIdentifier_9F16" type="merchantIdType"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="TecSupport_DFAB30" type="hex1"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="visaAsiaPacificType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="CvmRequirements_DF04" type="hex1"/>		
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DF02" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DF01" type="amount12"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="interacType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_9F5F" type="amount12"/>
+		<xs:element name="MerchantTypeIndicator_9F58" type="hex1"/>
+		<xs:element name="TerminalTransactionInformation_9F59" type="hex3"/>
+		<xs:element name="TerminalTransactionType_9F5A" type="hex1"/>
+		<xs:element name="TerminalOptionStatus_9F5E" type="hex2"/>
+		<xs:element name="ReceiptRequiredLimit_9F5D" type="amount12"/>
+		<xs:element name="TryAgainLimit_DF6D" type="hex1"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantIdentifier_9F16" type="merchantIdType"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="AcquirerIdentifier_9F01" type="hex6"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+		<xs:element name="TACDefault_DFAB43" type="hex5"/>
+		<xs:element name="TACDenial_DFAB44" type="hex5"/>
+		<xs:element name="TACOnline_DFAB45" type="hex5"/>
+		<xs:element name="RiskManagementThreshold_DFAB46" type="amount12"/>
+		<xs:element name="RiskManagementTargetPercentage_DFAB47" type="hex1"/>
+		<xs:element name="RiskManagementMaximumTargetPercentage_DFAB48" type="hex1"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="epalType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantIdentifier_9F16" type="merchantIdType"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="AcquirerIdentifier_9F01" type="hex6"/>
+		<xs:element name="TerminalTransactionQualifier_9F66" type="hex4"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="TACDefault_DFAB43" type="hex5"/>
+		<xs:element name="TACDenial_DFAB44" type="hex5"/>
+		<xs:element name="TACOnline_DFAB45" type="hex5"/>
+		<xs:element name="CtlsTransactionLimitCash_DFAB4A" type="amount12"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="ruPayType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+		<xs:element name="TACDefault_DFAB43" type="hex5"/>
+		<xs:element name="TACDenial_DFAB44" type="hex5"/>
+		<xs:element name="TACOnline_DFAB45" type="hex5"/>
+		<xs:element name="RiskManagementThreshold_DFAB46" type="amount12"/>
+		<xs:element name="RiskManagementTargetPercentage_DFAB47" type="hex1"/>
+		<xs:element name="RiskManagementMaximumTargetPercentage_DFAB48" type="hex1"/>
+		<xs:element name="CallbackTimeout_DFAB4D" type="hex2"/>
+		<xs:element name="TornTransactionInterval_DFAB4E" type="hex2"/>
+		<xs:element name="AdditionalTerminalCapabilitiesExt_DF3A" type="hex5" minOccurs="0"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="gemaltoType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantIdentifier_9F16" type="merchantIdType"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="AcquirerIdentifier_9F01" type="hex6"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+		<xs:element name="TACDefault_DFAB43" type="hex5"/>
+		<xs:element name="TACDenial_DFAB44" type="hex5"/>
+		<xs:element name="TACOnline_DFAB45" type="hex5"/>
+		<xs:element name="CtlsAppKernelCap_DFAB4F" type="hex5"/>
+		<xs:element name="MTOL_DFAB50" type="hex"/>
+		<xs:element name="DefaultDDOL_DFAB51" type="hex"/>
+		<xs:element name="TerminalTransactionData_9F76" type="hex"/>
+		<xs:element name="AppliAuthTransType_DFAB5A" type="hex1"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="pagoBancomatType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalTransactionQualifier_9F66" type="hex4"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+		<xs:element name="TACDefault_DFAB43" type="hex5"/>
+		<xs:element name="TACDenial_DFAB44" type="hex5"/>
+		<xs:element name="TACOnline_DFAB45" type="hex5"/>
+		<xs:element name="RiskManagementThreshold_DFAB46" type="amount12"/>
+		<xs:element name="RiskManagementTargetPercentage_DFAB47" type="hex1"/>
+		<xs:element name="RiskManagementMaximumTargetPercentage_DFAB48" type="hex1"/>
+		<xs:element name="TACSwitchInterface_DFAB55" type="hex5"/>
+		<xs:element name="IACSwitchInterface_DFAB56" type="hex5"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="wiseType">
+	<xs:all minOccurs="0">
+	    <xs:element name="AcquirerIdentifier_9F01" type="hex6"/>
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantIdentifier_9F16" type="merchantIdType"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="TecSupport_DFAB30" type="hex1"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="cpaceType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantIdentifier_9F16" type="merchantIdType"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="AcquirerIdentifier_9F01" type="hex6"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="CVM_aboveLimit_DF8118" type="hex1"/>
+		<xs:element name="CVM_belowLimit_DF8119" type="hex1"/>
+		<xs:element name="KernelConfiguration_DF811B" type="hex1"/>
+		<xs:element name="TACDefault_DF8120" type="hex5"/>
+		<xs:element name="TACDenial_DF8121" type="hex5"/>
+		<xs:element name="TACOnline_DF8122" type="hex5"/>
+		<xs:element name="FloorLimit_DF8123" type="amount12"/>
+		<xs:element name="TransactionLimitNoCDCVM_DF8124" type="amount12"/>
+		<xs:element name="TransactionLimitCDCVM_DF8125" type="amount12"/>
+		<xs:element name="CVMRequiredLimit_DF8126" type="amount12"/>
+		<xs:element name="MessageHoldTime_DF812D" type="hex3"/>
+		<xs:element name="CHV_CS_MessageTable_DF8131" type="hex"/>
+		<xs:element name="RR_MinGracePeriod_DF8132" type="hex2"/>
+		<xs:element name="RR_MaxGracePeriod_DF8133" type="hex2"/>
+		<xs:element name="RR_ExpTransTimeCAPDU_DF8134" type="hex2"/>
+		<xs:element name="RR_ExpTransTimeRAPDU_DF8135" type="hex2"/>
+		<xs:element name="RR_AccuracyThreshold_DF8136" type="hex2"/>
+		<xs:element name="RR_TransTimeMismatchThreshold_DF8137" type="hex1"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="mirType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="AcquirerIdentifier_9F01" type="hex6"/>
+		<xs:element name="TerminalFloorLimit_DF51" type="amount12"/>
+		<xs:element name="TerminalNoCVMLimit_DF52" type="amount12"/>
+		<xs:element name="TerminalContactlessLimitNonCDCVM_DF53" type="amount12"/>
+		<xs:element name="TerminalContactlessLimitCDCVM_DF54" type="amount12"/>
+		<xs:element name="TerminalTPMCapabilities_DF55" type="hex2"/>
+		<xs:element name="TransactionRecoveryLimit_DF56" type="hex1"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="TACDefault_DFAB43" type="hex5"/>
+		<xs:element name="TACDenial_DFAB44" type="hex5"/>
+		<xs:element name="TACOnline_DFAB45" type="hex5"/>
+		<xs:element name="DataExchangeTagList_DFAB57" type="hex"/>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="sibsType">
+	<xs:all minOccurs="0">
+		<xs:element name="TermIdent_9F1C" type="hex8"/>
+		<xs:element name="TerminalCountryCode_9F1A" type="hex2bcd3"/>
+		<xs:element name="TerminalType_9F35" type="terminalType"/>
+		<xs:element name="TerminalCapabilities_9F33" type="hex3"/>
+		<xs:element name="AdditionalTerminalCapabilities_9F40" type="hex5"/>
+		<xs:element name="VersionNumber_9F09" type="versionNumberType"/>
+		<xs:element name="MerchantCategoryCode_9F15" type="hex2"/>
+		<xs:element name="MerchantNameAndLocation_9F4E" type="merchantNameType"/>
+		<xs:element name="AppFlowCap_DFAB31" type="hex5"/>
+		<xs:element name="ContactlessFloorLimit_DFAB40" type="amount12"/>
+		<xs:element name="ContactlessTransactionLimit_DFAB41" type="amount12"/>
+		<xs:element name="ContactlessCVMRequiredLimit_DFAB42" type="amount12"/>
+		<xs:element name="TACDefault_DFAB43" type="hex5"/>
+		<xs:element name="TACDenial_DFAB44" type="hex5"/>		
+		<xs:element name="TACOnline_DFAB45" type="hex5"/>
+		<xs:element name="TermCap_aboveCVMLimit_DFAB53" type="hex3"/>
+		<xs:element name="TermCap_belowCVMLimit_DFAB54" type="hex3"/>		
+	</xs:all>
+</xs:complexType>
+
+</xs:schema>
+

@@ -48,8 +48,14 @@ class ConfigurationFragment : Fragment() {
         binding.btnCtConfig.setOnClickListener{
             configurationViewModel.setContactConfiguration()
         }
+        binding.btnCtTlvConfig.setOnClickListener{
+            configurationViewModel.setContactConfigThroughTlvAccess()
+        }
         binding.btnCtlsConfig.setOnClickListener{
             configurationViewModel.setContactlessConfiguration()
+        }
+        binding.btnCtlsTlvConfig.setOnClickListener {
+            configurationViewModel.setContactlessConfigThroughTlvAccess()
         }
         return root
     }

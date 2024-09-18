@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<TerminalData>
+  <TermTyp>22</TermTyp>
+  <CountryCodeTerm>0840</CountryCodeTerm>
+  <CurrencyTrans>0840</CurrencyTrans>
+  <ExpTrans>02</ExpTrans>
+  <SuppLang>0100000000000000000000000000000000000000</SuppLang>
+  <IFD_SerialNumber>52325334</IFD_SerialNumber>
+  <FlowOptions>10000000000000000000</FlowOptions>
+  <MaxCTLSTranslimit>00000000</MaxCTLSTranslimit>
+  <BeepVolume>004B</BeepVolume>
+  <BeepFrequencySuccess>0000</BeepFrequencySuccess>
+  <BeepFrequencyAlert>0000</BeepFrequencyAlert>
+  <HostCommunicationTimeout>0F</HostCommunicationTimeout>
+  <SecondTapDelay>0A</SecondTapDelay>
+  <KernelVersion>EP3.0.4r</KernelVersion>
+  <FrameworkVersion>5.43.22-166</FrameworkVersion>
+  <L1DriverVersion>EK26P_01.00-K26_01.01,EK2P_01.00;ST25R3916-01.00.04;EK26P_01.00-K26_ 8357F650</L1DriverVersion></TerminalData>

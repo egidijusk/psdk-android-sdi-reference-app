@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<TerminalData>
+  <TermTyp>22</TermTyp>
+  <CountryCodeTerm>0840</CountryCodeTerm>
+  <TermCap>E0F8C8</TermCap>
+  <TermAddCap>F000F0A001</TermAddCap>
+  <TermIdent>3232323232323232</TermIdent>
+  <CurrencyTrans>0840</CurrencyTrans>
+  <ExpTrans>02</ExpTrans>
+  <SuppLang>0102000000000000000000000000000000000000</SuppLang>
+  <IFD_SerialNumber>52325334</IFD_SerialNumber>
+  <KernelVersion>L27.0.3r</KernelVersion>
+  <FrameworkVersion>4.10.61-166</FrameworkVersion>
+  <L1DriverVersion>IFM40g-EMV4.3_1.0, SW_1.0, HW_1.0;SW_2.18 12/2023, HW_1.0 09/2021;V660p-1</L1DriverVersion></TerminalData>
