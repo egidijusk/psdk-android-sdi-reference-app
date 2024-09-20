@@ -61,7 +61,7 @@ specific to the test app and will not be much help for your integration.
 # Feature list
 
 ## System Commands 
-Can refer under sdi->system->SdiSystem package
+Can refer under sdi->system->SdiUtils package
 
 These are the PSDK-SDI apis which provides the usage for system related operations as mentioned below :
 

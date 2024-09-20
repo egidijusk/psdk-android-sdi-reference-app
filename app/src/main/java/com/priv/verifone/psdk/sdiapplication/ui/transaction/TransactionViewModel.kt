@@ -16,8 +16,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiContactless
+import com.priv.verifone.psdk.sdiapplication.sdi.display.OffDeviceTransactionListenerImpl
 import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiUtils
-import com.priv.verifone.psdk.sdiapplication.sdi.display.Display
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionManager
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
@@ -49,8 +49,6 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
     private var amount: Long = 12000L
     private val paymentSdk = (application as PSDKContext).paymentSDK
     private val transactionManager = TransactionManager(paymentSdk.sdiManager)
-    private val transactionListener = TransactionListenerImpl()
-    private val display = Display(paymentSdk.sdiManager.display)
     var ledsState = MutableLiveData(false)
     var led1 = MutableLiveData(false)
     var led2 = MutableLiveData(false)
@@ -64,44 +62,38 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
     var sensitiveDataGreenButtonText = MutableLiveData(CONFIRM)
 
     init {
-        transactionManager.setListener(transactionListener)
+        transactionManager.setListener(getTransactionListener())
     }
 
-    private inner class TransactionListenerImpl : TransactionListener {
+    private fun getTransactionListener(): TransactionListener {
+        return if (PSDKContext.ON_DEVICE_MODE) {
+            OnDeviceTransactionListenerImpl()
+        } else {
+            OffDeviceTransactionListenerImpl(paymentSdk.sdiManager.display)
+        }
+    }
+
+    private inner class OnDeviceTransactionListenerImpl : TransactionListener {
         // override transaction listener
         override fun display(message: String) {
-            if (PSDKContext.ON_DEVICE_MODE) {
-                _text.postValue(message)
-            } else {
-                display.textMessage(message, beep = false)
-            }
+            _text.postValue(message)
         }
 
         override fun presentCard(tec: Short, amount: Long, currency: SdiCurrency) {
-            if (PSDKContext.ON_DEVICE_MODE) {
-                _text.postValue("$${Decimal(2, amount).toBigDecimal()} \n Present Card")
-            } else {
-                display.cardRequest(tec, amount, currency)
-            }
+            _text.postValue("$${Decimal(2, amount).toBigDecimal()} \n Present Card")
         }
 
         override fun showLeds(activateStatus: Boolean) {
-            if (PSDKContext.ON_DEVICE_MODE) {
-                ledsState.postValue(activateStatus)
-            } else {
-                display.enableLed(activateStatus)
-            }
+            ledsState.postValue(activateStatus)
         }
 
         override fun activateLed(led: SdiContactless.LED, activate: Boolean) {
             background {
-                if (PSDKContext.ON_DEVICE_MODE) {
-                    when (led) {
-                        SdiContactless.LED.ONE -> led1.postValue(activate)
-                        SdiContactless.LED.TWO -> led2.postValue(activate)
-                        SdiContactless.LED.THREE -> led3.postValue(activate)
-                        SdiContactless.LED.FOUR -> led4.postValue(activate)
-                    }
+                when (led) {
+                    SdiContactless.LED.ONE -> led1.postValue(activate)
+                    SdiContactless.LED.TWO -> led2.postValue(activate)
+                    SdiContactless.LED.THREE -> led3.postValue(activate)
+                    SdiContactless.LED.FOUR -> led4.postValue(activate)
                 }
             }
         }
@@ -109,98 +101,64 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
         override fun getSensitiveDataTouchCoordinates(): ArrayList<SdiTouchButton> {
             // implementation is in TransactionFragment.kt
             // under getSensitiveDataTouchButtons() function
-            // NOTE : This TLV tag is supported for headless mode only (ignored for standard or off device mode).
             Log.d(TAG, "getSensitiveDataTouchCoordinates")
             Log.d(TAG, "${sensitiveDataTouchButtons.value?.isEmpty()}")
             Log.d(TAG, "${sensitiveDataTouchButtons.value?.size}")
-
-            return if (PSDKContext.ON_DEVICE_MODE) {
-                sensitiveDataTouchButtons.value!!
-            } else {
-                ArrayList()
-            }
+            return sensitiveDataTouchButtons.value!!
         }
 
         override fun sensitiveDataEntryTitle(message: String) {
-            if (PSDKContext.ON_DEVICE_MODE) {
-                sensitiveDataTitle.postValue(message)
-            }
+            sensitiveDataTitle.postValue(message)
         }
 
         override fun showSensitiveDataEntry() {
             Log.d(TAG, "showSensitiveDataEntry")
-            if (PSDKContext.ON_DEVICE_MODE) {
-                background {
-                    sensitiveDataDigits.postValue("")
-                    transactionState.postValue(State.SensitiveDataEntry)
-                }
-                // TODO
-                // shows the pin entry screen
-                // wait for screen to inflate fully
-                // get coordinates once inflated then return
-                // till this is done, use  Thread.sleep to adjust
-                Thread.sleep(800)
+            background {
+                sensitiveDataDigits.postValue("")
+                transactionState.postValue(State.SensitiveDataEntry)
             }
+            // TODO
+            // shows the pin entry screen
+            // wait for screen to inflate fully
+            // get coordinates once inflated then return
+            // till this is done, use  Thread.sleep to adjust
+            Thread.sleep(800)
         }
 
         override fun pinEntryComplete() {
-            if (PSDKContext.ON_DEVICE_MODE) {
-                sensitiveDataDigits.postValue("")
-                transactionState.postValue(State.TransactionInProgress)
-            }
+            sensitiveDataDigits.postValue("")
+            transactionState.postValue(State.TransactionInProgress)
         }
 
         override fun sensitiveDigitsEntered(digits: String) {
-            if (PSDKContext.ON_DEVICE_MODE) {
-                sensitiveDataDigits.postValue(digits)
-            }
+            sensitiveDataDigits.postValue(digits)
         }
 
         override fun setSensitiveDataGreenButtonText(text: String) {
-            if (PSDKContext.ON_DEVICE_MODE) {
-                sensitiveDataGreenButtonText.postValue(text)
-            }
+            sensitiveDataGreenButtonText.postValue(text)
         }
 
         override fun captureSignature(): ByteArray {
-            return if (PSDKContext.ON_DEVICE_MODE) {
-                // TODO Add UI to capture signature and return
-                byteArrayOf()
-            } else {
-                display.captureSignature()
-            }
+            // TODO Add UI to capture signature and return
+            return byteArrayOf()
         }
 
         override fun waitForCardRemoval() {
             transactionState.postValue(State.RemoveCard)
-            if (PSDKContext.ON_DEVICE_MODE) {
-                _text.postValue("Remove Card")
-            } else {
-                display.textMessage("Remove Card", beep = true)
-            }
+            _text.postValue("Remove Card")
         }
 
         override fun applicationSelection(candidates: ArrayList<SdiEmvCandidate>): Int {
-            val appNameList = ArrayList<String>()
             for (app in candidates) {
                 Log.d(TAG, "Application Name: ${app.aid.toHexString()}")
                 Log.d(TAG, "Application Label: ${app.appName}")
-                appNameList.add(app.appName)
             }
-            return if(PSDKContext.ON_DEVICE_MODE) {
-                // TODO Always returning first application till UI is implemented
-                0
-            } else {
-                // This is will return the selected app index
-                // Menu api is tested but app selection is not tested
-                display.menu("Select Application", appNameList)
-            }
+            // TODO Always returning first application till UI is implemented
+            return 0
         }
 
         override fun endTransaction() {
-            if (!PSDKContext.ON_DEVICE_MODE) {
-                display.clearScreen()
-            }
+            // Do Nothing
         }
     }
 
