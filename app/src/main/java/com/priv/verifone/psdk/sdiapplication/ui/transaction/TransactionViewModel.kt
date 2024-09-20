@@ -192,6 +192,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
                 0
             } else {
                 // This is will return the selected app index
+                // Menu api is tested but app selection is not tested
                 display.menu("Select Application", appNameList)
             }
         }
