@@ -21,7 +21,7 @@ import androidx.lifecycle.MutableLiveData
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.connection.ConnectionCallback
 import com.priv.verifone.psdk.sdiapplication.connection.SdiConnection
-import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiSystem
+import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiUtils
 import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.BaseViewModel
 import com.priv.verifone.psdk.sdiapplication.utils.getDeviceInformation
 import com.verifone.persistentloggerlibrary.PersistentLoggerApi
@@ -34,7 +34,7 @@ class HomeViewModel(val app: Application) : BaseViewModel(app), ConnectionCallba
 
     private val paymentSdk = (app as PSDKContext).paymentSDK
     private val sdiConnection = SdiConnection(paymentSdk, this)
-    private lateinit var sdiSystem: SdiSystem
+    private lateinit var sdiUtils: SdiUtils
 
     suspend fun connect() {
         _text.postValue("Connecting...")
@@ -78,8 +78,8 @@ class HomeViewModel(val app: Application) : BaseViewModel(app), ConnectionCallba
     override fun onConnected() {
         _text.postValue("Connected")
         _info.postValue(getDeviceInformation(paymentSdk))
-        sdiSystem = SdiSystem(paymentSdk.sdiManager)
-        _keyboardPresent.postValue(sdiSystem.isPhysicalKeyboardPresent())
+        sdiUtils = SdiUtils(paymentSdk.sdiManager)
+        _keyboardPresent.postValue(sdiUtils.isPhysicalKeyboardPresent())
     }
 
     override fun onDisconnected() {
@@ -124,12 +124,12 @@ class HomeViewModel(val app: Application) : BaseViewModel(app), ConnectionCallba
     }
 
     fun toggleKeyboardBacklight() {
-        if (sdiSystem.isPhysicalKeyboardPresent()) {
-            sdiSystem.toggleKeyboardBacklight()
+        if (sdiUtils.isPhysicalKeyboardPresent()) {
+            sdiUtils.toggleKeyboardBacklight()
         }
     }
 
     fun setDateTime(time: String) {
-        sdiSystem.setAndroidTime(time)
+        sdiUtils.setAndroidTime(time)
     }
 }

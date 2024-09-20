@@ -24,7 +24,7 @@ import com.verifone.payment_sdk.SdiSysPropertyInt
 import com.verifone.payment_sdk.SdiSysPropertyString
 import java.util.ArrayList
 
-class SdiSystem(internal val sdiManager: SdiManager) {
+class SdiUtils(internal val sdiManager: SdiManager) {
 
     companion object {
         private const val TAG = "SDISystem"
@@ -121,7 +121,6 @@ class SdiSystem(internal val sdiManager: SdiManager) {
         return response.response
     }
 
-
     // Read hardware model number
     fun modelName(): String {
         Log.d(TAG, "System Property Command HW_MODEL_NAME (20-1A)")
@@ -134,6 +133,7 @@ class SdiSystem(internal val sdiManager: SdiManager) {
     // Read PCI Reboot time
     fun pciRebootTime(): String {
         Log.d(TAG, "System Property Command PCI_REBOOT_TIME (20-1A)")
+
         val response =
             sdiManager.system.getPropertyString(SdiSysPropertyString.PCI_REBOOT_TIME, 0x01)
         Log.d(TAG, "Command Response : ${response.response}")

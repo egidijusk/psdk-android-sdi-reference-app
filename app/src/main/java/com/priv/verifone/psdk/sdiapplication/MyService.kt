@@ -18,7 +18,6 @@ class MyService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // Code for the service to execute
-
         return START_STICKY
     }
 

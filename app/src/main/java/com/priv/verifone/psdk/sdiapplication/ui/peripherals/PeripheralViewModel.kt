@@ -16,7 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.scanner.BarcodeScanner
 import com.priv.verifone.psdk.sdiapplication.scanner.ScannerCallback
-import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiSystem
+import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiUtils
 import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.BaseViewModel
 
 class PeripheralViewModel(val app: Application) : BaseViewModel(app), ScannerCallback {
@@ -27,17 +27,17 @@ class PeripheralViewModel(val app: Application) : BaseViewModel(app), ScannerCal
     val text: LiveData<String> = _text
     private val paymentSdk = (app as PSDKContext).paymentSDK
     private val barcodeScanner = BarcodeScanner(paymentSdk, this)
-    private val sdiSystem = SdiSystem(paymentSdk.sdiManager)
+    private val sdiUtils = SdiUtils(paymentSdk.sdiManager)
 
     fun printBitmapReceipt() {
         background {
-            sdiSystem.printBmp(app)
+            sdiUtils.printBmp(app)
         }
     }
 
     fun printHTMLReceipt() {
         background {
-            sdiSystem.printHtml(app)
+            sdiUtils.printHtml(app)
         }
     }
 
