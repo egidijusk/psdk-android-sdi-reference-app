@@ -110,7 +110,6 @@ class SdiContactless(private val sdiManager: SdiManager) :
             }
         }
 
-        uiListener.waitForCardRemoval()
         sdiManager.smartCardCtls.smartPowerOff(EnumSet.of(SdiEmvCtlsReaderOptions.DETECT_REMOVAL))
         var result: SdiResultCode?
         do {
