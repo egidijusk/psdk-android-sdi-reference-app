@@ -67,8 +67,10 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
 
     private fun getTransactionListener(): TransactionListener {
         return if (PSDKContext.ON_DEVICE_MODE) {
+            // UI event callback for Headless or On Device mode
             OnDeviceTransactionListenerImpl()
         } else {
+            // UI event callback for Headed or Off Device mode
             OffDeviceTransactionListenerImpl(paymentSdk.sdiManager.display)
         }
     }

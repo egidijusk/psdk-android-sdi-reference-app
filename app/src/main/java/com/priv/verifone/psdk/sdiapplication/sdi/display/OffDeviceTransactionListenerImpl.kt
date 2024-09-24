@@ -19,6 +19,7 @@ import com.verifone.payment_sdk.SdiDisplay
 import com.verifone.payment_sdk.SdiEmvCandidate
 import com.verifone.payment_sdk.SdiTouchButton
 
+// This listener callback triggers in off device case
 class OffDeviceTransactionListenerImpl(sdiDisplay: SdiDisplay) : TransactionListener {
 
     companion object {

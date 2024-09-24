@@ -49,7 +49,7 @@ class SdiConnection(private val paymentSdk: PaymentSdk, private val callback: Co
         return if (PSDKContext.ON_DEVICE_MODE) {
             "vfi-terminal"
         } else {
-            "192.168.1.4" // Enter your terminal IP address here
+            "192.168.1.9" // Enter your terminal IP address here
         }
     }
 

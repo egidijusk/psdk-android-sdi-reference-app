@@ -32,7 +32,7 @@ class Display(private val sdiDisplay: SdiDisplay) {
     }
 
     fun textMessage(dataValue: String, beep: Boolean) {
-        Log.d(TAG, "Handle Display (24-03)")
+        Log.d(TAG, "Handle Display Command (24-03)")
         val resultCode = sdiDisplay.text(TEMPLATE_ID, DISPLAY_TEXT, dataValue, 0, null, beep, null)
         Log.d(TAG, "Command Result: $resultCode")
     }
@@ -42,7 +42,7 @@ class Display(private val sdiDisplay: SdiDisplay) {
         keyActions: HashMap<String, String>, // FFA106 (Additional key action)
         headerText: String, enterText: String, clearText: String, cancelText: String
     ) {
-        Log.d(TAG, "Handle Display (24-03)")
+        Log.d(TAG, "Handle Display Command (24-03)")
         val dialogOptions = EnumSet.of(
             SdiDialogOptions.ASYNC,
             SdiDialogOptions.STORE_ASYNC_RESULT,
@@ -59,44 +59,47 @@ class Display(private val sdiDisplay: SdiDisplay) {
     // with TLV tag DFA13D containing dialog options DLG_Async and DLG_StoreAsyncResult,
     // this command can be used to get the status and result of this asynchronous dialog.
     fun getAsyncDisplayResult() {
-        Log.d(TAG, "Get Async Display Result (24-0B)")
-        val resultCode = sdiDisplay.getAsyncResult(null)
-        Log.d(TAG, "Command Result: $resultCode")
+        Log.d(TAG, "Get Async Display Result Command (24-0B)")
+        val statusResponse = sdiDisplay.getAsyncResult(null)
+        Log.d(TAG, "Command Result: ${statusResponse.result}")
+        Log.d(TAG, "Command Response Status: ${statusResponse.status}")
     }
 
     fun enableLed(status: Boolean) {
-        Log.d(TAG, "Activate LEDs (24-09)")
+        Log.d(TAG, "Activate LEDs Command (24-09)")
         val resultCode = sdiDisplay.leds(status)
         Log.d(TAG, "Command Result: $resultCode")
     }
 
     fun cardRequest(tec: Short, amount: Long, currency: SdiCurrency) {
-        Log.d(TAG, "Handle Card Request Display (24-06)")
+        Log.d(TAG, "Handle Card Request Display Command (24-06)")
         val resultCode = sdiDisplay.cardRequest(tec, 0, amount, currency, null)
         Log.d(TAG, "Command Result: $resultCode")
     }
 
     fun secureInput(inputType: SdiInputType): String {
-        Log.d(TAG, "Handle Secure Input (24-04)")
+        Log.d(TAG, "Handle Secure Input Command (24-04)")
         val inputResponse =
             sdiDisplay.input(inputType, SdiLanguage.NO_LANGUAGE, 0, null, null, false, null)
-        Log.d(TAG, "Command Result: $inputResponse")
+        Log.d(TAG, "Command Result: ${inputResponse.result}")
+        Log.d(TAG, "Command Response: ${inputResponse.response}")
         return inputResponse.response
     }
 
     fun menu(headLine: String, entries: ArrayList<String>): Int {
-        Log.d(TAG, "Handle Menu (24-05)")
+        Log.d(TAG, "Handle Menu Command (24-05)")
         val menuResponse = sdiDisplay.menu(headLine, entries, 0, false, null)
         Log.d(TAG, "Command Result: $menuResponse")
+        Log.d(TAG, "Command Response, index: ${menuResponse.response}")
         return menuResponse.response
     }
 
     // Currently Portable Network Graphics (png) format is supported.
     // In the two piece solution this command will be executed on the EPP only.
     fun captureSignature(): ByteArray {
-        Log.d(TAG, "Handle Signature Capture (24-08)")
+        Log.d(TAG, "Handle Signature Capture Command (24-08)")
         val signatureResponse = sdiDisplay.signatureCapture(SdiLanguage.ENGLISH, 0, null)
-        Log.d(TAG, "Command Result: $signatureResponse")
+        Log.d(TAG, "Command Result: ${signatureResponse.result}")
         Log.d(TAG, "Captured signature: ${signatureResponse.outData.toHexString()}")
         return signatureResponse.outData
     }
@@ -105,14 +108,14 @@ class Display(private val sdiDisplay: SdiDisplay) {
     // For customized dialogs w/o user input, please use text API
     // NOTE : This custom HTML dialog must be reviewed/signed by SDI team and deployed with SDI base installation packages.
     fun htmlDialog(htmlFileName: String, valueMap: HashMap<String, String>) {
-        Log.d(TAG, "Handle HTML Dialog (24-0A)")
+        Log.d(TAG, "Handle HTML Dialog Command (24-0A)")
         val dialogResponse =
             sdiDisplay.dialog(htmlFileName, valueMap, SdiLanguage.ENGLISH, false, null)
-        Log.d(TAG, "Command Result: $dialogResponse")
+        Log.d(TAG, "Command Result: ${dialogResponse.result}")
     }
 
     fun clearScreen() {
-        Log.d(TAG, "Display Idle Screen (24-07)")
+        Log.d(TAG, "Display Idle Screen Command (24-07)")
         val resultCode = sdiDisplay.idleScreen(null)
         Log.d(TAG, "Command Result: $resultCode")
     }
