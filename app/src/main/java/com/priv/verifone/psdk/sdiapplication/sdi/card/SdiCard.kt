@@ -94,6 +94,7 @@ abstract class SdiCard(private val sdiManager: SdiManager) {
         Log.d(TAG, "AIP: 82: ${data.aip?.toHexString()}")
         Log.d(TAG, "Issuer Application Data: 9F10: ${data.issuerAppData?.toHexString()}")
         Log.d(TAG, "CVM Result 9F34: ${data.cvmResults?.toHexString()}")
+        Log.d(TAG, "EMV Status: ${data.emvStatus}")
     }
 
     /*
@@ -208,20 +209,24 @@ abstract class SdiCard(private val sdiManager: SdiManager) {
     fun performValidationChecks(date: ByteArray, returnAdditional: Boolean): SdiDataValidationResponse {
         Log.i(TAG, "Perform Validation Checks  Command (29-05) ")
         val response = sdiManager.data.performValidationChecks(date, returnAdditional)
-        //Check results will deliver 01 if check is OK, 00 if check is failed
+        // Check results will deliver 01 if check is OK, 00 if check is failed
         // and FF if check has not been performed because it's disabled in the validation table.
-        //In case of IIN is used no check results are delivered.
+        // In case of IIN is used no check results are delivered.
         Log.i(TAG, "Command Result: ${response.result.name}")
-        Log.i(TAG, "Command Result Matching Record: ${response.match.record} " +
-                "luhnCheck: ${response.match.luhnCheck} " +
-                "expirationCheck: ${response.match.expirationCheck} " +
-                "activationCheck: ${response.match.activationCheck}")
-        for (record in response.additional) {
-            Log.i(TAG, "Command Result Additional Record : ${record.record}, " +
-                    "activationCheck: ${record.activationCheck} " +
-                    "expirationCheck:${record.expirationCheck} " +
-                    "luhnCheck:${record.luhnCheck}")
+        Log.i(TAG, "Command Result Matching Record: ${response.match?.record} " +
+                "luhnCheck: ${response.match?.luhnCheck} " +
+                "expirationCheck: ${response.match?.expirationCheck} " +
+                "activationCheck: ${response.match?.activationCheck}")
+
+        if(response.additional != null) {
+            for (record in response.additional) {
+                Log.i(TAG, "Command Result Additional Record : ${record.record}, " +
+                        "activationCheck: ${record.activationCheck} " +
+                        "expirationCheck:${record.expirationCheck} " +
+                        "luhnCheck:${record.luhnCheck}")
+            }
         }
+
         val crypto = Crypto(sdiManager)
         crypto.getSensitiveEncryptedData(listOf("57"))
         return response

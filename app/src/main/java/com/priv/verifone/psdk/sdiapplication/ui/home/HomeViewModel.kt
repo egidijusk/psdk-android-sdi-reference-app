@@ -48,7 +48,8 @@ class HomeViewModel(val app: Application) : BaseViewModel(app), ConnectionCallba
     fun transferLogs() {
         background {
             val logger = PersistentLoggerApi.getInstance(app.applicationContext)
-            logger.transferLogs()
+            val logResponse = logger.transferLogs()
+            Log.d(TAG, "transferLogs: $logResponse")
         }
     }
 

@@ -11,13 +11,15 @@
 package com.priv.verifone.psdk.sdiapplication.sdi.transaction
 
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiContactless
+import com.verifone.payment_sdk.SdiCurrency
 import com.verifone.payment_sdk.SdiEmvCandidate
 import com.verifone.payment_sdk.SdiTouchButton
 
 // This callback triggers to POS app for PSDK notifications and PSDK callback events
 interface TransactionListener {
     fun display(message:String)
-    fun showLeds(b: Boolean)
+    fun presentCard(tec: Short, amount: Long, currency: SdiCurrency)
+    fun showLeds(activateStatus: Boolean)
     fun activateLed(led: SdiContactless.LED, activate:Boolean)
     fun getSensitiveDataTouchCoordinates(): ArrayList<SdiTouchButton>
     fun sensitiveDataEntryTitle(message:String)
@@ -25,6 +27,8 @@ interface TransactionListener {
     fun pinEntryComplete()
     fun sensitiveDigitsEntered(digits: String)
     fun setSensitiveDataGreenButtonText(text: String)
+    fun captureSignature(): ByteArray
     fun waitForCardRemoval()
     fun applicationSelection(candidates:ArrayList<SdiEmvCandidate>): Int
+    fun endTransaction()
 }

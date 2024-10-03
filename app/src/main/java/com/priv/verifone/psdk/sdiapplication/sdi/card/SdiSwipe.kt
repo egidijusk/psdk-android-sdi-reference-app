@@ -26,8 +26,9 @@ class SdiSwipe(private val sdiManager: SdiManager) :
 
     override fun startTransactionFlow(amount: Long): SdiResultCode {
         val response = performValidationChecks(DATE, returnAdditional = true)
+        // retrieveTagsUsingApi(config.getMagstripeTagsToFetch())
 
-        //retrieveTagsUsingApi(config.getMagstripeTagsToFetch())
+        uiListener.captureSignature()
 
         // Go to Host for approval
         uiListener.display("Transaction Approved")

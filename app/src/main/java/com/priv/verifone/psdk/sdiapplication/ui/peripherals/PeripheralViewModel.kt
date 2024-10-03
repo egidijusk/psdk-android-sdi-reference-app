@@ -34,6 +34,7 @@ class PeripheralViewModel(val app: Application) : BaseViewModel(app), ScannerCal
             sdiUtils.printBmp(app)
         }
     }
+
     fun printHTMLReceipt() {
         background {
             sdiUtils.printHtml(app)

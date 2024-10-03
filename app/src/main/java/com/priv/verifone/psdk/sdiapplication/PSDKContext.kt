@@ -11,8 +11,6 @@
 package com.priv.verifone.psdk.sdiapplication
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
 import com.google.gson.Gson
 import com.verifone.payment_sdk.PaymentSdk
 import com.verifone.payment_sdk.SdiManager
@@ -22,7 +20,6 @@ import com.priv.verifone.psdk.sdiapplication.sdi.config.model.EmvCtlsConfig
 import com.priv.verifone.psdk.sdiapplication.sdi.config.tlvmodel.EmvContactConfigTlv
 import com.priv.verifone.psdk.sdiapplication.sdi.config.tlvmodel.EmvCtlsConfigTlv
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils
-import java.lang.Exception
 
 class PSDKContext : Application() {
 
@@ -31,6 +28,9 @@ class PSDKContext : Application() {
     //lateinit var config : Config
 
     companion object {
+        const val ON_DEVICE_MODE =
+            true // This is responsible for making the integration as ON(Headless) or Off(Headed) device
+
         lateinit var instance: PSDKContext
         lateinit var ctConfigData: EmvContactConfig
         lateinit var ctlsConfigData: EmvCtlsConfig

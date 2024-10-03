@@ -58,10 +58,20 @@ You can change the enable flag to false in the respective conf file and push the
 Please refer the <b>sdi</b>  package for the usage of PSDK SDI apis, all other packages are very 
 specific to the test app and will not be much help for your integration.
 
+# Headed Mode or Off Device integration
+In this mode POS app will connect to engage terminal where SDI-Server will be running on headed mode.
+We have implemented this flow in this app.
+To test this you need to follow below steps :
+
+-> set ON_DEVICE_MODE parameter of PSDKContext into false
+-> make sure your POS and the payment terminal on same network
+-> set your terminal IP Address while initialization of PSDK(inside getIPAddress method of SdiConnection)
+
+
 # Feature list
 
 ## System Commands 
-Can refer under sdi->system->SdiSystem package
+Can refer under sdi->system->SdiUtils package
 
 These are the PSDK-SDI apis which provides the usage for system related operations as mentioned below :
 

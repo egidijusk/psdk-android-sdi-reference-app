@@ -10,13 +10,10 @@
 
 package com.priv.verifone.psdk.sdiapplication.sdi.config
 
-import android.content.Context
 import android.util.Log
 import com.priv.verifone.psdk.sdiapplication.sdi.config.model.EmvCtlsConfig
-import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.hexStringToByteArray
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.verifone.payment_sdk.*

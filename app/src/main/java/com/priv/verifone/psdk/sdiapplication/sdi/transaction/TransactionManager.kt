@@ -15,7 +15,7 @@ import com.verifone.payment_sdk.SdiManager
 import com.verifone.payment_sdk.SdiResultCode
 import com.priv.verifone.psdk.sdiapplication.sdi.card.*
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiCard.Companion.cardDetect
-import com.verifone.payment_sdk.Decimal
+import com.verifone.payment_sdk.SdiCurrency
 import kotlin.experimental.and
 import kotlin.experimental.or
 
@@ -115,7 +115,7 @@ class TransactionManager(private val sdiManager: SdiManager) {
                     }
                 }
 
-                listener.display("$${Decimal(2, amount).toBigDecimal()}\nPresent Card")
+                listener.presentCard(techEnabled, amount, SdiCurrency.USD)
                 val detectResp = cardDetect(techEnabled, sdiManager = sdiManager)
                 if (detectResp.result == SdiResultCode.OK) {
                     Log.d(TAG, "Card detected successfully : ${detectResp.result.name}, tec : ${detectResp.tecOut}")
@@ -161,5 +161,6 @@ class TransactionManager(private val sdiManager: SdiManager) {
         if (exitResult != SdiResultCode.OK) {
             listener.display("Exit CT Frame Work Failed: ${exitResult.name}")
         }
+        listener.endTransaction()
     }
 }

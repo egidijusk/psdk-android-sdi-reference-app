@@ -16,12 +16,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.sdi.card.SdiContactless
+import com.priv.verifone.psdk.sdiapplication.sdi.display.OffDeviceTransactionListenerImpl
 import com.priv.verifone.psdk.sdiapplication.sdi.system.SdiUtils
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionListener
 import com.priv.verifone.psdk.sdiapplication.sdi.transaction.TransactionManager
 import com.priv.verifone.psdk.sdiapplication.sdi.utils.Utils.Companion.toHexString
 import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.BaseViewModel
 import com.priv.verifone.psdk.sdiapplication.utils.Constants.Companion.CONFIRM
+import com.verifone.payment_sdk.Decimal
+import com.verifone.payment_sdk.SdiCurrency
 import com.verifone.payment_sdk.SdiEmvCandidate
 import com.verifone.payment_sdk.SdiTouchButton
 import java.math.BigDecimal
@@ -46,7 +49,6 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
     private var amount: Long = 12000L
     private val paymentSdk = (application as PSDKContext).paymentSDK
     private val transactionManager = TransactionManager(paymentSdk.sdiManager)
-    private val transactionListener = TransactionListenerImpl()
     var ledsState = MutableLiveData(false)
     var led1 = MutableLiveData(false)
     var led2 = MutableLiveData(false)
@@ -60,17 +62,31 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
     var sensitiveDataGreenButtonText = MutableLiveData(CONFIRM)
 
     init {
-        transactionManager.setListener(transactionListener)
+        transactionManager.setListener(getTransactionListener())
     }
 
-    private inner class TransactionListenerImpl : TransactionListener {
+    private fun getTransactionListener(): TransactionListener {
+        return if (PSDKContext.ON_DEVICE_MODE) {
+            // UI event callback for Headless or On Device mode
+            OnDeviceTransactionListenerImpl()
+        } else {
+            // UI event callback for Headed or Off Device mode
+            OffDeviceTransactionListenerImpl(paymentSdk.sdiManager.display)
+        }
+    }
+
+    private inner class OnDeviceTransactionListenerImpl : TransactionListener {
         // override transaction listener
         override fun display(message: String) {
             _text.postValue(message)
         }
 
-        override fun showLeds(b: Boolean) {
-            ledsState.postValue(b)
+        override fun presentCard(tec: Short, amount: Long, currency: SdiCurrency) {
+            _text.postValue("$${Decimal(2, amount).toBigDecimal()} \n Present Card")
+        }
+
+        override fun showLeds(activateStatus: Boolean) {
+            ledsState.postValue(activateStatus)
         }
 
         override fun activateLed(led: SdiContactless.LED, activate: Boolean) {
@@ -90,7 +106,6 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
             Log.d(TAG, "getSensitiveDataTouchCoordinates")
             Log.d(TAG, "${sensitiveDataTouchButtons.value?.isEmpty()}")
             Log.d(TAG, "${sensitiveDataTouchButtons.value?.size}")
-
             return sensitiveDataTouchButtons.value!!
         }
 
@@ -125,6 +140,11 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
             sensitiveDataGreenButtonText.postValue(text)
         }
 
+        override fun captureSignature(): ByteArray {
+            // TODO Add UI to capture signature and return
+            return byteArrayOf()
+        }
+
         override fun waitForCardRemoval() {
             transactionState.postValue(State.RemoveCard)
             _text.postValue("Remove Card")
@@ -135,8 +155,12 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
                 Log.d(TAG, "Application Name: ${app.aid.toHexString()}")
                 Log.d(TAG, "Application Label: ${app.appName}")
             }
-            //TODO Always returning first application till UI is implemented
+            // TODO Always returning first application till UI is implemented
             return 0
+        }
+
+        override fun endTransaction() {
+            // Do Nothing
         }
     }
 
@@ -175,7 +199,7 @@ class TransactionViewModel(application: Application) : BaseViewModel(app = appli
 
     fun setAmount(amt: String) {
         var temp = amt
-        if (amt.isNullOrEmpty() ){
+        if (amt.isNullOrEmpty()) {
             temp = "100"
         }
         var amount = BigDecimal(temp)

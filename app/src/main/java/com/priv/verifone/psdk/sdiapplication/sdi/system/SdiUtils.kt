@@ -35,15 +35,17 @@ class SdiUtils(internal val sdiManager: SdiManager) {
         val bitmap =
             Utils.getBitmapFromAsset(app.applicationContext, "receipt/bmp/verifone-logo.bmp")
         val bytes = JavaUtils.convertBitmapTo1bpp(bitmap)
-        Log.d(TAG, "Print Command ")
+        Log.d(TAG, "printBitmap Command (25-04)")
         val result = sdiManager.printer.printBitmap(bitmap!!.width, bitmap.height, bytes)
         Log.d(TAG, "Command Result: ${result.name}")
     }
 
     // Prints the receipt from a hardcoded html format file present inside assets folder
     fun printHtml(app: Context) {
+        Log.d(TAG, "printHTML Command (25-02)")
         val html = getTestHtmlReceipt(app.applicationContext, "receipt/html/receipt.html")
-        sdiManager.printer.printHTML(html, false)
+        val result = sdiManager.printer.printHTML(html, false)
+        Log.d(TAG, "Command Result: ${result.name}")
     }
 
     fun printBmpHack(app: Context) {
@@ -65,7 +67,7 @@ class SdiUtils(internal val sdiManager: SdiManager) {
             encodedString = getBase64EncodedBitmap(bitmap!!)
         }
         val finalHtml = HTML.replace("encoded_data_placeholder", encodedString)
-        Log.d(TAG, "Print Command ")
+        Log.d(TAG, "printHTML Command (25-02)")
         val result = this.sdiManager.printer.printHTML(finalHtml, false)
         Log.d(TAG, "Command Result: ${result.name}")
     }
