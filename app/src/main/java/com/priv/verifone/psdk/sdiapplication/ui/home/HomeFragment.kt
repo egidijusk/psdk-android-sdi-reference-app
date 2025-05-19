@@ -22,17 +22,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.priv.verifone.psdk.sdiapplication.PSDKContext
 import com.priv.verifone.psdk.sdiapplication.databinding.FragmentHomeBinding
 import com.priv.verifone.psdk.sdiapplication.ui.utils.DateTimePickerUtil
 import com.priv.verifone.psdk.sdiapplication.ui.utils.DateTimeUtil
 import com.priv.verifone.psdk.sdiapplication.ui.viewmodel.PsdkViewModelFactory
+import com.verifone.payment_sdk.SdiNfc
+import com.verifone.payment_sdk.SdiNfcPollingBitmap
+import com.verifone.payment_sdk.SdiResultCode
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.EnumSet
 import java.util.Locale
 
 class HomeFragment : Fragment() {
 
+    private val TAG = "HomeFragment"
+    
     private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
@@ -82,7 +90,8 @@ class HomeFragment : Fragment() {
             }
         }
         binding.btnCrash.setOnClickListener {
-            throw RuntimeException("This is a crash simulation.")
+            val nfc = (requireActivity().application as PSDKContext).paymentSDK.sdiManager.nfc
+            readNfcA(nfc)
         }
 
         btnDisconnect.setOnClickListener {
@@ -132,8 +141,76 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+
         return root
     }
+
+    private fun readNfcA(nfc: SdiNfc) {
+        val nfcPollingSet: EnumSet<SdiNfcPollingBitmap> = EnumSet.of(
+            SdiNfcPollingBitmap.A
+        )
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                var sdiResultCode = nfc.open()
+                if (sdiResultCode != SdiResultCode.OK) {
+                    android.util.Log.d(TAG, "nfc.open() - $sdiResultCode")
+                    return@launch
+                }
+
+                sdiResultCode = nfc.fieldOn()
+                if (sdiResultCode != SdiResultCode.OK) {
+                    android.util.Log.d(TAG, "nfc.fieldOn() - $sdiResultCode")
+                    return@launch
+                }
+
+                var sdiNfcPollResult = nfc.fieldPolling(nfcPollingSet, 4000, byteArrayOf())
+                if (sdiNfcPollResult.result != SdiResultCode.OK) {
+                    android.util.Log.d(TAG, "nfc.fieldPolling() - ${sdiNfcPollResult.result}")
+                    return@launch
+                }
+
+                val sdiNfcCard = sdiNfcPollResult.detectedCards?.firstOrNull()
+                if (sdiNfcCard === null) {
+                    android.util.Log.d(TAG, "no cards detected")
+                    return@launch
+                }
+
+                android.util.Log.d(TAG, "Card UID - ${sdiNfcCard.cardInfo.toHexString()}")
+
+                sdiResultCode = nfc.fieldActivation(sdiNfcCard.cardType.toLong(), byteArrayOf())
+                if (sdiResultCode != SdiResultCode.OK) {
+                    android.util.Log.d(TAG, "nfc.fieldActivation() - $sdiResultCode")
+                    return@launch
+                }
+
+                val sdiBinaryResponse = nfc.mifareRead(sdiNfcCard.cardType, 0, 1)
+                if (sdiBinaryResponse.result != SdiResultCode.OK) {
+                    android.util.Log.d(TAG, "nfc.mifareRead() - ${sdiBinaryResponse.result}")
+                    return@launch
+                }
+
+                android.util.Log.d(TAG, "nfc.mifareRead() - ${sdiBinaryResponse.response.toHexString()}")
+            } catch (e: Exception) {
+                android.util.Log.d(TAG, e.stackTraceToString())
+            } finally {
+                var sdiResultCode = nfc.fieldOff()
+                if (sdiResultCode != SdiResultCode.OK) {
+                    android.util.Log.d(TAG, "nfc.fieldOff() - $sdiResultCode")
+                }
+
+                sdiResultCode = nfc.close()
+                if (sdiResultCode != SdiResultCode.OK) {
+                    android.util.Log.d(TAG, "nfc.close() - $sdiResultCode")
+                }
+            }
+        }
+    }
+
+    fun ByteArray.toHexString(): String {
+        return joinToString("") { "%02X".format(it) }
+    }
+
     private fun showDateTimePicker() {
         DateTimePickerUtil.showDatePicker(requireContext()) { view, year, month, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
@@ -166,4 +243,5 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
