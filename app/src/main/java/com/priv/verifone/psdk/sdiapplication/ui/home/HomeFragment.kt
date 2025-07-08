@@ -164,7 +164,7 @@ class HomeFragment : Fragment() {
                     return@launch
                 }
 
-                var sdiNfcPollResult = nfc.fieldPolling(nfcPollingSet, 4000, byteArrayOf())
+                var sdiNfcPollResult = nfc.fieldPollingExt(nfcPollingSet, 4000, byteArrayOf())
                 if (sdiNfcPollResult.result != SdiResultCode.OK) {
                     android.util.Log.d(TAG, "nfc.fieldPolling() - ${sdiNfcPollResult.result}")
                     return@launch
