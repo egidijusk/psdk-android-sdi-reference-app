@@ -184,7 +184,7 @@ class HomeFragment : Fragment() {
                     return@launch
                 }
 
-                val sdiBinaryResponse = nfc.mifareRead(sdiNfcCard.cardType, 0, 1)
+                val sdiBinaryResponse = nfc.mifareRead(sdiNfcCard.cardType, 16, 1)
                 if (sdiBinaryResponse.result != SdiResultCode.OK) {
                     android.util.Log.d(TAG, "nfc.mifareRead() - ${sdiBinaryResponse.result}")
                     return@launch
